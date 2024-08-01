@@ -1,0 +1,121 @@
+@keyframes slide-from {
+  from {
+    height: 0;
+  }
+  to {
+    height: 88px;
+  }
+}
+
+.category-menu {
+  display: none;
+  width: 100%;
+  color: black;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+  background-color: #4e3733;
+  color: #fff;
+  border-radius: 5px;
+  position: absolute;
+  top: 127%;
+  left: 0%;
+  height: 0;
+  align-items: flex-start;
+  overflow: hidden;
+  z-index: 10;
+
+  &.show {
+    display: flex;
+    animation: slide-from 0.5s linear forwards;
+  }
+
+  .category-list {
+    cursor: pointer;
+    width: 100%;
+    align-items: center;
+
+    .category-item {
+      width: 100%;
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 11px;
+
+      svg {
+        margin-left: 15px;
+        width: 15px;
+        height: 15px;
+        fill: #fff;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover {
+        background-color: #b27c85;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .category-menu {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 90%;
+    height: 100%;
+    overflow-y: auto;
+    z-index: 101;
+    background-color: #f4f5f7;
+    color: #000;
+    transition: transform 0.3s ease;
+
+    .category-btn {
+      background-color: transparent;
+      svg {
+        width: 20px;
+        height: 20px;
+        fill: #008ec8;
+      }
+    }
+
+    &.hide {
+      transform: translateX(-100%);
+    }
+
+    &.show {
+      animation: none;
+      transform: translateX(0%);
+    }
+
+    .category-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+    }
+
+    .category-list {
+      flex: 1;
+      width: 100%;
+      padding: 0 10px;
+      font-size: 18px;
+
+      .category {
+        display: flex;
+        justify-content: space-between;
+        border-top: 1px solid #dbdde7;
+
+        .category-item {
+          flex: 1;
+          justify-content: flex-start;
+        }
+      }
+    }
+  }
+}

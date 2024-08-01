@@ -1,0 +1,174 @@
+.card-info-title {
+  p {
+    display: inline-block;
+    margin-right: 40px;
+    color: #a2a2a2;
+
+    span {
+      font-size: 18px;
+      font-weight: 500;
+      color: #000;
+    }
+  }
+
+  .title {
+    display: flex;
+    justify-content: space-between;
+
+    .share-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 11;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .share-popup {
+      background-color: #ffffff;
+      width: 400px;
+      height: 140px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 12;
+      border-radius: 5px;
+      padding: 10px 15px;
+      gap: 4px;
+
+      .share-popup-header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px 0 10px 0;
+        margin-bottom: 5px;
+        border-bottom: 1px solid #a2a2a2;
+        font-size: 14px;
+
+        .close-popup-btn {
+          width: 25px;
+          height: 25px;
+          background-color: transparent;
+          svg {
+            width: 14px;
+            height: 14px;
+            fill: #008ec8;
+          }
+        }
+      }
+
+      .messenger-btn {
+        width: 45px;
+        height: 45px;
+        background-color: #dcdcdc;
+
+        svg {
+          width: 50px;
+          height: 50px;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
+
+  .available-product {
+    color: green;
+  }
+
+  .unavailable-product {
+    color: #a2a2a2;
+  }
+
+  .product-code {
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .reviews {
+      display: flex;
+      align-items: center;
+
+      .link-comment {
+        cursor: pointer;
+        color: #3e77aa;
+        margin-left: 5px;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .share-btn {
+      width: 30px;
+      height: auto;
+      margin-right: 10px;
+      background-color: transparent;
+      margin-left: auto;
+      display: flex;
+      justify-content: flex-end;
+
+      svg {
+        width: 30px;
+        height: 28px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .card-info-title {
+    text-align: left;
+
+    p {
+      margin-right: 10px;
+
+      span {
+        font-size: 16px;
+      }
+    }
+
+    .title {
+      align-items: flex-start;
+
+      .share-popup {
+        width: 90%;
+        height: 120px;
+        .messenger-btn {
+          width: 40px;
+          height: 40px;
+
+          svg {
+            width: 45px;
+            height: 45px;
+          }
+        }
+      }
+    }
+
+    .product-code {
+      gap: 5px;
+
+      .reviews {
+        .rating {
+          font-size: 1.1rem;
+        }
+      }
+
+      .share-btn {
+        margin-right: 0;
+      }
+    }
+  }
+}

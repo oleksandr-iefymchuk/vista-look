@@ -1,0 +1,137 @@
+.home-wrap {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  overflow: hidden;
+  padding-bottom: 25px;
+  width: 100vw;
+  overflow: hidden;
+
+  .products-list {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .product-category {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      width: 50%;
+
+      .category-title {
+        display: flex;
+        width: 90%;
+        margin-bottom: 10px;
+        align-items: center;
+
+        .category-buttons {
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          margin-left: 10px;
+
+          &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+          }
+        }
+      }
+
+      .products {
+        display: flex;
+        justify-content: space-between;
+        width: 90%;
+        flex: 1;
+        margin: 0%;
+        gap: 0;
+
+        .card-product {
+          width: 49%;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .home-wrap {
+    .catalog-btn-wrap {
+      width: 60%;
+      margin-top: 20px;
+
+      .home-catalog-btn {
+        width: 100%;
+        position: relative;
+        justify-content: center;
+        background-color: #b27c85;
+        font-size: 16px;
+
+        svg {
+          left: 3%;
+          position: absolute;
+        }
+      }
+    }
+
+    .products-list {
+      width: 100%;
+
+      .product-category {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .category-title {
+          width: 100%;
+          justify-content: center;
+          margin-bottom: 10px;
+        }
+
+        .products {
+          width: 50%;
+
+          .card-product {
+            width: 48%;
+            height: 345px;
+
+            a {
+              font-size: 9px;
+            }
+
+            .favorites-btn-wrap {
+              right: 3%;
+            }
+
+            .card-product-info {
+              font-size: 11px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .home-wrap {
+    .catalog-btn-wrap {
+      width: 90%;
+    }
+    .products-list {
+      .product-category {
+        .products {
+          width: 96%;
+          .card-product {
+            width: 49%;
+          }
+        }
+      }
+    }
+  }
+}

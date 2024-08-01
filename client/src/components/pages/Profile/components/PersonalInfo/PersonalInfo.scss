@@ -1,0 +1,91 @@
+.personal-info-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  padding: 0 0 0 60px;
+  justify-content: flex-start;
+  width: 100%;
+  h3 {
+    text-align: left;
+    margin-bottom: 20px;
+  }
+
+  .personal-info-form,
+  .password-form {
+    width: 440px;
+    .list-personal-info-inputs,
+    .list-password-inputs {
+      display: flex;
+      flex-direction: column;
+      width: 400px;
+
+      .personal-info-input {
+        margin-bottom: 20px;
+      }
+    }
+
+    .personal-info-btn {
+      width: 400px;
+      height: 40px;
+      background-color: #008ec8;
+
+      &:hover {
+        background-color: #00a7e9;
+      }
+    }
+  }
+
+  .Mui-disabled {
+    -webkit-text-fill-color: #8d8d8d !important;
+  }
+}
+
+@media screen and (max-width: 1366px) {
+  .personal-info-wrap {
+    padding: 0;
+    gap: 20px;
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .personal-info-wrap {
+    gap: 0;
+    padding: 0;
+    text-align: center;
+
+    h3 {
+      text-align: center;
+    }
+
+    .personal-info-form,
+    .password-form {
+      width: 60%;
+      margin: 0 auto 40px auto;
+
+      .list-personal-info-inputs,
+      .list-password-inputs {
+        width: 100%;
+
+        .personal-info-input {
+          margin-bottom: 20px;
+        }
+      }
+
+      .personal-info-btn {
+        width: 100%;
+        margin-top: 20px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .personal-info-wrap {
+    .personal-info-form,
+    .password-form {
+      width: 100%;
+      margin-bottom: 40px;
+    }
+  }
+}

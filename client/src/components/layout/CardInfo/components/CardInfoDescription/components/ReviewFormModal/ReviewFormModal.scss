@@ -1,0 +1,139 @@
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.form-container {
+  padding: 30px;
+  background-color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  animation: modalFadeIn 0.3s ease-out;
+
+  .form-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #cbcbcb;
+
+    .close-form-btn {
+      width: 30px;
+      height: 30px;
+      background-color: transparent;
+
+      svg {
+        width: 15px;
+        height: 15px;
+        fill: #008ec8;
+      }
+    }
+  }
+
+  .google-login {
+    position: absolute;
+    right: 30px;
+    top: 95px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    p {
+      font-size: 15px;
+      margin: 0 5px 10px auto;
+      color: #767676;
+    }
+  }
+
+  .form-add-review {
+    display: flex;
+    flex-direction: column;
+
+    .review-input {
+      margin-top: 20px;
+      width: 300px;
+
+      &.textarea {
+        width: 600px;
+      }
+    }
+
+    .rating-stars {
+      margin-top: 20px;
+      display: flex;
+
+      p {
+        margin-right: 10px;
+      }
+    }
+
+    .submit-review-btn {
+      margin-top: 50px;
+      width: 200px;
+      height: 40px;
+      background-color: #008ec8;
+
+      &:hover {
+        background-color: #00a7e9;
+        transition: 0.3s;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .form-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    padding: 20px;
+
+    .google-login {
+      width: 90%;
+      top: 425px;
+      left: 50%;
+      transform: translate(-50%, 0);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      p {
+        font-size: 15px;
+        margin: 0 5px 10px 0;
+        color: #767676;
+      }
+    }
+
+    .form-add-review {
+      align-items: center;
+
+      .review-input {
+        width: 100%;
+        margin-top: 25px;
+
+        &.textarea {
+          width: 100%;
+        }
+      }
+
+      .rating-stars {
+        margin-top: 30px;
+        align-self: flex-start;
+      }
+
+      .submit-review-btn {
+        width: 90%;
+        font-size: 14px;
+        letter-spacing: 1px;
+        margin-top: 70px;
+      }
+    }
+  }
+}

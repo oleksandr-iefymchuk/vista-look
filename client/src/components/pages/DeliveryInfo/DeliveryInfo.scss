@@ -1,0 +1,33 @@
+.delivery-info {
+  width: 90%;
+  margin: 15px auto;
+
+  h2,
+  h3,
+  h4 {
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  h3 {
+    margin-top: 30px;
+  }
+
+  h3,
+  ul {
+    text-align: left;
+    list-style-type: none;
+
+    li {
+      position: relative;
+      padding-left: 20px;
+
+      &::before {
+        content: '\2714';
+        color: #f05a00;
+        position: absolute;
+        left: 0;
+      }
+    }
+  }
+}

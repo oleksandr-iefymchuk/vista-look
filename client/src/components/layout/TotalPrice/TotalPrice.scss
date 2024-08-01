@@ -1,0 +1,49 @@
+.total-price-wrapp {
+  background-color: #f2f5f7;
+  align-self: flex-end;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 330px;
+
+  p {
+    width: 100%;
+    font-weight: 500;
+    color: #000;
+    border-bottom: 1px solid #a2a2a2;
+    padding: 12px 25px;
+    justify-content: space-between;
+    display: flex;
+
+    &:nth-child(2) {
+      color: #a2a2a2;
+    }
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+
+    span {
+      font-size: 18px;
+      margin-left: 15px;
+    }
+
+    .total-amount {
+      color: #f05a00;
+    }
+  }
+
+  .order-btn {
+    margin-top: 15px;
+    width: 256px;
+    height: 36px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .total-price-wrapp {
+    width: 100%;
+  }
+}

@@ -1,0 +1,109 @@
+.basket-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  gap: 20px;
+  padding: 15px 40px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+
+  .basket-item-info {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+
+    p {
+      width: 80%;
+    }
+  }
+
+  .basket-cost-block {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    .quantity-control-btn {
+      display: flex;
+      align-items: center;
+
+      .quantity {
+        padding: 0 15px;
+        border-right: 1px solid grey;
+        border-left: 1px solid grey;
+      }
+
+      .active-btn-increase-quantity,
+      .disabled-btn-increase-quantity {
+        background-color: transparent;
+        width: 50px;
+        height: 30px;
+      }
+
+      .active-btn-increase-quantity {
+        svg {
+          fill: rgb(45, 45, 45);
+          stroke: rgb(45, 45, 45);
+          width: 20px;
+        }
+      }
+
+      .disabled-btn-increase-quantity {
+        svg {
+          fill: rgb(232, 232, 232);
+          stroke: rgb(232, 232, 232);
+          width: 20px;
+        }
+        pointer-events: none;
+      }
+    }
+
+    .price {
+      font-weight: 600;
+      min-width: 105px;
+
+      .old-price {
+        text-decoration: line-through;
+        color: #a2a2a2;
+      }
+    }
+
+    .delete-btn {
+      background-color: transparent;
+      width: 40px;
+      height: 40px;
+
+      svg {
+        fill: #000;
+      }
+    }
+  }
+
+  img {
+    max-height: 90px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .basket-item {
+    padding: 15px 20px;
+    gap: 10px;
+    flex-direction: column;
+
+    .basket-cost-block {
+      gap: 10px;
+    }
+
+    .basket-item-info {
+      gap: 10px;
+
+      p {
+        font-size: 13px;
+      }
+    }
+    .delete-btn {
+      margin-right: 5px;
+    }
+  }
+}

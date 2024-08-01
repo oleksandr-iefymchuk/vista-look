@@ -1,0 +1,110 @@
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.registration-block {
+  padding: 30px;
+  width: 400px;
+  background-color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  animation: modalFadeIn 0.3s ease-out;
+
+  .registration-form {
+    display: flex;
+    flex-direction: column;
+
+    h2 {
+      margin-bottom: 15px;
+    }
+
+    .registration-form-header {
+      display: flex;
+      justify-content: space-between;
+
+      .close-form-btn {
+        width: 30px;
+        height: 30px;
+        background-color: transparent;
+
+        svg {
+          width: 15px;
+          height: 15px;
+          fill: #008ec8;
+        }
+      }
+    }
+
+    .list-registration-inputs {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .registration-input {
+        width: 100%;
+        margin: 10px 0;
+      }
+    }
+
+    .registration-btn {
+      align-self: center;
+      margin-top: 20px;
+      width: 100%;
+      height: 40px;
+      background-color: #008ec8;
+
+      &:hover {
+        background-color: #00a7e9;
+        transition: 0.3s;
+      }
+    }
+  }
+
+  .login {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
+
+    .login-btn {
+      width: 120px;
+      height: 30px;
+      background-color: transparent;
+      border: 1px solid #ddeafd;
+      color: #000;
+
+      &:hover {
+        background-color: #f7faff;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .registration-block {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+
+    .login {
+      p {
+        font-size: 12px;
+      }
+
+      .login-btn {
+        width: 110px;
+      }
+    }
+  }
+}

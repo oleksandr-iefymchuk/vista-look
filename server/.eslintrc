@@ -1,0 +1,19 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": ["plugin:@typescript-eslint/recommended"],
+
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+
+  "plugins": ["@typescript-eslint/eslint-plugin"],
+
+  "rules": {
+    "semi": "error",
+    "comma-dangle": ["error", "never"],
+    "@typescript-eslint/explicit-module-boundary-types": "error",
+    "@typescript-eslint/no-inferrable-types": "error",
+    "@typescript-eslint/no-explicit-any": "error"
+  }
+}

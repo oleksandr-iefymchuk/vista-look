@@ -1,0 +1,147 @@
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.login-block {
+  padding: 30px;
+  width: 390px;
+  background-color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  animation: modalFadeIn 0.3s ease-out;
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+
+    h2 {
+      margin-bottom: 15px;
+    }
+
+    .login-form-header {
+      display: flex;
+      justify-content: space-between;
+
+      .close-form-btn {
+        width: 30px;
+        height: 30px;
+        background-color: transparent;
+
+        svg {
+          width: 15px;
+          height: 15px;
+          fill: #008ec8;
+        }
+      }
+    }
+
+    .list-login-inputs {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .login-input {
+        width: 100%;
+        margin: 10px 0;
+      }
+    }
+
+    .login-btn {
+      align-self: center;
+      margin-top: 20px;
+      width: 100%;
+      height: 40px;
+      background-color: #008ec8;
+
+      &:hover {
+        background-color: #00a7e9;
+        transition: 0.3s;
+      }
+    }
+  }
+
+  .registration {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+    margin-top: 15px;
+
+    p {
+      font-size: 14px;
+    }
+
+    .registration-btn {
+      width: 120px;
+      height: 30px;
+      background-color: transparent;
+      border: 1px solid #ddeafd;
+      color: #000;
+
+      &:hover {
+        background-color: #f7faff;
+      }
+    }
+  }
+
+  .or {
+    display: flex;
+    align-items: center;
+    margin: 15px auto;
+    text-align: center;
+
+    p {
+      margin: 0 10px;
+    }
+    .separator {
+      width: 50%;
+      height: 1px;
+      background-color: #cbcbcb;
+      margin: 4px auto 0 auto;
+    }
+  }
+
+  .google-login {
+    margin: 0 auto;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    button {
+      border: none;
+    }
+  }
+}
+
+#container {
+  padding: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .login-block {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+
+    .registration {
+      p {
+        font-size: 12px;
+      }
+
+      .registration-btn {
+        width: 110px;
+        font-size: 12px;
+      }
+    }
+  }
+}

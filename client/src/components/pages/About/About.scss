@@ -1,0 +1,31 @@
+.about-wrap {
+  h1 {
+    font-size: 28px;
+  }
+  margin: 15px auto;
+  width: 90%;
+
+  .about {
+    margin-top: 20px;
+    text-align: justify;
+    .wait {
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    p {
+      text-indent: 40px;
+      margin-bottom: 10px;
+
+      span {
+        font-weight: 500;
+        color: #e1ae74;
+      }
+    }
+
+    ul {
+      margin-left: 40px;
+      margin-bottom: 30px;
+    }
+  }
+}
