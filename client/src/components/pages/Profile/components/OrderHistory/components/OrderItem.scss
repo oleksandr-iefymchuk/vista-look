@@ -10,6 +10,10 @@
   margin-bottom: 5px;
   min-height: 110px;
 
+  .size {
+    min-width: 80px;
+  }
+
   .order-item-info {
     width: 100%;
     display: flex;

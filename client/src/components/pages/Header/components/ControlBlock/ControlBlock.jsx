@@ -45,6 +45,12 @@ const ControlBlock = () => {
     navigationSearchList();
   };
 
+  const handleKeyDown = e => {
+    if (e.key === 'Enter') {
+      handleSearchSubmit();
+    }
+  };
+
   return (
     <div className='control-block-wrap'>
       <div className='control-block'>
@@ -79,6 +85,7 @@ const ControlBlock = () => {
             type='text'
             value={searchValue}
             onChangeInput={handleSearchChange}
+            onKeyDown={handleKeyDown}
           />
           <ButtonWrapper
             disabled={searchValue.trim() === ''}

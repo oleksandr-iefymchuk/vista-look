@@ -13,17 +13,19 @@ import {
 
 const BasketItem = ({
   _id,
+  productCode,
   images,
   title,
   price,
   quantity,
+  size,
   discount,
   isInOrders = false
 }) => {
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector(store => store.user);
-  const products = useSelector(state => state.products);
-  const currentProduct = products.find(product => product._id === _id);
+  // const products = useSelector(state => state.products);
+  // const currentProduct = products.find(product => product._id === _id);
 
   const oldTotalPrice = price * quantity;
   const newTotalPrice = calculateDiscountedPrice(price, discount) * quantity;
@@ -50,8 +52,11 @@ const BasketItem = ({
     <div className='basket-item'>
       <div className='basket-item-info'>
         <img src={images[0]} alt={title} />
-        <p>{title}</p>
+        <p>
+          {title} (Код: {productCode})
+        </p>
       </div>
+      <p className='size'>Розмір: {size}</p>
       <div className='basket-cost-block'>
         <div className='quantity-control-btn'>
           {!isInOrders && (
@@ -71,11 +76,11 @@ const BasketItem = ({
           {!isInOrders && (
             <ButtonWrapper
               buttonClassName={
-                quantity >= currentProduct.quantity
+                quantity >= 10
                   ? 'disabled-btn-increase-quantity'
                   : 'active-btn-increase-quantity'
               }
-              disabled={quantity >= currentProduct.quantity}
+              disabled={quantity >= 10}
               onClick={handleIncreaseQuantity}
               icon='plus'
             />
@@ -112,10 +117,12 @@ const BasketItem = ({
 
 BasketItem.propTypes = {
   _id: PropTypes.string,
+  productCode: PropTypes.string,
   images: PropTypes.array,
   title: PropTypes.string,
   price: PropTypes.number,
   quantity: PropTypes.number,
+  size: PropTypes.number,
   discount: PropTypes.number,
   isInOrders: PropTypes.bool
 };

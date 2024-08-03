@@ -11,13 +11,8 @@ export const breadcrumbLinks = {
   '/favorites': 'Список бажань',
   '/basket': 'Кошик',
   '/order': 'Оформлення замовлення',
+  '/search': 'Пошук',
   '/catalog': 'Каталог',
-  '/catalog/bojleri': 'Водонагрівачі',
-  '/catalog/bojleri-ocean-flat': 'Водонагрівачі OCEAN FLAT',
-  '/catalog/bojleri-ocean-cube': 'Бойлери OCEAN CUBE',
-  '/catalog/bojleri-ocean-flat-ser-digital': 'Бойлери OCEAN FLAT серії Digital',
-  '/catalog/bojler-ocean-flat-basic': 'Бойлер OCEAN FLAT BASIC',
-  '/catalog/bojleri-ocean-pro-kvadratn': 'Бойлери OCEAN PRO квадратні',
-  '/catalog/bojleri-ocean-mini': 'Бойлери OCEAN MINI',
-  '/catalog/bojleri-novatek': 'Бойлери Новатек'
+  '/catalog/kostyumi': 'Костюми',
+  '/catalog/sukni': 'Сукні'
 };

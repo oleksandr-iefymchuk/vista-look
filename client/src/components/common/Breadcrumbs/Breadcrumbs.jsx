@@ -2,7 +2,7 @@ import './Breadcrumbs.scss';
 import { Fragment, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-
+import { useSelector } from 'react-redux';
 import {
   selectCategory,
   selectSubcategory
@@ -13,8 +13,10 @@ import { breadcrumbLinks } from '../../../constants/breadcrumbLinks';
 const Breadcrumbs = () => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const pathnameParts = location.pathname.split('/').filter(Boolean);
   const navigate = useNavigate();
+  const products = useSelector(state => state.products);
+
+  const pathnameParts = location.pathname.split('/').filter(Boolean);
 
   const handleGoHome = () => {
     navigate('/');
@@ -41,11 +43,17 @@ const Breadcrumbs = () => {
     }
   }, [location.pathname]);
 
+  const findProductTitle = slug => {
+    const product = products.find(product => product.slug === slug);
+    return product ? product.title : slug;
+  };
+
   const generateBreadcrumbs = pathParts => {
     let path = '';
     return pathParts.map((part, index) => {
       path += '/' + part;
-      const displayName = breadcrumbLinks[path] || part;
+      const displayName = breadcrumbLinks[path] || findProductTitle(part);
+
       return (
         <Fragment key={path}>
           {index === 0 ? (

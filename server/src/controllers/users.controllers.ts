@@ -280,7 +280,7 @@ export const removeFromFavorites = async (req: Request, res: Response): Promise<
 
 export const addToBasket = async (req: Request, res: Response): Promise<void> => {
   const user = (req as Request & { user?: User }).user;
-  const { productId, quantity } = req.body;
+  const { productId, productCode, quantity, size } = req.body;
   if (!user) {
     res.status(401).json({ message: 'Not authorized' });
     return;
@@ -289,7 +289,7 @@ export const addToBasket = async (req: Request, res: Response): Promise<void> =>
     const updatedUser: User | null = (await userModel
       .findOneAndUpdate(
         { _id: user._id, 'basket.productId': { $ne: productId } },
-        { $push: { basket: { productId, quantity } } },
+        { $push: { basket: { productId, productCode, quantity, size } } },
         { new: true }
       )
       .select('-password -createdAt -updatedAt -__v')) as User;

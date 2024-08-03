@@ -11,6 +11,7 @@ const OrderHistory = () => {
   const tokenString = localStorage.getItem('userInfo');
   const dispatch = useDispatch();
   const { orders } = useSelector(state => state.orders);
+  console.log('orders:', orders);
 
   useEffect(() => {
     if (tokenString) {

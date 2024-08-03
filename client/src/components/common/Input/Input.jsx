@@ -8,7 +8,8 @@ const InputWrapper = ({
   type,
   id,
   value,
-  htmlFor
+  htmlFor,
+  onKeyDown
 }) => {
   return (
     <div className='input-block'>
@@ -24,6 +25,7 @@ const InputWrapper = ({
         placeholder={placeholder}
         value={value}
         onChange={onChangeInput}
+        onKeyDown={onKeyDown}
       ></input>
     </div>
   );
@@ -36,7 +38,8 @@ InputWrapper.propTypes = {
   type: PropTypes.string.isRequired,
   id: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  htmlFor: PropTypes.string
+  htmlFor: PropTypes.string,
+  onKeyDown: PropTypes.func
 };
 
 export default InputWrapper;

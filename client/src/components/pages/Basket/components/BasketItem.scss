@@ -7,6 +7,10 @@
   padding: 15px 40px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
 
+  .size {
+    min-width: 80px;
+  }
+
   .basket-item-info {
     width: 100%;
     display: flex;
@@ -32,6 +36,7 @@
         padding: 0 15px;
         border-right: 1px solid grey;
         border-left: 1px solid grey;
+        min-width: 50px;
       }
 
       .active-btn-increase-quantity,

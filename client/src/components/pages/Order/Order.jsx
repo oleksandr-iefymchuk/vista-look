@@ -104,7 +104,7 @@ const Order = () => {
     };
 
   const orderItems = basket
-    .map(({ productId, quantity }) => {
+    .map(({ productId, productCode, quantity, size }) => {
       const product = products.find(p => p._id === productId);
       if (product) {
         const discountedPrice = calculateDiscountedPrice(
@@ -113,10 +113,12 @@ const Order = () => {
         );
         return {
           _id: product._id,
+          productCode,
           image: product.images[0],
           title: product.title,
           price: discountedPrice,
           quantity,
+          size,
           total: discountedPrice * quantity
         };
       }
@@ -354,13 +356,14 @@ const Order = () => {
       </div>
       <div className='current-order'>
         <h4>Ваше замовлення</h4>
-        {basket.map(({ productId, quantity }) => {
+        {basket.map(({ productId, quantity, size }) => {
           const product = products.find(p => p._id === productId);
           return product ? (
             <BasketItem
               key={productId}
               {...product}
               quantity={quantity}
+              size={size}
               isInOrders={true}
             />
           ) : null;

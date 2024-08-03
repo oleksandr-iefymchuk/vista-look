@@ -271,41 +271,42 @@ export const removeFromFavoritesThunk = productId => async dispatch => {
   }
 };
 
-export const addToBasketThunk = (productId, quantity) => async dispatch => {
-  try {
-    const tokenString = localStorage.getItem('userInfo');
-    if (!tokenString) {
-      dispatch(
-        showMessage('Ви не авторизовані. Авторизуйтесь будь-ласка!', 'error')
-      );
-      return;
-    }
-    const token = JSON.parse(tokenString);
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`
+export const addToBasketThunk =
+  (productId, productCode, quantity, size) => async dispatch => {
+    try {
+      const tokenString = localStorage.getItem('userInfo');
+      if (!tokenString) {
+        dispatch(
+          showMessage('Ви не авторизовані. Авторизуйтесь будь-ласка!', 'error')
+        );
+        return;
       }
-    };
+      const token = JSON.parse(tokenString);
 
-    const { data } = await axios.put(
-      `${BASE_URL}/users/basket/add`,
-      { productId, quantity },
-      config
-    );
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
 
-    dispatch(setUserData(data));
-  } catch (error) {
-    dispatch(
-      showMessage(
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-        'error'
-      )
-    );
-  }
-};
+      const { data } = await axios.put(
+        `${BASE_URL}/users/basket/add`,
+        { productId, productCode, quantity, size },
+        config
+      );
+
+      dispatch(setUserData(data));
+    } catch (error) {
+      dispatch(
+        showMessage(
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+          'error'
+        )
+      );
+    }
+  };
 
 export const removeFromBasketThunk = productId => async dispatch => {
   try {

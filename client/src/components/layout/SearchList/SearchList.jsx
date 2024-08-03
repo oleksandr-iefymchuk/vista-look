@@ -1,5 +1,6 @@
 import './SearchList.scss';
 import { useState, useEffect, Fragment } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import questionMark from '../../../assets/question-mark.webp';
 
@@ -8,14 +9,14 @@ import SortList from '../../layout/SortList/SortList';
 
 const SearchList = () => {
   const searchValue = useSelector(state => state.app.searchValue);
-  console.log('searchValue:', searchValue);
   const allProducts = useSelector(state => state.products);
+  const navigate = useNavigate();
 
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   const filterProducts = (products, searchValue) => {
-    return products.filter(({ _id, title }) => {
-      const filteredById = _id
+    return products.filter(({ productCode, title }) => {
+      const filteredById = productCode
         .toLowerCase()
         .includes(searchValue.toLowerCase());
       const filteredByTitle = title
@@ -59,7 +60,7 @@ const SearchList = () => {
             </p>
             <ButtonWrapper
               buttonClassName='catalog-btn'
-              onClick={() => console.log('catalog-btn')}
+              onClick={() => navigate('/catalog')}
               buttonText='Скористатись каталогом'
             />
           </div>

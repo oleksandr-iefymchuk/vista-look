@@ -6,7 +6,9 @@ const COLLECTION = 'users';
 const productInBasketSchema: mongoose.Schema = new mongoose.Schema(
   {
     productId: { type: mongoose.Schema.Types.ObjectId, ref: 'products', required: true },
-    quantity: { type: Number, required: true, default: 1 }
+    productCode: { type: String, required: true },
+    quantity: { type: Number, required: true, default: 1 },
+    size: { type: Number, required: true }
   },
   { _id: false }
 );

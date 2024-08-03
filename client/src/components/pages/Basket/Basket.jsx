@@ -16,6 +16,7 @@ const Basket = () => {
 
   const products = useSelector(state => state.products);
   const basket = useSelector(store => store.user.basket);
+  console.log('basket:', basket);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -34,10 +35,16 @@ const Basket = () => {
         )}
 
         <div className='basket-list'>
-          {basket.map(({ productId, quantity }) => {
+          {basket.map(({ productId, quantity, size, productCode }) => {
             const product = products.find(p => p._id === productId);
             return product ? (
-              <BasketItem key={productId} {...product} quantity={quantity} />
+              <BasketItem
+                key={productId}
+                {...product}
+                quantity={quantity}
+                size={size}
+                productCode={productCode}
+              />
             ) : null;
           })}
         </div>

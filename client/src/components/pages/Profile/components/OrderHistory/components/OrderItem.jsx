@@ -1,15 +1,18 @@
 import PropTypes from 'prop-types';
 import './OrderItem.scss';
 
-const OrderItem = ({ image, title, price, quantity }) => {
+const OrderItem = ({ productCode, image, title, price, quantity, size }) => {
   const totalPrice = price * quantity;
 
   return (
     <div className='order-item'>
       <div className='order-item-info'>
         <img src={image} alt={title} />
-        <p>{title}</p>
+        <p>
+          {title} (Код: {productCode})
+        </p>
       </div>
+      <p className='size'>Розмір: {size}</p>
       <div className='order-cost-block'>
         <div className='order-cost'>
           <p className='price'>
@@ -33,10 +36,12 @@ const OrderItem = ({ image, title, price, quantity }) => {
 };
 
 OrderItem.propTypes = {
+  productCode: PropTypes.string,
   image: PropTypes.string,
   title: PropTypes.string,
   price: PropTypes.number,
-  quantity: PropTypes.number
+  quantity: PropTypes.number,
+  size: PropTypes.number
 };
 
 export default OrderItem;

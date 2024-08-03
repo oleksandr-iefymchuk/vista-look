@@ -23,7 +23,7 @@ const NoveltySlider = () => {
     speed: 500,
     slidesToShow: isMobileDevice ? 2 : isTabletDevice ? 3 : 4,
     slidesToScroll: 1,
-    // autoplay: true,
+    autoplay: true,
     autoplaySpeed: 4000,
     pauseOnHover: true,
 

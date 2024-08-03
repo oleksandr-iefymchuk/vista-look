@@ -37,10 +37,12 @@ const COLLECTION = 'orders';
 
 const orderItemSchema = new Schema({
   _id: { type: mongoose.Schema.Types.ObjectId, ref: 'products', required: true },
+  productCode: { type: String, required: true },
   image: { type: String, required: true },
   title: { type: String, required: true },
   price: { type: Number, required: true },
   quantity: { type: Number, required: true },
+  size: { type: Number, required: true },
   total: { type: Number, required: true }
 });
 
