@@ -80,6 +80,30 @@
     }
   }
 
+  .product-control-block {
+    position: absolute;
+    top: 23%;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    right: 1%;
+
+    .product-update-btn,
+    .product-del-btn {
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .product-update-btn {
+      margin-bottom: 5px;
+    }
+  }
+
   .card-product-info {
     position: relative;
     text-align: left;
@@ -135,6 +159,13 @@
       }
     }
   }
+}
+
+.dialog-btn {
+  width: 100px;
+  height: 40px;
+  color: #fff;
+  margin-right: 18px;
 }
 
 @media screen and (max-width: 1024px) {

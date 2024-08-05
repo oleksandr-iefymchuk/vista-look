@@ -1,5 +1,6 @@
 import {
   GET_PRODUCTS,
+  DELETE_PRODUCT,
   INCREASE_QUANTITY_PRODUCT,
   DECREASE_QUANTITY_PRODUCT
 } from './actionTypes';
@@ -7,6 +8,11 @@ import {
 const getProducts = product => ({
   type: GET_PRODUCTS,
   payload: product
+});
+
+const delProduct = id => ({
+  type: DELETE_PRODUCT,
+  payload: id
 });
 
 const increaseQuantityProducts = (id, quantity) => ({
@@ -19,4 +25,9 @@ const decreaseQuantityProducts = (id, quantity) => ({
   payload: { id, quantity }
 });
 
-export { getProducts, increaseQuantityProducts, decreaseQuantityProducts };
+export {
+  getProducts,
+  delProduct,
+  increaseQuantityProducts,
+  decreaseQuantityProducts
+};

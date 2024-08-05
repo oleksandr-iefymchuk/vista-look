@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { productModel } from '../models/products.js';
-import { Product } from '../interfaces.js';
+import { Product, User } from '../interfaces.js';
 // import { apiErrors } from '../constants.js';
 // import { HttpError } from '../errors/httpError.js';
 
@@ -8,6 +8,43 @@ export const getAllProducts = async (req: Request, res: Response): Promise<void>
   const products: Product[] = await productModel.find({});
   res.json(products);
 };
+
+export const deleteProduct = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const user = (req as Request & { user?: User }).user;
+    const { productId } = req.params; // Извлекаем productId из параметров запроса
+
+    if (!productId) {
+      res.status(400).json({ message: "ID товару є обо'язковим" });
+      return;
+    }
+
+    if (!user) {
+      res.status(401).json({ message: 'Ви не авторизовані!' });
+      return;
+    }
+
+    const deletedProduct = await productModel.findByIdAndDelete(productId);
+
+    if (deletedProduct) {
+      res.status(200).json({ message: 'Товар успішно видалено.' });
+    } else {
+      res.status(404).json({ message: 'Не вдалося видалити товар.' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Внутрішня помилка сервера!' });
+  }
+};
+
+// export const deleteMovie = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+//   const id: string = req.params.id;
+//   const deletedMovie: Movie | null = await movieModel.findByIdAndDelete(id);
+//   if (deletedMovie) {
+//     res.status(200).json({ message: 'Movie deleted successfully' });
+//   } else {
+//     next(new HttpError(apiErrors.NOT_FOUND, 404));
+//   }
+// };
 
 // export const createMovie = async (req: Request, res: Response): Promise<void> => {
 //   const { title, description, releaseDate, genre } = req.body;
@@ -39,16 +76,6 @@ export const getAllProducts = async (req: Request, res: Response): Promise<void>
 
 //   if (updatedMovie) {
 //     res.json(updatedMovie);
-//   } else {
-//     next(new HttpError(apiErrors.NOT_FOUND, 404));
-//   }
-// };
-
-// export const deleteMovie = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-//   const id: string = req.params.id;
-//   const deletedMovie: Movie | null = await movieModel.findByIdAndDelete(id);
-//   if (deletedMovie) {
-//     res.status(200).json({ message: 'Movie deleted successfully' });
 //   } else {
 //     next(new HttpError(apiErrors.NOT_FOUND, 404));
 //   }

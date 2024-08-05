@@ -19,6 +19,8 @@
 
 @media screen and (max-width: 1024px) {
   .sort-list-wrap {
+    margin-left: 0;
+
     .sort-list-block {
       &.justify-end {
         justify-content: flex-end;

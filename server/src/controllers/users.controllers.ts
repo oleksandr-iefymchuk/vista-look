@@ -180,7 +180,7 @@ export const registerUser = async (req: Request, res: Response, next: NextFuncti
       res.status(400).json({ message: 'Недійсні дані користувача!' });
     }
 
-    await sendingMail(email, `https://${process.env.API_URL}/users/activate/${activationLink}`);
+    await sendingMail(email, `http://${process.env.API_URL}/users/activate/${activationLink}`);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Внутрішня помилка сервера!' });

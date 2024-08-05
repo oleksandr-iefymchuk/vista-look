@@ -13,15 +13,15 @@ const sendingMail = async (to: string, link: string): Promise<void> => {
 
   try {
     await transporter.sendMail({
-      from: { name: 'AquaTerra', address: process.env.SMTP_USER as unknown as string },
+      from: { name: 'PurePure', address: process.env.SMTP_USER as unknown as string },
       to: to,
-      subject: `Активація акаунту в інтернет-магазині AquaTerra`,
+      subject: `Активація акаунту в інтернет-магазині жіночого одягу «PurePure»`,
       text: '',
       html: `
             <table width="800px">
             <tr>
                 <td>
-                    <img src="https://aqua-terra.vercel.app/assets/logo-xsY7A0fZ.png" alt="Логотип" width="100">
+                    <img src="http://localhost:5173/assets/logo.jpg" alt="Логотип" width="100">
                 </td>
                 <td width="180px" style="width:180px; text-align:right"> 
                     <h2>+38 (050) 174 70 15</h2>
@@ -34,7 +34,7 @@ const sendingMail = async (to: string, link: string): Promise<void> => {
 
             <tr>
               <td colspan="2" style="padding-bottom:25px">
-                <h2>Для активації облікового запису в інтернет-магазині AquaTerra перейдіть за посиланням:</h2>
+                <h2>Для активації облікового запису в інтернет-магазині жіночого одягу «PurePure» перейдіть за посиланням:</h2>
                 <a href='${link}'>${link}</a>
               </td>
             </tr>
