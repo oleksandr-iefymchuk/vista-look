@@ -18,7 +18,6 @@ const getReviewsThunk = () => {
 };
 
 const addReviewThunk = review => {
-  console.log('review:', review);
   return async dispatch => {
     try {
       dispatch(setLoading(true));

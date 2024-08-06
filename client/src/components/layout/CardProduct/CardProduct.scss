@@ -161,18 +161,10 @@
   }
 }
 
-.dialog-btn {
-  width: 100px;
-  height: 40px;
-  color: #fff;
-  margin-right: 18px;
-}
-
 @media screen and (max-width: 1024px) {
   .card-product {
-    width: 33.3%;
+    width: 32.5%;
     height: 345px;
-
     border: 1px solid #eaedf7;
 
     a {
@@ -184,8 +176,7 @@
 @media screen and (max-width: 768px) {
   .products {
     .card-product {
-      width: 48%;
-
+      width: 49.2%;
       .card-product-info {
         font-size: 12px;
       }

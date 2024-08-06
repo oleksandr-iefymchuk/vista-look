@@ -1,24 +1,36 @@
 import './Reviews.scss';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useMediaQuery } from 'react-responsive';
 import { Rating } from '@mui/material';
 import { formatDate } from '../../../../../../../helpers';
 
 import ButtonWrapper from '../../../../../../common/Button/Button';
+import ConfirmDialog from '../../../../../../common/ConfirmDialog/ConfirmDialog';
 import ReviewFormModal from '../ReviewFormModal/ReviewFormModal';
 
 const Reviews = ({ _id }) => {
+  const dispatch = useDispatch();
   const isMobileDevice = useMediaQuery({ maxWidth: 768 });
   const [openModalForm, setOpenModalForm] = useState(false);
   const [parentCommentId, setParentCommentId] = useState(null);
   const [replyToUser, setReplyToUser] = useState(null);
   const [openRepliesIds, setOpenRepliesIds] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
 
+  const { isAdmin } = useSelector(store => store.user);
   const reviews = useSelector(store => store.reviews);
   const productReviews = reviews.filter(review => review.productId === _id);
   productReviews.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  const handleOpenDialog = () => setOpenDialog(true);
+  const handleCloseDialog = () => setOpenDialog(false);
+
+  const handleDeleteКReview = async () => {
+    // dispatch(delReviewThunk(_id));
+    handleCloseDialog();
+  };
 
   const handleOpenModalForm = (userName, parentCommentId) => {
     setOpenModalForm(true);
@@ -57,6 +69,13 @@ const Reviews = ({ _id }) => {
               <h4>{userName}</h4>
               <p className='review-date'>{formatDate(date)}</p>
               <Rating className='review-rating' value={rating} readOnly />
+              {isAdmin && (
+                <ButtonWrapper
+                  buttonClassName='review-del-btn'
+                  icon='delete'
+                  onClick={handleOpenDialog}
+                />
+              )}
             </div>
             <p>{comment}</p>
 
@@ -107,6 +126,14 @@ const Reviews = ({ _id }) => {
         closeModalForm={handleCloseModalForm}
         replyToUser={replyToUser}
         parentCommentId={parentCommentId}
+      />
+
+      <ConfirmDialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        onConfirm={handleDeleteКReview}
+        title='Підтвердження видалення відгуку'
+        content='Ви дійсно бажаєте видалити цей відгук?'
       />
     </div>
   );

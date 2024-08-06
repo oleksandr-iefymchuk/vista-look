@@ -3,14 +3,9 @@ import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { calculateDiscountedPrice, isNewProduct } from '../../../helpers';
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle
-} from '@mui/material';
 import './CardProduct.scss';
 import ButtonWrapper from '../../common/Button/Button';
+import ConfirmDialog from '../../common/ConfirmDialog/ConfirmDialog';
 
 import {
   addToBasketThunk,
@@ -150,13 +145,13 @@ const CardProduct = ({
 
             <ButtonWrapper
               buttonClassName={`${
-                currentProduct.quantity <= 0 &&
+                currentProduct?.quantity <= 0 &&
                 (!currentBasketProduct || currentBasketProduct.quantity <= 0)
                   ? 'disabled-buy-btn'
                   : 'active-buy-btn'
               } ${isInBasket ? 'in-basket' : ''}`}
               disabled={
-                currentProduct.quantity <= 0 &&
+                currentProduct?.quantity <= 0 &&
                 (!currentBasketProduct || currentBasketProduct.quantity <= 0)
               }
               icon={isInBasket ? 'full-basket' : 'basket'}
@@ -165,25 +160,13 @@ const CardProduct = ({
           </div>
         </div>
       </div>
-
-      <Dialog open={openDialog} onClose={handleCloseDialog}>
-        <DialogTitle>Підтвердження видалення товару</DialogTitle>
-        <DialogContent>
-          Ви впевнені, що бажаєте видалити цей товар?
-        </DialogContent>
-        <DialogActions>
-          <ButtonWrapper
-            buttonClassName='dialog-btn'
-            onClick={handleCloseDialog}
-            buttonText='Відміна'
-          />
-          <ButtonWrapper
-            buttonClassName='dialog-btn'
-            onClick={handleDeleteProduct}
-            buttonText='Видалити'
-          />
-        </DialogActions>
-      </Dialog>
+      <ConfirmDialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        onConfirm={handleDeleteProduct}
+        title='Підтвердження видалення товару'
+        content='Ви впевнені, що бажаєте видалити цей товар?'
+      />
     </>
   );
 };

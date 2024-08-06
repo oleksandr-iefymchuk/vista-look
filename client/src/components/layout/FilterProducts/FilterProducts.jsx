@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+
 import { useMediaQuery } from 'react-responsive';
 import PropTypes from 'prop-types';
 import './FilterProducts.scss';
@@ -23,24 +25,9 @@ const FilterProducts = ({ products, showFilterButton }) => {
   const [isShowFilterMenu, setShowFilterMenu] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedParams, setSelectedParams] = useState({});
-
-  const applyFilters = params => {
-    let filtered = products;
-
-    Object.entries(params).forEach(([paramName, selectedValues]) => {
-      if (selectedValues.length > 0) {
-        filtered = filtered.filter(product =>
-          selectedValues.some(value =>
-            Array.isArray(product.param[paramName])
-              ? product.param[paramName].includes(value)
-              : product.param[paramName] === value
-          )
-        );
-      }
-    });
-
-    setFilteredProducts(filtered);
-  };
+  const [allParamValues, setAllParamValues] = useState({});
+  const [availableParams, setAvailableParams] = useState({});
+  const activeCategory = useSelector(store => store.app.selectedCategory);
 
   const handleParamChange = (paramName, value) => {
     const updatedValues = selectedParams[paramName] || [];
@@ -52,48 +39,7 @@ const FilterProducts = ({ products, showFilterButton }) => {
         : [...updatedValues, value]
     };
     setSelectedParams(updatedParams);
-    applyFilters(updatedParams);
   };
-
-  const allParamValues = products.reduce((acc, product) => {
-    Object.entries(product.param).forEach(([paramName, paramValue]) => {
-      if (!acc[paramName]) {
-        acc[paramName] = [];
-      }
-      const values = Array.isArray(paramValue) ? paramValue : [paramValue];
-      values.forEach(value => {
-        if (!acc[paramName].includes(value)) {
-          acc[paramName].push(value);
-        }
-      });
-    });
-    return acc;
-  }, {});
-
-  const availableParams = Object.keys(allParamValues).reduce(
-    (acc, paramName) => {
-      acc[paramName] = allParamValues[paramName].filter(paramValue => {
-        const tempSelectedParams = {
-          ...selectedParams,
-          [paramName]: [paramValue]
-        };
-        const filtered = products.filter(product =>
-          Object.entries(tempSelectedParams).every(
-            ([key, values]) =>
-              values.length === 0 ||
-              values.some(value =>
-                Array.isArray(product.param[key])
-                  ? product.param[key].includes(value)
-                  : product.param[key] === value
-              )
-          )
-        );
-        return filtered.length > 0;
-      });
-      return acc;
-    },
-    {}
-  );
 
   const getProductsWordUkr = count => {
     const cases = [2, 0, 1, 1, 1, 2];
@@ -115,10 +61,87 @@ const FilterProducts = ({ products, showFilterButton }) => {
   };
 
   useEffect(() => {
+    const applyFilters = (params, products) => {
+      let filtered = products;
+
+      Object.entries(params).forEach(([paramName, selectedValues]) => {
+        if (selectedValues.length > 0) {
+          filtered = filtered.filter(product =>
+            selectedValues.some(value =>
+              Array.isArray(product.param[paramName])
+                ? product.param[paramName].includes(value)
+                : product.param[paramName] === value
+            )
+          );
+        }
+      });
+
+      setFilteredProducts(filtered);
+    };
+
     if (products) {
-      setFilteredProducts(products);
+      let filtered = products;
+
+      if (activeCategory) {
+        filtered = products.filter(
+          product => product.category === activeCategory
+        );
+      }
+
+      applyFilters(selectedParams, filtered);
     }
-  }, [products]);
+  }, [products, selectedParams, activeCategory]);
+
+  useEffect(() => {
+    const filteredByCategory = activeCategory
+      ? products.filter(product => product.category === activeCategory)
+      : products;
+
+    const paramValues = filteredByCategory.reduce((acc, product) => {
+      Object.entries(product.param).forEach(([paramName, paramValue]) => {
+        if (!acc[paramName]) {
+          acc[paramName] = [];
+        }
+        const values = Array.isArray(paramValue) ? paramValue : [paramValue];
+        values.forEach(value => {
+          if (!acc[paramName].includes(value)) {
+            acc[paramName].push(value);
+          }
+        });
+      });
+      return acc;
+    }, {});
+
+    setAllParamValues(paramValues);
+  }, [products, activeCategory]);
+
+  useEffect(() => {
+    const availableParams = Object.keys(allParamValues).reduce(
+      (acc, paramName) => {
+        acc[paramName] = allParamValues[paramName].filter(paramValue => {
+          const tempSelectedParams = {
+            ...selectedParams,
+            [paramName]: [paramValue]
+          };
+          const filtered = products.filter(product =>
+            Object.entries(tempSelectedParams).every(
+              ([key, values]) =>
+                values.length === 0 ||
+                values.some(value =>
+                  Array.isArray(product.param[key])
+                    ? product.param[key].includes(value)
+                    : product.param[key] === value
+                )
+            )
+          );
+          return filtered.length > 0;
+        });
+        return acc;
+      },
+      {}
+    );
+    setAvailableParams(availableParams);
+  }, [allParamValues, selectedParams, products]);
 
   return (
     <div className='filter-products-wrap'>
@@ -202,7 +225,7 @@ const FilterProducts = ({ products, showFilterButton }) => {
         products={filteredProducts}
         setShowFilterMenu={toggleFilterMenu}
         showFilterButton={showFilterButton}
-      ></SortList>
+      />
     </div>
   );
 };

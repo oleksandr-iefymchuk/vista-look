@@ -1,0 +1,22 @@
+.dialog-btn {
+  width: 100px;
+  height: 40px;
+  color: #fff;
+  margin-right: 18px;
+
+  &.delete {
+    background-color: #26b663;
+
+    &:hover {
+      background-color: #2dd674;
+    }
+  }
+
+  &.cancel {
+    background-color: #b27c85;
+
+    &:hover {
+      background-color: #b3969b;
+    }
+  }
+}
