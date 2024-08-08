@@ -2,13 +2,13 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  gap: 10px;
+  gap: 0.6vw;
 }
 
 @media screen and (max-width: 1024px) {
   .products {
     width: 90%;
-    gap: 8px;
+    gap: 0.8vw;
     margin: 0 auto;
   }
 }
@@ -17,6 +17,6 @@
   .products {
     width: 100%;
     margin: 0 auto;
-    gap: 5px;
+    gap: 1vw;
   }
 }

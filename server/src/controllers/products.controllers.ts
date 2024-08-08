@@ -12,7 +12,7 @@ export const getAllProducts = async (req: Request, res: Response): Promise<void>
 export const deleteProduct = async (req: Request, res: Response): Promise<void> => {
   try {
     const user = (req as Request & { user?: User }).user;
-    const { productId } = req.params; // Извлекаем productId из параметров запроса
+    const { productId } = req.params;
 
     if (!productId) {
       res.status(400).json({ message: "ID товару є обо'язковим" });

@@ -1,5 +1,5 @@
 import './CardInfo.scss';
-import { useState, useEffect, Fragment } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
@@ -8,10 +8,6 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 import { TabControlContext } from '../../../contexts/TabControlContext';
-
-import ButtonWrapper from '../../common/Button/Button';
-import CardInfoTitle from './components/CardInfoTitle/CardInfoTitle';
-import CardInfoDescription from './components/CardInfoDescription/CardInfoDescription';
 import {
   addToBasketThunk,
   addToFavoritesThunk,
@@ -19,6 +15,11 @@ import {
 } from '../../../store/user/thunk';
 import { toggleLogineModal } from '../../../store/appReduser/actionCreators';
 import { showMessage } from '../../../store/user/actionCreators';
+
+import ButtonWrapper from '../../common/Button/Button';
+import CardInfoTitle from './components/CardInfoTitle/CardInfoTitle';
+import CardInfoDescription from './components/CardInfoDescription/CardInfoDescription';
+import SizeSelector from '../../common/SizeSelector/SizeSelector';
 
 const CardInfo = () => {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const CardInfo = () => {
 
   const [cardInfoQuantity, setcardInfoQuantity] = useState(1);
   const [value, setValue] = useState('description');
-  const [selectedSize, setSelectedSize] = useState('');
+  const [selectedSize, setSelectedSize] = useState(null);
 
   const products = useSelector(state => state.products);
   const { favorites, basket, isAuthenticated } = useSelector(
@@ -58,12 +59,6 @@ const CardInfo = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  useEffect(() => {
-    if (isInBasket) {
-      setSelectedSize(isInBasket.size);
-    }
-  }, [isInBasket]);
 
   const handleAddToBasket = () => {
     if (!isAuthenticated) {
@@ -106,10 +101,6 @@ const CardInfo = () => {
     }
   };
 
-  const handleSizeChange = size => {
-    setSelectedSize(size);
-  };
-
   const settings = {
     dots: true,
     infinite: true,
@@ -132,6 +123,14 @@ const CardInfo = () => {
       );
     }
   };
+
+  useEffect(() => {
+    if (isInBasket) {
+      setSelectedSize(isInBasket.size);
+    } else if (sizes && sizes.length > 0) {
+      setSelectedSize(sizes[0]);
+    }
+  }, [sizes, isInBasket]);
 
   return (
     cardInfo && (
@@ -179,25 +178,13 @@ const CardInfo = () => {
                   </span>
                 )}
                 <p className='card-info-price'>{price} грн.</p>
-                <div className='size-selector'>
-                  <p>Виберіть розмір:</p>
-                  <div className='sizes'>
-                    {sizes?.map((size, index) => (
-                      <Fragment key={index}>
-                        <input
-                          type='checkbox'
-                          id={`size-${size}`}
-                          className='size-checkbox'
-                          checked={selectedSize === size}
-                          onChange={() => handleSizeChange(size)}
-                        />
-                        <label htmlFor={`size-${size}`} className='size-label'>
-                          {size}
-                        </label>
-                      </Fragment>
-                    ))}
-                  </div>
-                </div>
+                <SizeSelector
+                  sizes={sizes}
+                  selectedSize={selectedSize}
+                  onSelectSize={setSelectedSize}
+                  productId={_id}
+                  isDisabled={quantity <= 0}
+                />
                 <div className='card-info-quantity'>
                   <ButtonWrapper
                     buttonClassName={

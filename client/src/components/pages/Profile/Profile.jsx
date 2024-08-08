@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
-  const { isAuthenticated } = useSelector(store => store.user);
+  const { isAuthenticated, isAdmin } = useSelector(store => store.user);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -33,7 +33,9 @@ const Profile = () => {
               <Link to='personal-info'>Особиста інформація</Link>
             </li>
             <li>
-              <Link to='personal-orders'>Історія замовлень</Link>
+              <Link to='personal-orders'>
+                {isAdmin ? 'Замовення клієнтів' : 'Історія замовлень'}
+              </Link>
             </li>
           </ul>
         </nav>

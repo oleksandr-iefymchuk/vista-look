@@ -86,58 +86,22 @@
         flex-wrap: wrap;
         align-items: center;
 
-        .size-selector {
-          display: flex;
-          flex-wrap: nowrap;
-          align-items: center;
-
-          p {
-            margin-right: 10px;
-            margin-bottom: 20px;
-          }
-
-          .sizes {
-            display: flex;
-            flex-wrap: nowrap;
-            margin-bottom: 20px;
-
-            gap: 7px;
-
-            .size-checkbox {
-              display: none;
-
-              &:checked + .size-label {
-                background-color: #b27c85;
-                color: #fff;
-                border-color: #b27c85;
-              }
-            }
-
-            .size-label {
-              display: inline-block;
-              padding: 10px 22px;
-              border: 1px solid #ccc;
-              border-radius: 4px;
-              cursor: pointer;
-              transition:
-                background-color 0.3s ease,
-                color 0.3s ease;
-              text-align: center;
-
-              &:hover {
-                background-color: #b27c85;
-                color: #fff;
-              }
-            }
-          }
-        }
-
         .available-product {
           color: green;
         }
 
         .unavailable-product {
           color: #a2a2a2;
+        }
+
+        .size-selector {
+          margin-bottom: 40px;
+          .size-label {
+            font-size: 1.1vw;
+            padding-top: 7%;
+            padding-bottom: 7%;
+            min-width: 65%;
+          }
         }
 
         .card-info-price {
@@ -265,6 +229,11 @@
 
       .card-info-header {
         .quantity-block {
+          .size-selector {
+            .size-label {
+              font-size: 1.6vw;
+            }
+          }
           .card-info-price {
             margin: 5px 0;
           }
@@ -312,6 +281,14 @@
     .card-info {
       .card-info-header {
         .quantity-block {
+          .size-selector {
+            .size-label {
+              font-size: 4vw;
+              padding-top: 7%;
+              padding-bottom: 7%;
+              min-width: 16.5%;
+            }
+          }
           .size-selector {
             flex-wrap: wrap;
             font-size: 18px;

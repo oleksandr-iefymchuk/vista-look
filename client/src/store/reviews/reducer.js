@@ -1,4 +1,9 @@
-import { GET_REVIEWS, ADD_REVIEW, UPDATE_REVIEW } from './actionTypes';
+import {
+  GET_REVIEWS,
+  ADD_REVIEW,
+  UPDATE_REVIEW,
+  DELETE_REVIEW
+} from './actionTypes';
 
 const reviewsInitialState = [];
 
@@ -14,6 +19,9 @@ const reviewsReducer = (state = reviewsInitialState, action) => {
       return state.map(review =>
         review._id === action.payload._id ? action.payload : review
       );
+
+    case DELETE_REVIEW:
+      return state.filter(({ _id }) => _id !== action.payload);
 
     default:
       return state;

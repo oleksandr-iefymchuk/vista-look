@@ -1,4 +1,9 @@
-import { GET_REVIEWS, ADD_REVIEW, UPDATE_REVIEW } from './actionTypes';
+import {
+  GET_REVIEWS,
+  ADD_REVIEW,
+  UPDATE_REVIEW,
+  DELETE_REVIEW
+} from './actionTypes';
 
 const getReviwes = review => ({
   type: GET_REVIEWS,
@@ -15,4 +20,9 @@ const updateReview = review => ({
   payload: review
 });
 
-export { getReviwes, addReview, updateReview };
+const delReview = id => ({
+  type: DELETE_REVIEW,
+  payload: id
+});
+
+export { getReviwes, addReview, updateReview, delReview };

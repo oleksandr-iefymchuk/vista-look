@@ -4,7 +4,7 @@ import { showMessage } from '../user/actionCreators';
 import { setLoading } from '../appReduser/actionCreators';
 import { BASE_URL } from '../../constants/constants';
 
-export const getOrdersThunk = token => {
+export const getUserOrdersThunk = token => {
   return async dispatch => {
     try {
       dispatch(setLoading(true));
@@ -15,6 +15,37 @@ export const getOrdersThunk = token => {
         }
       };
       const { data } = await axios.get(`${BASE_URL}/orders`, config);
+      dispatch(getOrders(data));
+      dispatch(setLoading(false));
+    } catch (error) {
+      dispatch(setLoading(false));
+      dispatch(
+        showMessage(
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+          'error'
+        )
+      );
+    }
+  };
+};
+
+export const getAllOrdersThunk = (token, startDate, endDate) => {
+  return async dispatch => {
+    try {
+      dispatch(setLoading(true));
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        params: {
+          startDate,
+          endDate
+        }
+      };
+      const { data } = await axios.get(`${BASE_URL}/orders/all`, config);
       dispatch(getOrders(data));
       dispatch(setLoading(false));
     } catch (error) {

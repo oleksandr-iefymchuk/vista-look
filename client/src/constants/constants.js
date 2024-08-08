@@ -87,3 +87,25 @@ export const svgOption = {
   DEFAULT_SIZE: 25,
   DEFAULT_COLOR: '#ffffff'
 };
+
+export const orderHeaders = [
+  { id: 'orderNumber', label: 'Замовлення №' },
+  { id: 'user', label: 'Користувач' },
+  { id: 'deliveryAddress', label: 'Адреса доставки' },
+  { id: 'deliveryMethod', label: 'Метод доставки' },
+  { id: 'totalPrice', label: 'Сума' },
+  { id: 'isPaid', label: 'Оплачено' },
+  { id: 'isDelivered', label: 'Доставлено' },
+  { id: 'paymentMethod', label: 'Метод оплати' },
+  { id: 'createdAt', label: 'Створене' }
+];
+
+export const itemHeaders = [
+  { id: 'productCode', label: 'Код продукту' },
+  { id: 'title', label: 'Назва продукту' },
+  { id: 'image', label: 'Зображення' },
+  { id: 'price', label: 'Ціна' },
+  { id: 'quantity', label: 'Кількість' },
+  { id: 'size', label: 'Розмір' },
+  { id: 'total', label: 'Загальна сума' }
+];

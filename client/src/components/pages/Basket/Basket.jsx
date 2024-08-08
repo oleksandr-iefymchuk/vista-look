@@ -16,7 +16,6 @@ const Basket = () => {
 
   const products = useSelector(state => state.products);
   const basket = useSelector(store => store.user.basket);
-  console.log('basket:', basket);
 
   useEffect(() => {
     window.scrollTo(0, 0);

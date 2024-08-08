@@ -44,7 +44,9 @@ const NoveltySlider = () => {
                 <Skeleton
                   variant='rounded'
                   width='100%'
-                  height={isMobileDevice ? 345 : 400}
+                  height={
+                    isMobileDevice ? '84vw' : isTabletDevice ? '46vw' : '33vw'
+                  }
                   animation='wave'
                 />
               </div>

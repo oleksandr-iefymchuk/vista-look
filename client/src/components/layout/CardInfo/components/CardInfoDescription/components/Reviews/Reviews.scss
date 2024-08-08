@@ -10,10 +10,10 @@
     .add-review-btn {
       width: 200px;
       height: 40px;
-      background-color: #008ec8;
+      background-color: #b27c85;
 
       &:hover {
-        background-color: #00a7e9;
+        background-color: #b3969b;
       }
     }
   }
@@ -23,6 +23,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      min-height: 35px;
 
       .review-date {
         font-size: 14px;
@@ -36,8 +37,8 @@
 
       .review-del-btn {
         border-radius: 50%;
-        width: 40px;
-        height: 40px;
+        width: 35px;
+        height: 35px;
         svg {
           width: 20px;
           height: 20px;

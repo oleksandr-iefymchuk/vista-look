@@ -1,11 +1,9 @@
-import { useState } from 'react';
+import './CardProduct.scss';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { calculateDiscountedPrice, isNewProduct } from '../../../helpers';
-import './CardProduct.scss';
-import ButtonWrapper from '../../common/Button/Button';
-import ConfirmDialog from '../../common/ConfirmDialog/ConfirmDialog';
 
 import {
   addToBasketThunk,
@@ -15,6 +13,10 @@ import {
 import { toggleLogineModal } from '../../../store/appReduser/actionCreators';
 import { delProductThunk } from '../../../store/products/thunk';
 
+import ButtonWrapper from '../../common/Button/Button';
+import ConfirmDialog from '../../common/ConfirmDialog/ConfirmDialog';
+import SizeSelector from '../../common/SizeSelector/SizeSelector';
+
 const CardProduct = ({
   _id,
   productCode,
@@ -22,6 +24,7 @@ const CardProduct = ({
   title,
   slug,
   price,
+  sizes,
   quantity,
   discount,
   dateAdded
@@ -30,17 +33,18 @@ const CardProduct = ({
   const navigationBasket = () => navigate('/basket');
 
   const dispatch = useDispatch();
+  const [selectedSize, setSelectedSize] = useState(null);
   const products = useSelector(state => state.products);
   const { favorites, basket, isAuthenticated, isAdmin } = useSelector(
     store => store.user
   );
 
   const currentProduct = products.find(product => product._id === _id);
-  const currentBasketProduct = basket.find(product => product._id === _id);
 
   const isFavorite = favorites.some(item => item === _id);
-  const isInBasket = basket.some(item => item.productId === _id);
-
+  const isInBasket = basket
+    ? basket.find(item => item.productId === _id)
+    : null;
   const [openDialog, setOpenDialog] = useState(false);
 
   const handleOpenDialog = () => setOpenDialog(true);
@@ -57,7 +61,7 @@ const CardProduct = ({
     }
 
     if (isAuthenticated && !isInBasket) {
-      dispatch(addToBasketThunk(_id, 1));
+      dispatch(addToBasketThunk(_id, productCode, 1, selectedSize));
     }
 
     if (isAuthenticated && isInBasket) {
@@ -77,6 +81,14 @@ const CardProduct = ({
     }
   };
 
+  useEffect(() => {
+    if (isInBasket) {
+      setSelectedSize(isInBasket.size);
+    } else if (sizes && sizes.length > 0) {
+      setSelectedSize(sizes[0]);
+    }
+  }, [sizes, isInBasket]);
+
   return (
     <>
       <div className='card-product'>
@@ -94,7 +106,7 @@ const CardProduct = ({
           svgColor='#f05a00'
           onClick={handleAddToFavotites}
         />
-        <Link to={`/${slug}`}>
+        <Link to={`/${slug}`} className='card-product-img-container'>
           <img src={images[0]} alt={title} />
         </Link>
         {isAdmin && (
@@ -123,6 +135,17 @@ const CardProduct = ({
             {quantity !== 0 ? 'В наявності' : 'Немає в наявності'}
           </p>
 
+          <SizeSelector
+            sizes={sizes}
+            selectedSize={selectedSize}
+            onSelectSize={setSelectedSize}
+            productId={_id}
+            isDisabled={
+              currentProduct?.quantity <= 0 &&
+              (!isInBasket || isInBasket.quantity <= 0)
+            }
+          />
+
           <div className='card-product-price'>
             <div className='price'>
               <p
@@ -146,13 +169,13 @@ const CardProduct = ({
             <ButtonWrapper
               buttonClassName={`${
                 currentProduct?.quantity <= 0 &&
-                (!currentBasketProduct || currentBasketProduct.quantity <= 0)
+                (!isInBasket || isInBasket.quantity <= 0)
                   ? 'disabled-buy-btn'
                   : 'active-buy-btn'
               } ${isInBasket ? 'in-basket' : ''}`}
               disabled={
                 currentProduct?.quantity <= 0 &&
-                (!currentBasketProduct || currentBasketProduct.quantity <= 0)
+                (!isInBasket || isInBasket.quantity <= 0)
               }
               icon={isInBasket ? 'full-basket' : 'basket'}
               onClick={() => handleAddToBasket()}
@@ -179,6 +202,7 @@ CardProduct.propTypes = {
   slug: PropTypes.string,
   subcategory: PropTypes.string,
   price: PropTypes.number,
+  sizes: PropTypes.array,
   quantity: PropTypes.number,
   dateAdded: PropTypes.string,
   discount: PropTypes.number

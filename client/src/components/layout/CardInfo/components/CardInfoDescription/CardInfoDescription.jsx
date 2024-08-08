@@ -126,7 +126,7 @@ const CardInfoDescription = ({ _id, description, param }) => {
             )}
           </TabPanel>
           <TabPanel value='reviews' className='reviews'>
-            <Reviews _id={_id} />
+            <Reviews productId={_id} />
           </TabPanel>
         </TabContext>
       </ThemeProvider>

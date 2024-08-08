@@ -8,6 +8,7 @@ import CardProduct from '../CardProduct/CardProduct';
 const ProductList = ({ products }) => {
   const skeletonCount = 2;
   const isMobileDevice = useMediaQuery({ maxWidth: 768 });
+  const isTabletDevice = useMediaQuery({ maxWidth: 1024 });
 
   return (
     <div className='products'>
@@ -17,7 +18,9 @@ const ProductList = ({ products }) => {
               <Skeleton
                 animation='wave'
                 variant='rounded'
-                height={isMobileDevice ? 345 : 400}
+                height={
+                  isMobileDevice ? '84vw' : isTabletDevice ? '46vw' : '33vw'
+                }
               />
             </div>
           ))

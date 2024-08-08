@@ -5,12 +5,13 @@ import PropTypes from 'prop-types';
 import { useMediaQuery } from 'react-responsive';
 import { Rating } from '@mui/material';
 import { formatDate } from '../../../../../../../helpers';
+import { delReviewThunk } from '../../../../../../../store/reviews/thunk';
 
 import ButtonWrapper from '../../../../../../common/Button/Button';
 import ConfirmDialog from '../../../../../../common/ConfirmDialog/ConfirmDialog';
 import ReviewFormModal from '../ReviewFormModal/ReviewFormModal';
 
-const Reviews = ({ _id }) => {
+const Reviews = ({ productId }) => {
   const dispatch = useDispatch();
   const isMobileDevice = useMediaQuery({ maxWidth: 768 });
   const [openModalForm, setOpenModalForm] = useState(false);
@@ -18,17 +19,24 @@ const Reviews = ({ _id }) => {
   const [replyToUser, setReplyToUser] = useState(null);
   const [openRepliesIds, setOpenRepliesIds] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
+  const [currentReviewId, setCurrentReviewId] = useState(null);
 
   const { isAdmin } = useSelector(store => store.user);
   const reviews = useSelector(store => store.reviews);
-  const productReviews = reviews.filter(review => review.productId === _id);
+  const productReviews = reviews.filter(
+    review => review.productId === productId
+  );
   productReviews.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-  const handleOpenDialog = () => setOpenDialog(true);
+  const handleOpenDialog = reviewId => {
+    setCurrentReviewId(reviewId);
+    setOpenDialog(true);
+  };
+
   const handleCloseDialog = () => setOpenDialog(false);
 
   const handleDeleteКReview = async () => {
-    // dispatch(delReviewThunk(_id));
+    dispatch(delReviewThunk(currentReviewId));
     handleCloseDialog();
   };
 
@@ -73,7 +81,7 @@ const Reviews = ({ _id }) => {
                 <ButtonWrapper
                   buttonClassName='review-del-btn'
                   icon='delete'
-                  onClick={handleOpenDialog}
+                  onClick={() => handleOpenDialog(_id)}
                 />
               )}
             </div>
@@ -121,7 +129,7 @@ const Reviews = ({ _id }) => {
         )
       )}
       <ReviewFormModal
-        _id={_id}
+        _id={productId}
         openModalForm={openModalForm}
         closeModalForm={handleCloseModalForm}
         replyToUser={replyToUser}
@@ -140,7 +148,7 @@ const Reviews = ({ _id }) => {
 };
 
 Reviews.propTypes = {
-  _id: PropTypes.string,
+  productId: PropTypes.string,
   reviews: PropTypes.array
 };
 
