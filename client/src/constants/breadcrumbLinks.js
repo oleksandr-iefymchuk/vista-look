@@ -8,6 +8,7 @@ export const breadcrumbLinks = {
   '/profile': 'Особистий кабінет',
   '/profile/personal-info': 'Загальна інформація',
   '/profile/personal-orders': 'Історія замовлень',
+  '/profile/product-form': 'Управління товаром',
   '/favorites': 'Список бажань',
   '/basket': 'Кошик',
   '/order': 'Оформлення замовлення',

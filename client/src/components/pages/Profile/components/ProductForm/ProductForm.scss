@@ -1,0 +1,133 @@
+.product-form-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  width: 60%;
+  margin: 0 auto;
+  gap: 20px;
+
+  .product-form-btn {
+    width: 80px;
+    height: 40px;
+    background-color: #b27c85;
+
+    &:hover {
+      background-color: #b3969b;
+    }
+  }
+
+  .add-product-btn {
+    margin: 0 auto;
+    width: 200px;
+    height: 40px;
+    background-color: #b27c85;
+
+    &:hover {
+      background-color: #b3969b;
+    }
+  }
+
+  .product-param-btn {
+    width: 30px;
+    height: 20px;
+    background-color: #b27c85;
+
+    &:hover {
+      background-color: #b3969b;
+    }
+
+    svg {
+      width: 20px;
+      height: 15px;
+    }
+  }
+
+  .product-array-item {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+
+    .product-input-container {
+      display: flex;
+      width: 50%;
+
+      .product-input-field {
+        width: 100%;
+      }
+    }
+
+    .added-product-parameter {
+      font-size: 14px;
+      width: 50%;
+      height: 100px;
+      border: 1px solid rgba(0, 0, 0, 0.23);
+      overflow-y: scroll;
+      padding: 10px;
+
+      .product-parameter {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        gap: 10px;
+        margin-bottom: 5px;
+      }
+    }
+  }
+
+  .product-input {
+    width: 48.5%;
+  }
+
+  .input-block {
+    .input-body {
+      border: 1px solid #000;
+    }
+  }
+}
+
+@media screen and (max-width: 1366px) {
+  .product-form-wrap {
+    width: 100%;
+    .product-array-item {
+      .added-product-parameter {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .product-form-wrap {
+    .product-array-item {
+      .added-product-parameter {
+        padding: 7px;
+        font-size: 11.2px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .product-form-wrap {
+    width: 100%;
+    justify-content: center;
+
+    .product-input {
+      width: 100%;
+    }
+
+    .product-array-item {
+      flex-wrap: wrap;
+
+      .product-input-container {
+        width: 100%;
+      }
+
+      .added-product-parameter {
+        padding: 10px;
+        font-size: 16px;
+        width: 100%;
+      }
+    }
+  }
+}

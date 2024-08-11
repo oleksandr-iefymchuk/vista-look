@@ -152,3 +152,77 @@ export const deliveryOptions = [
 ];
 
 export const paymentOptions = ['Оплата при отриманні', 'Оплата онлайн*'];
+
+export const productDataInputs = [
+  {
+    id: 'productCode',
+    type: 'text',
+    label: 'Код товару',
+    placeholder: 'Код ...'
+  },
+  {
+    id: 'title',
+    type: 'text',
+    label: 'Назва товару',
+    placeholder: 'Назва ...'
+  },
+  {
+    id: 'slug',
+    type: 'text',
+    label: 'URL-частина/Slug',
+    placeholder: 'Slug ...'
+  },
+  { id: 'price', type: 'number', label: 'Ціна', placeholder: 'Ціна ...' },
+  {
+    id: 'quantity',
+    type: 'number',
+    label: 'Кількість',
+    placeholder: 'Кількість ...'
+  },
+  {
+    id: 'discount',
+    type: 'number',
+    label: 'Знижка',
+    placeholder: 'Знижка ...'
+  },
+  {
+    id: 'category',
+    type: 'text',
+    label: 'Категорія',
+    placeholder: 'Категорія ...'
+  },
+  { id: 'dateAdded', type: 'date', label: 'Дата' },
+  {
+    id: 'description',
+    type: 'textarea',
+    label: 'Опис',
+    placeholder: 'Опис ...'
+  }
+];
+
+export const productArrayTemplates = [
+  {
+    id: 'images',
+    type: 'text',
+    label: 'Зображення',
+    placeholder: 'Посилання на зображення'
+  },
+  {
+    id: 'sizes',
+    type: 'number',
+    label: 'Розміри',
+    placeholder: 'Розмір ...'
+  }
+];
+
+export const productParamInputs = [
+  { id: 'Товар', type: 'text', label: 'Товар', placeholder: 'Товар ...' },
+  { id: 'Тканина', type: 'text', label: 'Тканина', placeholder: 'Тканина ...' },
+  { id: 'Колір', type: 'text', label: 'Колір', placeholder: 'Колір ...' },
+  {
+    id: 'Країна виробництва',
+    type: 'text',
+    label: 'Країна виробництва',
+    placeholder: 'Країна виробництва ...'
+  }
+];

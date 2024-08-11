@@ -10,9 +10,10 @@
   .user-profile {
     display: flex;
     margin: 0 auto 60px auto;
+    align-items: flex-start;
 
     .profile-sidebar {
-      height: 132px;
+      display: flex;
       width: 300px;
       background: #f2f5f7;
       text-align: left;
@@ -22,9 +23,10 @@
 
         li {
           padding: 20px;
+          border-bottom: 1px solid #dbdde7;
 
-          &:first-child {
-            border-bottom: 1px solid #dbdde7;
+          &:last-child {
+            border-bottom: none;
           }
 
           a {
@@ -50,12 +52,14 @@
         width: 100%;
         background: #fff;
         text-align: center;
+        justify-content: center;
 
         ul {
           list-style: none;
           display: flex;
           justify-content: center;
           gap: 10px;
+          flex-wrap: wrap;
 
           li {
             align-items: center;
@@ -64,6 +68,7 @@
             padding: 0;
             background: #f4f5f7;
             border-radius: 3px;
+            min-width: 200px;
 
             &:first-child {
               border-bottom: none;

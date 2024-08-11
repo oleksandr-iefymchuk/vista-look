@@ -1,5 +1,6 @@
 import {
   GET_PRODUCTS,
+  ADD_PRODUCT,
   DELETE_PRODUCT,
   INCREASE_QUANTITY_PRODUCT,
   DECREASE_QUANTITY_PRODUCT
@@ -11,6 +12,9 @@ const productsReducer = (state = productsInitialState, action) => {
   switch (action.type) {
     case GET_PRODUCTS:
       return [...action.payload];
+
+    case ADD_PRODUCT:
+      return [...state, action.payload];
 
     case DELETE_PRODUCT:
       return state.filter(({ _id }) => _id !== action.payload);

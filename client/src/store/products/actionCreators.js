@@ -1,12 +1,18 @@
 import {
   GET_PRODUCTS,
+  ADD_PRODUCT,
   DELETE_PRODUCT,
   INCREASE_QUANTITY_PRODUCT,
   DECREASE_QUANTITY_PRODUCT
 } from './actionTypes';
 
-const getProducts = product => ({
+const getProducts = products => ({
   type: GET_PRODUCTS,
+  payload: products
+});
+
+const addProduct = product => ({
+  type: ADD_PRODUCT,
   payload: product
 });
 
@@ -27,6 +33,7 @@ const decreaseQuantityProducts = (id, quantity) => ({
 
 export {
   getProducts,
+  addProduct,
   delProduct,
   increaseQuantityProducts,
   decreaseQuantityProducts

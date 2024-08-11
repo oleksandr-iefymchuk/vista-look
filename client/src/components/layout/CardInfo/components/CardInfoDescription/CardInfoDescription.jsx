@@ -91,18 +91,24 @@ const CardInfoDescription = ({ _id, description, param }) => {
                 isExpandedDescription ? 'content-expanded' : 'content-collapsed'
               }
             >
-              <Markdown>{markdown}</Markdown>
+              {!markdown.includes('<!doctype html>') ? (
+                <Markdown>{markdown}</Markdown>
+              ) : (
+                <p>Опис відсутній</p>
+              )}
             </div>
-            {markdown.split('\n').length > 10 && (
-              <ButtonWrapper
-                buttonClassName='expand-btn'
-                icon={isExpandedDescription ? 'collapse' : 'expand'}
-                onClick={toggleExpandDescription}
-                buttonText={
-                  isExpandedDescription ? 'Згорнути' : 'Показати повністю'
-                }
-              />
-            )}
+            {markdown &&
+              !markdown.includes('<!doctype html>') &&
+              markdown.split('\n').length > 10 && (
+                <ButtonWrapper
+                  buttonClassName='expand-btn'
+                  icon={isExpandedDescription ? 'collapse' : 'expand'}
+                  onClick={toggleExpandDescription}
+                  buttonText={
+                    isExpandedDescription ? 'Згорнути' : 'Показати повністю'
+                  }
+                />
+              )}
           </TabPanel>
           <TabPanel value='characteristics' className='characteristics'>
             <div

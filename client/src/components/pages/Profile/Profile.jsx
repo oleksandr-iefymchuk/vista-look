@@ -37,6 +37,11 @@ const Profile = () => {
                 {isAdmin ? 'Замовення клієнтів' : 'Історія замовлень'}
               </Link>
             </li>
+            {isAdmin && (
+              <li>
+                <Link to='product-form'>Управління товаром</Link>
+              </li>
+            )}
           </ul>
         </nav>
         <Outlet />

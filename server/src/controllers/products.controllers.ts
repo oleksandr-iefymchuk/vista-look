@@ -9,6 +9,69 @@ export const getAllProducts = async (req: Request, res: Response): Promise<void>
   res.json(products);
 };
 
+export const saveProduct = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const authUser = (req as Request & { user?: User }).user;
+
+    if (authUser && authUser.isAdmin) {
+      const {
+        productCode,
+        images,
+        title,
+        slug,
+        price,
+        quantity,
+        sizes,
+        discount,
+        category,
+        dateAdded,
+        param,
+        description
+      } = req.body;
+
+      if (
+        !productCode ||
+        !images ||
+        !title ||
+        !slug ||
+        !price ||
+        !quantity ||
+        !discount ||
+        !category ||
+        !dateAdded ||
+        !sizes ||
+        !param ||
+        !description
+      ) {
+        res.status(400).json({ message: "Всі поля обов'язкові для створення замовлення!" });
+        return;
+      } else {
+        const newProduct = await productModel.create({
+          productCode,
+          images,
+          title,
+          slug,
+          price,
+          sizes,
+          quantity,
+          discount,
+          category,
+          dateAdded,
+          param,
+          description
+        });
+
+        res.status(201).json({ message: 'Товар успішно створено!', newProduct });
+      }
+    } else {
+      res.status(403).json({ message: 'Недостатньо прав для виконання даної операції!' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Внутрішня помилка сервера!' });
+  }
+};
+
 export const deleteProduct = async (req: Request, res: Response): Promise<void> => {
   try {
     const user = (req as Request & { user?: User }).user;

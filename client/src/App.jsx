@@ -38,6 +38,7 @@ import Authentication from './components/pages/Authentication/Authentication';
 import Profile from './components/pages/Profile/Profile';
 import OrderHistory from './components/pages/Profile/components/OrderHistory/OrderHistory';
 import PersonalInfo from './components/pages/Profile/components/PersonalInfo/PersonalInfo';
+import ProductForm from './components/pages/Profile/components/ProductForm/ProductForm';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -99,6 +100,7 @@ const App = () => {
               <Route path='' element={<Navigate to='personal-info' />} />
               <Route path='personal-info' element={<PersonalInfo />} />
               <Route path='personal-orders' element={<OrderHistory />} />
+              <Route path='product-form' element={<ProductForm />} />
             </Route>
           </Routes>
         </main>
