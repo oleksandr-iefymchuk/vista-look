@@ -5,13 +5,13 @@
   transform: translateX(-50%);
   width: 26px;
   height: 4px;
-  background-color: #b27c85;
+  background-color: #a664c0;
   border-radius: 10px;
   box-shadow:
-    0 0 5px #b27c85,
-    0 0 15px #b27c85,
-    0 0 30px #b27c85,
-    0 0 60px #b27c85;
+    0 0 5px #a664c0,
+    0 0 15px #a664c0,
+    0 0 30px #a664c0,
+    0 0 60px #a664c0;
   transition: 0.5s;
   transition-delay: 0.5s;
 }
@@ -26,7 +26,13 @@
 .control-block-wrap {
   display: flex;
   justify-content: center;
-  background-color: #3e2723;
+  // background-color: #6f3e7e;
+  background: radial-gradient(
+    circle,
+    rgba(209, 77, 101, 1) 0%,
+    rgba(111, 62, 126, 1) 66%,
+    rgba(111, 62, 126, 1) 100%
+  );
   padding: 8px 0;
   position: fixed;
   top: 0;

@@ -8,7 +8,8 @@ import { calculateDiscountedPrice, isNewProduct } from '../../../helpers';
 import {
   addToBasketThunk,
   addToFavoritesThunk,
-  removeFromFavoritesThunk
+  removeFromFavoritesThunk,
+  updateBasketItemSizeThunk
 } from '../../../store/user/thunk';
 import { toggleLogineModal } from '../../../store/appReduser/actionCreators';
 import { delProductThunk } from '../../../store/products/thunk';
@@ -81,6 +82,13 @@ const CardProduct = ({
     }
   };
 
+  const handleSizeChange = size => {
+    setSelectedSize(size);
+    if (isInBasket && size !== isInBasket.size) {
+      dispatch(updateBasketItemSizeThunk(_id, size));
+    }
+  };
+
   useEffect(() => {
     if (isInBasket) {
       setSelectedSize(isInBasket.size);
@@ -88,6 +96,12 @@ const CardProduct = ({
       setSelectedSize(sizes[0]);
     }
   }, [sizes, isInBasket]);
+
+  // useEffect(() => {
+  //   if (isAuthenticated && isInBasket && selectedSize !== isInBasket.size) {
+  //     dispatch(updateBasketItemSizeThunk(_id, selectedSize));
+  //   }
+  // }, [selectedSize, isAuthenticated, isInBasket, dispatch, _id]);
 
   return (
     <>
@@ -138,7 +152,7 @@ const CardProduct = ({
           <SizeSelector
             sizes={sizes}
             selectedSize={selectedSize}
-            onSelectSize={setSelectedSize}
+            onSelectSize={handleSizeChange}
             productId={_id}
             isDisabled={
               currentProduct?.quantity <= 0 &&

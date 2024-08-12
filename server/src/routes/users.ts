@@ -13,7 +13,8 @@ import {
   activate,
   updateUserProfile,
   updateUserPassword,
-  clearBasket
+  clearBasket,
+  updateBasketItemSize
 } from '../controllers/users.controllers.js';
 import { asyncWrapper } from '../asyncWrapper.js';
 import asyncHandler from 'express-async-handler';
@@ -35,4 +36,5 @@ router.put('/basket/remove', protect, asyncWrapper(removeFromBasket));
 router.put('/basket/clear', protect, asyncWrapper(clearBasket));
 router.put('/basket/inc', protect, asyncWrapper(increaseQuantityInBasket));
 router.put('/basket/dec', protect, asyncWrapper(decreaseQuantityInBasket));
+router.put('/basket/size', protect, asyncWrapper(updateBasketItemSize));
 export default router;

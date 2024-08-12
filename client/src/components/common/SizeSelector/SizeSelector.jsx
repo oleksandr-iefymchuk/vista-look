@@ -9,6 +9,10 @@ const SizeSelector = ({
   productId,
   isDisabled
 }) => {
+  const handleSizeChange = size => {
+    onSelectSize(size);
+  };
+
   return (
     <div className='size-selector'>
       <p>Виберіть розмір:</p>
@@ -20,7 +24,7 @@ const SizeSelector = ({
               id={`size-${productId}-${size}`}
               className='size-checkbox'
               checked={selectedSize === size}
-              onChange={() => onSelectSize(size)}
+              onChange={() => handleSizeChange(size)}
               disabled={isDisabled}
             />
             <label

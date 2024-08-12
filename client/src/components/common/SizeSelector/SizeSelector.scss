@@ -19,9 +19,9 @@
       display: none;
 
       &:checked + .size-label {
-        background-color: #b27c85;
+        background-color: #e06f84;
         color: #fff;
-        border-color: #b27c85;
+        border-color: #d14d65;
       }
 
       &:disabled + .size-label {
@@ -51,7 +51,7 @@
       text-align: center;
 
       &:hover {
-        background-color: #b27c85;
+        background-color: #e07b8f;
         color: #fff;
       }
     }

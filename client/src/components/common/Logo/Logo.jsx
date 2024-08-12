@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import logo from '../../../assets/logo.jpg';
+import logo from '../../../assets/logo.png';
 import './Logo.scss';
 
 const Logo = ({ onClick }) => {

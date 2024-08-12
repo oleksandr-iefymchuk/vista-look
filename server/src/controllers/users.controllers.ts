@@ -423,3 +423,42 @@ export const decreaseQuantityInBasket = async (req: Request, res: Response): Pro
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+export const updateBasketItemSize = async (req: Request, res: Response): Promise<void> => {
+  const user = (req as Request & { user?: User }).user;
+  const { productId, size } = req.body;
+
+  if (!productId || !size) {
+    res.status(400).json({ message: "ID товару та розмір є обов'язкові" });
+    return;
+  }
+
+  if (!user) {
+    res.status(401).json({ message: 'Ви не авторизовані!' });
+    return;
+  }
+
+  try {
+    const updatedUser = await userModel
+      .findOneAndUpdate(
+        { _id: user, 'basket.productId': productId },
+        {
+          $set: { 'basket.$[elem].size': size }
+        },
+        {
+          arrayFilters: [{ 'elem.productId': productId }],
+          new: true
+        }
+      )
+      .select('-password -createdAt -updatedAt -__v');
+
+    if (!updatedUser) {
+      res.status(404).json({ message: 'Товар не знайдено у кошику' });
+      return;
+    }
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
