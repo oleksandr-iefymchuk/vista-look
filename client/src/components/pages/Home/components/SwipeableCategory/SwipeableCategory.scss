@@ -1,0 +1,10 @@
+.swipeable-category-wrap {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 1024px) {
+  .swipeable-category-wrap {
+    width: 100%;
+  }
+}

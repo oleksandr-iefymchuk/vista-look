@@ -40,11 +40,14 @@
       justify-content: center;
       align-items: center;
       padding: 15px;
+      position: relative;
+      overflow: hidden;
 
       img {
-        max-width: 100%;
-        max-height: 100%;
         object-fit: contain;
+        width: 85%;
+        height: auto;
+        transition: transform 0.2s ease-out;
       }
     }
 
@@ -69,6 +72,16 @@
         object-fit: contain;
       }
     }
+  }
+
+  .zoom-effect {
+    position: absolute;
+    pointer-events: none;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transform: scale(1);
+    transition: transform 0.3s ease;
+    transform-origin: center;
   }
 
   .card-info {
@@ -197,6 +210,7 @@
           }
 
           .balance-btn {
+            visibility: hidden;
             background-color: transparent;
             color: #000;
             svg {

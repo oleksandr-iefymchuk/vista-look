@@ -4,12 +4,12 @@ import { useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import { BUTTON_LABELS } from '../../../constants/constants';
 import { categories } from '../../../constants/categories';
-
 import Banner from './components/Banner/Banner';
 import ButtonWrapper from '../../common/Button/Button';
 import ProductList from '../../layout/ProductList/ProductList';
 import CatalogBatton from '../../layout/CatalogBatton/CatalogBatton';
 import NoveltySlider from './components/NoveltySlider/NoveltySlider';
+import SwipeableCategory from './components/SwipeableCategory/SwipeableCategory';
 
 const Home = () => {
   const { BUTTON_CATALOG } = BUTTON_LABELS;
@@ -28,6 +28,23 @@ const Home = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const handleSwipe = (direction, category) => {
+    const currentIndex = categoryIndexes[category] || 0;
+    const categoryProducts = products.filter(
+      product => product.category === category
+    );
+
+    if (direction === 'left') {
+      if (currentIndex + 2 < categoryProducts.length) {
+        setCurrentIndex(category, currentIndex + 2);
+      }
+    } else if (direction === 'right') {
+      if (currentIndex > 0) {
+        setCurrentIndex(category, currentIndex - 2);
+      }
+    }
+  };
 
   return (
     <div className='home-wrap'>
@@ -56,28 +73,34 @@ const Home = () => {
           );
 
           return (
-            <div className='product-category' key={categoryName}>
-              <div className='category-title'>
-                <h2>{categoryName}</h2>
-                <ButtonWrapper
-                  buttonClassName='category-buttons'
-                  disabled={currentIndex === 0}
-                  onClick={() =>
-                    setCurrentIndex(categoryName, currentIndex - 2)
-                  }
-                  icon='arrow-prev'
-                />
-                <ButtonWrapper
-                  buttonClassName='category-buttons'
-                  disabled={currentIndex + 2 >= categoryProducts.length}
-                  onClick={() =>
-                    setCurrentIndex(categoryName, currentIndex + 2)
-                  }
-                  icon='arrow-next'
-                />
+            <SwipeableCategory
+              key={categoryName}
+              onSwipeLeft={() => handleSwipe('left', categoryName)}
+              onSwipeRight={() => handleSwipe('right', categoryName)}
+            >
+              <div className='product-category'>
+                <div className='category-title'>
+                  <h2>{categoryName}</h2>
+                  <ButtonWrapper
+                    buttonClassName='category-buttons'
+                    disabled={currentIndex === 0}
+                    onClick={() =>
+                      setCurrentIndex(categoryName, currentIndex - 2)
+                    }
+                    icon='arrow-prev'
+                  />
+                  <ButtonWrapper
+                    buttonClassName='category-buttons'
+                    disabled={currentIndex + 2 >= categoryProducts.length}
+                    onClick={() =>
+                      setCurrentIndex(categoryName, currentIndex + 2)
+                    }
+                    icon='arrow-next'
+                  />
+                </div>
+                <ProductList products={displayedProducts} />
               </div>
-              <ProductList products={displayedProducts} />
-            </div>
+            </SwipeableCategory>
           );
         })}
       </div>

@@ -31,6 +31,10 @@ const CardInfo = () => {
   const [cardInfoQuantity, setcardInfoQuantity] = useState(1);
   const [value, setValue] = useState('description');
   const [selectedSize, setSelectedSize] = useState(null);
+  const [zoomStyle, setZoomStyle] = useState({
+    transform: 'scale(1)',
+    transformOrigin: 'center'
+  });
 
   const products = useSelector(state => state.products);
   const { favorites, basket, isAuthenticated } = useSelector(
@@ -101,6 +105,24 @@ const CardInfo = () => {
     }
   };
 
+  const handleMouseMove = e => {
+    const { top, left, width, height } = e.target.getBoundingClientRect();
+    let x = ((e.pageX - left) / width) * 100;
+    let y = ((e.pageY - top) / height) * 100;
+
+    x = Math.max(10, Math.min(90, x));
+    y = Math.max(10, Math.min(90, y));
+
+    setZoomStyle({
+      transform: 'scale(2.5)',
+      transformOrigin: `${x}% ${y}%`
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setZoomStyle({ transform: 'scale(1)', transformOrigin: 'center' });
+  };
+
   const settings = {
     dots: true,
     infinite: true,
@@ -148,7 +170,13 @@ const CardInfo = () => {
             <Slider {...settings}>
               {images.map((image, index) => (
                 <div className='card' key={index}>
-                  <img src={image} alt={`${title} фото ${index + 1}`} />
+                  <img
+                    src={image}
+                    alt={`${title} фото ${index + 1}`}
+                    onMouseMove={handleMouseMove}
+                    onMouseLeave={handleMouseLeave}
+                    style={zoomStyle}
+                  />
                 </div>
               ))}
             </Slider>

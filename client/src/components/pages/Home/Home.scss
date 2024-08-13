@@ -21,7 +21,7 @@
       justify-content: center;
       align-items: flex-start;
       margin-top: 60px;
-      width: 48%;
+      // width: 48%;
 
       .category-title {
         display: flex;
@@ -45,7 +45,6 @@
       .products {
         display: flex;
         justify-content: space-between;
-        // flex: 1;
         margin: 0%;
 
         .card-product {
@@ -62,7 +61,6 @@
 
   .skeleton-wrapper {
     width: 17.2vw;
-    // height: 32vw;
   }
 }
 
