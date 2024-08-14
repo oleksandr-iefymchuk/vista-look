@@ -172,16 +172,16 @@ export const productDataInputs = [
     label: 'URL-частина/Slug',
     placeholder: 'Slug ...'
   },
-  { id: 'price', type: 'number', label: 'Ціна', placeholder: 'Ціна ...' },
+  { id: 'price', type: 'text', label: 'Ціна', placeholder: 'Ціна ...' },
   {
     id: 'quantity',
-    type: 'number',
+    type: 'text',
     label: 'Кількість',
     placeholder: 'Кількість ...'
   },
   {
     id: 'discount',
-    type: 'number',
+    type: 'text',
     label: 'Знижка',
     placeholder: 'Знижка ...'
   },

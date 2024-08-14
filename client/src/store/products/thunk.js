@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { getProducts, delProduct, addProduct } from './actionCreators';
+import {
+  getProducts,
+  delProduct,
+  addProduct,
+  updateProduct
+} from './actionCreators';
 import { setLoading } from '../appReduser/actionCreators';
 import { showMessage } from '../user/actionCreators';
 import { BASE_URL } from '../../constants/constants';
@@ -60,6 +65,48 @@ const addProductThunk = productData => {
   };
 };
 
+const updateProductThunk = (_id, productData) => {
+  return async dispatch => {
+    try {
+      dispatch(setLoading(true));
+      const tokenString = localStorage.getItem('userInfo');
+      if (!tokenString) {
+        dispatch(
+          showMessage('Ви не авторизовані. Авторизуйтесь будь-ласка!', 'error')
+        );
+        return;
+      }
+      const token = JSON.parse(tokenString);
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+
+      const data = await axios.put(
+        `${BASE_URL}/products/${_id}`,
+        productData,
+        config
+      );
+
+      dispatch(updateProduct(data));
+      dispatch(showMessage('Товар успішно оновлено!', 'success'));
+      dispatch(setLoading(false));
+    } catch (error) {
+      dispatch(setLoading(false));
+      dispatch(
+        showMessage(
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+          'error'
+        )
+      );
+    }
+  };
+};
+
 const delProductThunk = productId => {
   return async dispatch => {
     try {
@@ -93,4 +140,9 @@ const delProductThunk = productId => {
   };
 };
 
-export { getProductsThunk, addProductThunk, delProductThunk };
+export {
+  getProductsThunk,
+  addProductThunk,
+  updateProductThunk,
+  delProductThunk
+};

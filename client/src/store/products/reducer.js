@@ -1,6 +1,7 @@
 import {
   GET_PRODUCTS,
   ADD_PRODUCT,
+  UPDATE_PRODUCT,
   DELETE_PRODUCT,
   INCREASE_QUANTITY_PRODUCT,
   DECREASE_QUANTITY_PRODUCT
@@ -15,6 +16,13 @@ const productsReducer = (state = productsInitialState, action) => {
 
     case ADD_PRODUCT:
       return [...state, action.payload];
+
+    case UPDATE_PRODUCT:
+      return state.map(product =>
+        product.productCode === action.payload.productCode
+          ? action.payload
+          : product
+      );
 
     case DELETE_PRODUCT:
       return state.filter(({ _id }) => _id !== action.payload);

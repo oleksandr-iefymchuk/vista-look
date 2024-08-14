@@ -1,3 +1,5 @@
+@import '../../../variables.scss';
+
 .size-selector {
   display: flex;
   flex-wrap: wrap;
@@ -19,9 +21,9 @@
       display: none;
 
       &:checked + .size-label {
-        background-color: #e06f84;
+        background-color: $secondary-btn-color;
         color: #fff;
-        border-color: #d14d65;
+        border-color: $secondary-color;
       }
 
       &:disabled + .size-label {

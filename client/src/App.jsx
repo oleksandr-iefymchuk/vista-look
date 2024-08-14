@@ -101,6 +101,10 @@ const App = () => {
               <Route path='personal-info' element={<PersonalInfo />} />
               <Route path='personal-orders' element={<OrderHistory />} />
               <Route path='product-form' element={<ProductForm />} />
+              <Route
+                path='product-form/:productSlug'
+                element={<ProductForm />}
+              />
             </Route>
           </Routes>
         </main>

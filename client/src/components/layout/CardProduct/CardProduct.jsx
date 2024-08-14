@@ -97,12 +97,6 @@ const CardProduct = ({
     }
   }, [sizes, isInBasket]);
 
-  // useEffect(() => {
-  //   if (isAuthenticated && isInBasket && selectedSize !== isInBasket.size) {
-  //     dispatch(updateBasketItemSizeThunk(_id, selectedSize));
-  //   }
-  // }, [selectedSize, isAuthenticated, isInBasket, dispatch, _id]);
-
   return (
     <>
       <div className='card-product'>
@@ -125,7 +119,7 @@ const CardProduct = ({
         </Link>
         {isAdmin && (
           <div className='product-control-block'>
-            <Link to={`/product/update/${slug}`}>
+            <Link to={`/profile/product-form/${slug}`}>
               <ButtonWrapper buttonClassName='product-update-btn' icon='pen' />
             </Link>
             <ButtonWrapper

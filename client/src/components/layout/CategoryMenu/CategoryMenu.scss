@@ -1,3 +1,5 @@
+@import '../../../variables.scss';
+
 @keyframes slide-from {
   from {
     height: 0;
@@ -12,7 +14,7 @@
   width: 100%;
   color: black;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
-  background-color: #a664c0;
+  background-color: $primary-btn-color;
   color: #fff;
   border-radius: 5px;
   position: absolute;
@@ -37,23 +39,16 @@
       width: 100%;
       display: flex;
       flex-wrap: nowrap;
-      justify-content: center;
+      justify-content: space-evenly;
       align-items: center;
       padding: 10px 11px;
-
-      svg {
-        margin-left: 15px;
-        width: 15px;
-        height: 15px;
-        fill: #fff;
-      }
 
       &:last-child {
         border-bottom: none;
       }
 
       &:hover {
-        background-color: #c69bd8;
+        background-color: $primary-btn-hover-color;
       }
     }
   }
@@ -79,7 +74,7 @@
       svg {
         width: 20px;
         height: 20px;
-        fill: #008ec8;
+        fill: #fff;
       }
     }
 
@@ -93,28 +88,38 @@
     }
 
     .category-header {
+      color: #fff;
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 10px;
+      background-color: $primary-color;
+      margin-bottom: 12px;
     }
 
     .category-list {
       flex: 1;
       width: 100%;
-      padding: 0 10px;
       font-size: 18px;
+
+      .category-item {
+        justify-content: flex-start;
+        padding: 10px 22px 10px 35px;
+
+        svg {
+          margin-left: auto;
+          width: 15px;
+          height: 15px;
+          fill: $primary-color;
+        }
+      }
 
       .category {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         border-top: 1px solid #dbdde7;
-
-        .category-item {
-          flex: 1;
-          justify-content: flex-start;
-        }
       }
     }
   }

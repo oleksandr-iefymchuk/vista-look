@@ -1,3 +1,5 @@
+@import '../../../../../variables.scss';
+
 .product-form-wrap {
   display: flex;
   flex-wrap: wrap;
@@ -9,10 +11,10 @@
   .product-form-btn {
     width: 80px;
     height: 40px;
-    background-color: #e06f84;
+    background-color: $secondary-btn-color;
 
     &:hover {
-      background-color: #e08b9c;
+      background-color: $secondary-btn-hover-color;
     }
   }
 
@@ -20,10 +22,10 @@
     margin: 0 auto;
     width: 200px;
     height: 40px;
-    background-color: #e06f84;
+    background-color: $secondary-btn-color;
 
     &:hover {
-      background-color: #e08b9c;
+      background-color: $secondary-btn-hover-color;
     }
   }
 

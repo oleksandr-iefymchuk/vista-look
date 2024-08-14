@@ -1,3 +1,5 @@
+@import '../../../variables.scss';
+
 .card-info-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -163,7 +165,7 @@
             width: 140px;
             height: 50px;
             border-radius: 5px;
-            background-color: #e06f84;
+            background-color: $secondary-btn-color;
             margin-left: 20px;
 
             svg {
@@ -175,7 +177,7 @@
 
           .active-buy-btn {
             &:hover {
-              background-color: #e08b9c;
+              background-color: $secondary-btn-hover-color;
             }
           }
 

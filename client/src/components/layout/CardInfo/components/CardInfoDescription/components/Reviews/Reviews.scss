@@ -1,3 +1,5 @@
+@import '../../../../../../../variables.scss';
+
 .reviews-wrapper {
   .block-add-review {
     display: flex;
@@ -10,10 +12,10 @@
     .add-review-btn {
       width: 200px;
       height: 40px;
-      background-color: #e06f84;
+      background-color: $secondary-btn-color;
 
       &:hover {
-        background-color: #e08b9c;
+        background-color: $secondary-btn-hover-color;
       }
     }
   }

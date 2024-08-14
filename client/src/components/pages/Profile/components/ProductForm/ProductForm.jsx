@@ -1,7 +1,8 @@
 import './ProductForm.scss';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { TextField } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import {
   productArrayTemplates,
@@ -9,20 +10,26 @@ import {
   productParamInputs
 } from '../../../../../constants/inputTemplates';
 import ButtonWrapper from '../../../../common/Button/Button';
-import { addProductThunk } from '../../../../../store/products/thunk';
+import {
+  addProductThunk,
+  getProductsThunk,
+  updateProductThunk
+} from '../../../../../store/products/thunk';
 
 const ProductForm = () => {
   const dispatch = useDispatch();
+  const { productSlug } = useParams();
+  const allProducts = useSelector(state => state.products);
 
   const [productData, setProductData] = useState({
     productCode: '',
     images: [],
     title: '',
     slug: '',
-    price: '',
+    price: 0,
     sizes: [],
-    quantity: '',
-    discount: '',
+    quantity: 0,
+    discount: 0,
     category: '',
     dateAdded: '',
     description: ''
@@ -41,9 +48,17 @@ const ProductForm = () => {
   });
 
   const handleProductChange = key => e => {
+    let value = e.target.value;
+
+    if (['price', 'quantity', 'discount'].includes(key)) {
+      value = value.replace(/[^0-9.]/g, '');
+      value = parseFloat(value);
+      value = isNaN(value) || value === '' ? 0 : value;
+    }
+
     setProductData({
       ...productData,
-      [key]: e.target.value
+      [key]: value !== undefined ? value : ''
     });
   };
 
@@ -74,42 +89,104 @@ const ProductForm = () => {
     }));
   };
 
-  const handleSubmit = e => {
+  const productToUpdate = allProducts.find(({ slug }) => slug === productSlug);
+
+  const handleSubmit = async e => {
     e.preventDefault();
     const newProduct = {
       ...productData,
+      price: parseFloat(productData.price),
+      quantity: parseInt(productData.quantity),
+      discount: parseFloat(productData.discount),
       param: productParam
     };
     console.log('newProduct:', newProduct);
 
-    dispatch(addProductThunk(newProduct));
+    try {
+      if (productToUpdate) {
+        const updatedProduct = { ...newProduct };
+        console.log('updatedProduct:', updatedProduct);
 
-    setProductData({
-      productCode: '',
-      images: [],
-      title: '',
-      slug: '',
-      price: 0,
-      sizes: [],
-      quantity: 0,
-      discount: 0,
-      category: '',
-      dateAdded: '',
-      description: ''
-    });
+        await dispatch(updateProductThunk(productToUpdate._id, updatedProduct));
+      } else {
+        await dispatch(addProductThunk(newProduct));
+      }
 
-    setProductParam({
-      Товар: '',
-      Тканина: '',
-      Колір: '',
-      'Країна виробництва': ''
-    });
+      await dispatch(getProductsThunk());
 
-    setNewValue({
-      images: '',
-      sizes: ''
-    });
+      if (!productToUpdate) {
+        setProductData({
+          productCode: '',
+          images: [],
+          title: '',
+          slug: '',
+          price: 0,
+          sizes: [],
+          quantity: 0,
+          discount: 0,
+          category: '',
+          dateAdded: '',
+          description: ''
+        });
+
+        setProductParam({
+          Товар: '',
+          Тканина: '',
+          Колір: '',
+          'Країна виробництва': ''
+        });
+
+        setNewValue({
+          images: '',
+          sizes: ''
+        });
+      }
+    } catch (error) {
+      console.error('Error in handleSubmit:', error);
+    }
   };
+
+  useEffect(() => {
+    if (productToUpdate) {
+      const {
+        productCode,
+        images,
+        title,
+        slug,
+        price,
+        sizes,
+        quantity,
+        discount,
+        category,
+        dateAdded,
+        param,
+        description
+      } = productToUpdate;
+
+      setProductData({
+        productCode,
+        images,
+        title,
+        slug,
+        price,
+        sizes,
+        quantity,
+        discount,
+        category,
+        dateAdded: dateAdded
+          ? new Date(dateAdded).toISOString().split('T')[0]
+          : '',
+        description
+      });
+
+      setProductParam({
+        Товар: param?.['Товар'] || '',
+        Тканина: param?.['Тканина'] || '',
+        Колір: param?.['Колір'] || '',
+        'Країна виробництва': param?.['Країна виробництва'] || ''
+      });
+    }
+  }, [allProducts, productToUpdate]);
 
   return (
     <form className='product-form-wrap' onSubmit={handleSubmit}>
@@ -117,13 +194,14 @@ const ProductForm = () => {
         <TextField
           key={id}
           {...otherInputProps}
-          value={productData[id]}
+          value={productData[id] !== undefined ? productData[id] : ''}
           onChange={handleProductChange(id)}
           size='small'
           className='product-input'
           InputLabelProps={{
             shrink: otherInputProps.type === 'date' || undefined
           }}
+          // disabled={id === 'productCode' && !!productToUpdate}
           required
         />
       ))}
@@ -147,7 +225,7 @@ const ProductForm = () => {
             />
           </div>
           <div className='added-product-parameter'>
-            {productData[id].map((item, index) => (
+            {(productData[id] || []).map((item, index) => (
               <div className='product-parameter' key={index}>
                 <p>{item}</p>
                 <ButtonWrapper
@@ -176,7 +254,7 @@ const ProductForm = () => {
 
       <ButtonWrapper
         type='submit'
-        buttonText='Додати товар'
+        buttonText={productToUpdate ? 'Оновити товар' : 'Додати товар'}
         buttonClassName='add-product-btn'
       />
     </form>

@@ -1,3 +1,5 @@
+@import '../../../variables.scss';
+
 .home-wrap {
   display: flex;
   justify-content: center;
@@ -74,7 +76,7 @@
         width: 100%;
         position: relative;
         justify-content: center;
-        background-color: #e06f84;
+        background-color: $secondary-btn-color;
         font-size: 16px;
 
         svg {

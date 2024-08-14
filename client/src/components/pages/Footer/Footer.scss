@@ -1,9 +1,11 @@
+@import '../../../variables.scss';
+
 .footer-wrap {
   background: linear-gradient(
     142deg,
-    rgba(111, 62, 126, 1) 0%,
-    rgba(209, 77, 101, 1) 91%,
-    rgba(209, 77, 101, 1) 100%
+    $primary-color 0%,
+    $secondary-color 91%,
+    $secondary-color 100%
   );
   color: #fff;
   margin-top: 20px;

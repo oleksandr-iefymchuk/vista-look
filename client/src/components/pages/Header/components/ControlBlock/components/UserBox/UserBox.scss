@@ -1,3 +1,5 @@
+@import '../../../../../../../variables.scss';
+
 @keyframes slideProfileModal {
   from {
     height: 0;
@@ -8,7 +10,7 @@
 }
 
 .user-box {
-  background-color: #a664c0;
+  background-color: $primary-btn-color;
   display: flex;
   border-radius: 5px;
   position: relative;

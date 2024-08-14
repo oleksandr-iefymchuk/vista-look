@@ -12,6 +12,7 @@ import {
 } from '../../../store/appReduser/actionCreators';
 
 import ButtonWrapper from '../../common/Button/Button';
+import SvgIcon from '../../common/SvgIcon';
 
 const CategoryMenu = ({ categories }) => {
   const navigate = useNavigate();
@@ -69,6 +70,7 @@ const CategoryMenu = ({ categories }) => {
             onClick={() => handleCategoryClick(categoryData)}
           >
             {categoryData.name}
+            {isMobileDevice && <SvgIcon name='arrow-next'></SvgIcon>}
           </div>
         ))}
       </div>

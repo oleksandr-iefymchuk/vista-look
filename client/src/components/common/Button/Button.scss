@@ -1,6 +1,8 @@
+@import '../../../variables.scss';
+
 button {
   cursor: pointer;
-  background-color: #a664c0;
+  background-color: $primary-btn-color;
   border: none;
   width: 60px;
   height: 60px;
@@ -11,7 +13,7 @@ button {
   border-radius: 3px;
 
   &:hover {
-    background-color: #c69bd8;
+    background-color: $primary-btn-hover-color;
     transition: 0.3s;
   }
 
@@ -26,7 +28,7 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #d14d65;
+    color: $secondary-color;
   }
 
   .svg-wrapper {
@@ -42,8 +44,6 @@ button {
     height: 40px;
 
     .value {
-      // background-color: #ffffff;
-      // color: #000000;
       font-size: 10px;
       width: 16px;
       height: 16px;

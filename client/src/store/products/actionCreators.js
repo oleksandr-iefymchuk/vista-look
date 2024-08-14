@@ -1,6 +1,7 @@
 import {
   GET_PRODUCTS,
   ADD_PRODUCT,
+  UPDATE_PRODUCT,
   DELETE_PRODUCT,
   INCREASE_QUANTITY_PRODUCT,
   DECREASE_QUANTITY_PRODUCT
@@ -13,6 +14,11 @@ const getProducts = products => ({
 
 const addProduct = product => ({
   type: ADD_PRODUCT,
+  payload: product
+});
+
+const updateProduct = product => ({
+  type: UPDATE_PRODUCT,
   payload: product
 });
 
@@ -35,6 +41,7 @@ export {
   getProducts,
   addProduct,
   delProduct,
+  updateProduct,
   increaseQuantityProducts,
   decreaseQuantityProducts
 };

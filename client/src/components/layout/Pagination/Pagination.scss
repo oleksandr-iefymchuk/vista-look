@@ -1,3 +1,5 @@
+@import '../../../variables.scss';
+
 .pagination {
   display: flex;
   margin-top: 20px;
@@ -20,7 +22,7 @@
     }
 
     .pagination-buttons.active {
-      background-color: #e06f84;
+      background-color: $secondary-btn-color;
     }
   }
 }

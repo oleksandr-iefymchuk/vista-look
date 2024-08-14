@@ -51,10 +51,10 @@ export const saveProduct = async (req: Request, res: Response): Promise<void> =>
           images,
           title,
           slug,
-          price,
+          price: parseFloat(price),
           sizes,
-          quantity,
-          discount,
+          quantity: parseFloat(quantity),
+          discount: parseFloat(discount),
           category,
           dateAdded,
           param,
@@ -63,6 +63,82 @@ export const saveProduct = async (req: Request, res: Response): Promise<void> =>
 
         res.status(201).json({ message: 'Товар успішно створено!', newProduct });
       }
+    } else {
+      res.status(403).json({ message: 'Недостатньо прав для виконання даної операції!' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Внутрішня помилка сервера!' });
+  }
+};
+
+export const updateProduct = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const authUser = (req as Request & { user?: User }).user;
+    const { productId } = req.params;
+
+    if (authUser && authUser.isAdmin) {
+      const {
+        productCode,
+        images,
+        title,
+        slug,
+        price,
+        quantity,
+        sizes,
+        discount,
+        category,
+        dateAdded,
+        param,
+        description
+      } = req.body;
+
+      if (
+        !productCode ||
+        !images ||
+        !title ||
+        !slug ||
+        price === undefined ||
+        price === null ||
+        quantity === undefined ||
+        quantity === null ||
+        discount === undefined ||
+        discount === null ||
+        !category ||
+        !dateAdded ||
+        !sizes ||
+        !param ||
+        !description
+      ) {
+        res.status(400).json({ message: "Всі поля обов'язкові для оновлення замовлення!" });
+        return;
+      }
+
+      const updatedProduct = await productModel.findOneAndUpdate(
+        { _id: productId },
+        {
+          productCode,
+          images,
+          title,
+          slug,
+          price,
+          quantity,
+          sizes,
+          discount,
+          category,
+          dateAdded,
+          param,
+          description
+        },
+        { new: true }
+      );
+
+      if (!updatedProduct) {
+        res.status(404).json({ message: 'Товар не знайдено!' });
+        return;
+      }
+
+      res.status(200).json({ message: 'Товар успішно оновлено!', updatedProduct });
     } else {
       res.status(403).json({ message: 'Недостатньо прав для виконання даної операції!' });
     }

@@ -15,7 +15,18 @@ body {
   &.category-menu-open,
   &.loading {
     overflow: hidden;
-    margin-right: 17px;
+    // margin-right: 17px;
+  }
+
+  &.loading {
+    .footer-wrap,
+    .user-profile {
+      margin-right: 16px;
+    }
+  }
+
+  &.mobile-menu-open {
+    margin-right: 16px;
   }
 
   #root {
