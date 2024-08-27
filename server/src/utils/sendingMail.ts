@@ -21,7 +21,7 @@ const sendingMail = async (to: string, link: string): Promise<void> => {
             <table width="800px">
             <tr>
                 <td>
-                    <img src="https://pur-pur.vercel.app/assets/logo.jpg" alt="Логотип" width="100">
+                    <img src="https://pur-pur.vercel.app/assets/logo-1YNSEaJn.png" alt="Логотип" width="100">
                 </td>
                 <td width="180px" style="width:180px; text-align:right"> 
                     <h2>+38 (050) 174 70 15</h2>

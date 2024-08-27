@@ -5,7 +5,7 @@ import {
   DELETE_REVIEW
 } from './actionTypes';
 
-const getReviwes = review => ({
+const getReviews = review => ({
   type: GET_REVIEWS,
   payload: review
 });
@@ -25,4 +25,4 @@ const delReview = id => ({
   payload: id
 });
 
-export { getReviwes, addReview, updateReview, delReview };
+export { getReviews, addReview, updateReview, delReview };

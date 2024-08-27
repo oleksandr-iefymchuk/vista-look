@@ -9,16 +9,32 @@ import { setLoading } from '../appReduser/actionCreators';
 import { showMessage } from '../user/actionCreators';
 import { BASE_URL } from '../../constants/constants';
 
-const getProductsThunk = () => {
+const getProductsThunk = (maxRetries = 5, retryDelay = 4000) => {
   return async dispatch => {
-    try {
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+    let attempts = 0;
+
+    while (attempts < maxRetries) {
       dispatch(setLoading(true));
-      const response = await axios.get(`${BASE_URL}/products`);
-      dispatch(getProducts(response.data));
-      dispatch(setLoading(false));
-    } catch (error) {
-      dispatch(setLoading(false));
-      throw new Error(error);
+      try {
+        const response = await axios.get(`${BASE_URL}/products`);
+        dispatch(getProducts(response.data));
+        dispatch(setLoading(false));
+        return;
+      } catch (error) {
+        attempts++;
+        console.error(`Attempt ${attempts} failed:`, error);
+
+        if (attempts < maxRetries) {
+          await sleep(retryDelay);
+        } else {
+          dispatch(setLoading(false));
+          console.error(
+            'Max retry attempts reached. Could not fetch products.'
+          );
+          throw new Error(error);
+        }
+      }
     }
   };
 };

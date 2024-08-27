@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {
-  getReviwes,
+  getReviews,
   addReview,
   updateReview,
   delReview
@@ -10,16 +10,30 @@ import { showMessage } from '../user/actionCreators';
 
 import { BASE_URL } from '../../constants/constants';
 
-const getReviewsThunk = () => {
+const getReviewsThunk = (maxRetries = 5, retryDelay = 4000) => {
   return async dispatch => {
-    try {
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+    let attempts = 0;
+
+    while (attempts < maxRetries) {
       dispatch(setLoading(true));
-      const response = await axios.get(`${BASE_URL}/reviews`);
-      dispatch(getReviwes(response.data));
-      dispatch(setLoading(false));
-    } catch (error) {
-      dispatch(setLoading(false));
-      throw new Error(error);
+      try {
+        const response = await axios.get(`${BASE_URL}/reviews`);
+        dispatch(getReviews(response.data));
+        dispatch(setLoading(false));
+        return;
+      } catch (error) {
+        attempts++;
+        console.error(`Attempt ${attempts} failed:`, error);
+
+        if (attempts < maxRetries) {
+          await sleep(retryDelay);
+        } else {
+          dispatch(setLoading(false));
+          console.error('Max retry attempts reached. Could not fetch reviews.');
+          throw new Error(error);
+        }
+      }
     }
   };
 };

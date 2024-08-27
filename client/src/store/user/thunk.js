@@ -35,25 +35,42 @@ export const loginUserThunk = (user, onLoginSucces) => {
   };
 };
 
-export const getUserProfileThunk = token => {
+export const getUserProfileThunk = (
+  token,
+  maxRetries = 5,
+  retryDelay = 4000
+) => {
   return async dispatch => {
-    try {
-      dispatch(setLoading(true));
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+    let attempts = 0;
 
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`
+    while (attempts < maxRetries) {
+      dispatch(setLoading(true));
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        };
+
+        const { data } = await axios.get(`${BASE_URL}/users/profile`, config);
+        dispatch(setUserData(data));
+        dispatch(setLoading(false));
+        return;
+      } catch (error) {
+        attempts++;
+        console.error(`Attempt ${attempts} failed:`, error);
+
+        if (attempts < maxRetries) {
+          await sleep(retryDelay);
+        } else {
+          dispatch(setLoading(false));
+          console.error(
+            'Max retry attempts reached. Could not fetch user profile.'
+          );
+          throw new Error(error);
         }
-      };
-      const { data } = await axios.get(`${BASE_URL}/users/profile`, config);
-      dispatch(setUserData(data));
-      dispatch(setLoading(false));
-    } catch (error) {
-      dispatch(setLoading(false));
-      console.error(error);
-      // if (error.response && error.response.status === 401) {
-      //   localStorage.removeItem('userInfo');
-      // }
+      }
     }
   };
 };
