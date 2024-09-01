@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://pur-pur-server.vercel.app';
+export const BASE_URL = 'https://vista-look-server.vercel.app';
 
 export const headerNavbarLinks = [
   {

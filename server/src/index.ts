@@ -20,7 +20,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-const uri = 'mongodb+srv://bizmailer24:nybcc1HA77rVDnic@cluster0.f97rpqg.mongodb.net/pur-pur';
+const uri = 'mongodb+srv://bizmailer24:nybcc1HA77rVDnic@cluster0.f97rpqg.mongodb.net/vista-look';
 
 mongoose
   .connect(uri)

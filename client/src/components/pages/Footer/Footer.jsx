@@ -34,7 +34,7 @@ const Footer = () => {
       </div>
       <div className='copyright'>
         <Logo onClick={navigationHome} />
-        <p>&copy; 2024 Інтернет-магазин жіночого одягу «PurePure»</p>
+        <p>&copy; 2024 Інтернет-магазин жіночого одягу «VistaLook»</p>
       </div>
     </div>
   );

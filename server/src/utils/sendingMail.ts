@@ -13,15 +13,15 @@ const sendingMail = async (to: string, link: string): Promise<void> => {
 
   try {
     await transporter.sendMail({
-      from: { name: 'PurePure', address: process.env.SMTP_USER as unknown as string },
+      from: { name: 'VistaLook', address: process.env.SMTP_USER as unknown as string },
       to: to,
-      subject: `Активація акаунту в інтернет-магазині жіночого одягу «PurePure»`,
+      subject: `Активація акаунту в інтернет-магазині жіночого одягу «VistaLook»`,
       text: '',
       html: `
             <table width="800px">
             <tr>
                 <td>
-                    <img src="https://pur-pur.vercel.app/assets/logo-1YNSEaJn.png" alt="Логотип" width="100">
+                    <img src="https://vista-look.vercel.app/assets/logo-1YNSEaJn.png" alt="Логотип" width="100">
                 </td>
                 <td width="180px" style="width:180px; text-align:right"> 
                     <h2>+38 (050) 174 70 15</h2>
@@ -34,7 +34,7 @@ const sendingMail = async (to: string, link: string): Promise<void> => {
 
             <tr>
               <td colspan="2" style="padding-bottom:25px">
-                <h2>Для активації облікового запису в інтернет-магазині жіночого одягу «PurePure» перейдіть за посиланням:</h2>
+                <h2>Для активації облікового запису в інтернет-магазині жіночого одягу «VistaLook» перейдіть за посиланням:</h2>
                 <a href='${link}'>${link}</a>
               </td>
             </tr>

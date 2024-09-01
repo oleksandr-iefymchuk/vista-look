@@ -20,8 +20,8 @@ body {
 
   &.loading {
     .footer-wrap,
-    .user-profile,
-    .home-wrap {
+    .user-profile {
+      // .home-wrap {
       margin-right: 16px;
     }
   }
