@@ -72,8 +72,10 @@
 @media screen and (max-width: 768px) {
   .size-selector {
     .sizes {
+      gap: 4%;
       .size-label {
         font-size: 2.4vw;
+        padding: 5%;
       }
     }
   }
