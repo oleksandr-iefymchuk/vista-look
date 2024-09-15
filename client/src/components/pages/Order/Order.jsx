@@ -376,7 +376,7 @@ const Order = () => {
           currency='UAH'
           description='Оплата товара'
           order_id='6'
-          server_url='https://aqua-terra.vercel.app'
+          server_url='https://vista-look.vercel.app'
         /> */}
       </div>
     </div>

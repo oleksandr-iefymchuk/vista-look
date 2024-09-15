@@ -7,12 +7,16 @@ export const categories = [
     name: 'Cукні',
     linkName: 'sukni'
   }
-  // {
-  //   name: 'Худі',
-  //   linkName: 'hudi'
-  // },
-  // {
-  //   name: 'Шорти',
-  //   linkName: 'shorti'
-  // }
+  {
+    name: 'Худі',
+    linkName: 'hudi'
+  },
+  {
+    name: 'Жилетки',
+    linkName: 'zhiletki'
+  },
+  {
+    name: 'Куртки',
+    linkName: 'kurtki'
+  }
 ];
