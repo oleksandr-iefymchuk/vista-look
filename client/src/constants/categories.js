@@ -6,7 +6,7 @@ export const categories = [
   {
     name: 'Cукні',
     linkName: 'sukni'
-  }
+  },
   {
     name: 'Худі',
     linkName: 'hudi'
