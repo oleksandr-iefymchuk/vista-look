@@ -174,3 +174,18 @@
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .card-info-title {
+    width: 100%;
+
+    .product-code {
+      font-size: 3.5vw;
+      display: flex;
+
+      .share-btn {
+        margin-left: 0;
+      }
+    }
+  }
+}

@@ -55,6 +55,13 @@ body {
       margin-right: 0;
     }
 
+    &.loading {
+      .footer-wrap,
+      .user-profile {
+        margin-right: 0;
+      }
+    }
+
     #root {
       .home-page {
         margin-top: 56px;
