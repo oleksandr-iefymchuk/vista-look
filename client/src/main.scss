@@ -15,20 +15,20 @@ body {
   &.category-menu-open,
   &.loading {
     overflow: hidden;
-    // margin-right: 17px;
+    margin-right: 17px;
   }
 
-  &.loading {
-    .footer-wrap,
-    .user-profile {
-      // .home-wrap {
-      margin-right: 16px;
-    }
-  }
+  // &.loading {
+  //   .footer-wrap,
+  //   .user-profile {
+  //     // .home-wrap {
+  //     margin-right: 16px;
+  //   }
+  // }
 
-  &.mobile-menu-open {
-    margin-right: 16px;
-  }
+  // &.mobile-menu-open {
+  //   margin-right: 16px;
+  // }
 
   #root {
     display: flex;
@@ -53,13 +53,6 @@ body {
     &.category-menu-open,
     &.loading {
       margin-right: 0;
-    }
-
-    &.loading {
-      .footer-wrap,
-      .user-profile {
-        margin-right: 0;
-      }
     }
 
     #root {
