@@ -4,7 +4,7 @@ export const categories = [
     linkName: 'kostyumi'
   },
   {
-    name: 'Cукні',
+    name: 'Сукні',
     linkName: 'sukni'
   },
   {
