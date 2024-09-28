@@ -42,7 +42,7 @@ const orderItemSchema = new Schema({
   title: { type: String, required: true },
   price: { type: Number, required: true },
   quantity: { type: Number, required: true },
-  size: { type: Number, required: true },
+  size: { type: mongoose.Schema.Types.Mixed, required: true },
   total: { type: Number, required: true }
 });
 

@@ -72,7 +72,6 @@ const CityInput = ({ selectedCity, onCitySelect, error, helperText }) => {
         }
 
         if (results) {
-          console.log('results:', results);
           newOptions = [
             ...newOptions,
             ...results.map(result => ({

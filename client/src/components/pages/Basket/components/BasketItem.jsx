@@ -122,7 +122,7 @@ BasketItem.propTypes = {
   title: PropTypes.string,
   price: PropTypes.number,
   quantity: PropTypes.number,
-  size: PropTypes.number,
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   discount: PropTypes.number,
   isInOrders: PropTypes.bool
 };

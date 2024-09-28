@@ -8,7 +8,7 @@ const productInBasketSchema: mongoose.Schema = new mongoose.Schema(
     productId: { type: mongoose.Schema.Types.ObjectId, ref: 'products', required: true },
     productCode: { type: String, required: true },
     quantity: { type: Number, required: true, default: 1 },
-    size: { type: Number, required: true }
+    size: { type: mongoose.Schema.Types.Mixed, required: true }
   },
   { _id: false }
 );
