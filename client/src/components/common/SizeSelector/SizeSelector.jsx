@@ -15,40 +15,36 @@ const SizeSelector = ({
 
   return (
     <div className='size-selector'>
-      {sizes?.length > 0 ? (
-        <>
-          <p>Виберіть розмір:</p>
-          <div className='sizes'>
-            {sizes.map((size, index) => (
-              <Fragment key={index}>
-                <input
-                  type='checkbox'
-                  id={`size-${productId}-${size}`}
-                  className='size-checkbox'
-                  checked={selectedSize === size}
-                  onChange={() => handleSizeChange(size)}
-                  disabled={isDisabled}
-                />
-                <label
-                  htmlFor={`size-${productId}-${size}`}
-                  className={`size-label ${isDisabled ? 'disabled-label' : ''}`}
-                >
-                  {size}
-                </label>
-              </Fragment>
-            ))}
-          </div>
-        </>
-      ) : (
-        <p>Розмір: Універсал</p>
-      )}
+      <p>Виберіть розмір:</p>
+      <div className='sizes'>
+        {sizes?.map((size, index) => (
+          <Fragment key={index}>
+            <input
+              type='checkbox'
+              id={`size-${productId}-${size}`}
+              className='size-checkbox'
+              checked={selectedSize === size}
+              onChange={() => handleSizeChange(size)}
+              disabled={isDisabled}
+            />
+            <label
+              htmlFor={`size-${productId}-${size}`}
+              className={`size-label ${isDisabled ? 'disabled-label' : ''}`}
+            >
+              {size}
+            </label>
+          </Fragment>
+        ))}
+      </div>
     </div>
   );
 };
 
 SizeSelector.propTypes = {
-  sizes: PropTypes.array,
-  selectedSize: PropTypes.number,
+  sizes: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  ),
+  selectedSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onSelectSize: PropTypes.func,
   productId: PropTypes.string,
   isDisabled: PropTypes.bool

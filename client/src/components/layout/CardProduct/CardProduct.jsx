@@ -62,9 +62,7 @@ const CardProduct = ({
     }
 
     if (isAuthenticated && !isInBasket) {
-      dispatch(
-        addToBasketThunk(_id, productCode, 1, selectedSize || 'Універсал')
-      );
+      dispatch(addToBasketThunk(_id, productCode, 1, selectedSize));
     }
 
     if (isAuthenticated && isInBasket) {
