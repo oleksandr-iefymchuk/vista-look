@@ -19,7 +19,7 @@ const Navigation = () => {
         </nav>
         <div className='contacts'>
           <p>
-            <SvgIcon name='phone' color='#fff'></SvgIcon> +38 (050) 174-70-15
+            <SvgIcon name='phone' color='#fff'></SvgIcon> +38 (093) 94-264-23
           </p>
           <p>
             <SvgIcon width='22px' name='email' color='#fff'></SvgIcon>{' '}

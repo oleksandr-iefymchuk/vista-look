@@ -24,7 +24,7 @@ const sendingMail = async (to: string, link: string): Promise<void> => {
                     <img src="https://vista-look.vercel.app/assets/logo-1YNSEaJn.png" alt="Логотип" width="100">
                 </td>
                 <td width="180px" style="width:180px; text-align:right"> 
-                    <h2>+38 (050) 174 70 15</h2>
+                    <h2>+38 (093) 94-264-23</h2>
                 </td>
             </tr>
 
@@ -41,7 +41,7 @@ const sendingMail = async (to: string, link: string): Promise<void> => {
 
             <tr>
                 <td width="100%" colspan="2" style="height:92px;border-top:1px solid #737373;">
-                    <p>+38 (050) 174 70 15</p>
+                    <p>+38 (093) 94-264-23</p>
                 </td>
             </tr>
             </table>

@@ -24,7 +24,7 @@ const Footer = () => {
         <h4>Контакти</h4>
         <ul>
           <li>
-            <SvgIcon name='phone' color='#fff'></SvgIcon>+38 (050) 174 70 15
+            <SvgIcon name='phone' color='#fff'></SvgIcon>+38 (093) 94-264-23
           </li>
           <li>
             <SvgIcon width='22px' name='email' color='#fff'></SvgIcon>

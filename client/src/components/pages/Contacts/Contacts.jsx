@@ -55,7 +55,7 @@ const Contacts = () => {
           </li>
           <li>
             <SvgIcon name='phone' color='#fff'></SvgIcon>
-            +38 (050) 174 70 15
+            +38 (093) 94-264-23
           </li>
           <li>
             <SvgIcon name='email' color='#fff'></SvgIcon>
