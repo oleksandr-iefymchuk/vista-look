@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useIntl } from 'react-intl';
 import debounce from 'lodash/debounce';
 import { Autocomplete, TextField, Grid, Box, Typography } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -46,6 +47,7 @@ type Props = {
 };
 
 export const CityInput = ({ selectedCity, onCitySelect, error, helperText }: Props) => {
+  const intl = useIntl();
   const [inputValue, setInputValue] = useState('');
   const debouncedSetInputValue = useMemo(() => debounce((value: string) => setInputValue(value), 1000), []);
 
@@ -68,9 +70,16 @@ export const CityInput = ({ selectedCity, onCitySelect, error, helperText }: Pro
       onChange={(_, newValue) => onCitySelect(newValue)}
       onInputChange={(_, newInputValue) => debouncedSetInputValue(newInputValue)}
       disableClearable
-      noOptionsText='немає збігів, перевірте правильність написання'
+      noOptionsText={intl.formatMessage({ id: 'cityInput.noMatches', defaultMessage: 'немає збігів, перевірте правильність написання' })}
       renderInput={(params) => (
-        <TextField {...params} label='Вкажіть населений пункт' fullWidth variant='standard' error={error} helperText={helperText} />
+        <TextField
+          {...params}
+          label={intl.formatMessage({ id: 'cityInput.address.label', defaultMessage: 'Вкажіть населений пункт' })}
+          fullWidth
+          variant='standard'
+          error={error}
+          helperText={helperText}
+        />
       )}
       renderOption={({ key, ...props }, option) => (
         <li key={key} {...props}>

@@ -1,4 +1,7 @@
 {
+  "cityInput.noMatches": "no matches found, please check the spelling",
+  "cityInput.address.label": "Enter your locality",
+
   "footer.forClients": "For Clients",
   "footer.contacts": "Contacts",
   "footer.copyright": "2024–2025 VistaLook Women's Clothing Online Store",

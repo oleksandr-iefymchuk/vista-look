@@ -1,4 +1,7 @@
 {
+  "cityInput.noMatches": "немає збігів, перевірте правильність написання",
+  "cityInput.address.label": "Вкажіть населений пункт",
+
   "footer.forClients": "Клієнтам",
   "footer.contacts": "Контакти",
   "footer.copyright": "2024-2025 Інтернет-магазин жіночого одягу «VistaLook»",
