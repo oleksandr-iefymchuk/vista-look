@@ -1,12 +1,8 @@
-@import '../../../variables.scss';
+@use '@/variables.scss' as *;
 
-.footer-wrap {
-  background: linear-gradient(
-    142deg,
-    $primary-color 0%,
-    $secondary-color 91%,
-    $secondary-color 100%
-  );
+.wrap {
+  position: relative;
+  background: linear-gradient(142deg, $primary-color 0%, $secondary-color 91%, $secondary-color 100%);
   color: #fff;
   margin-top: 20px;
   padding: 30px 7%;
@@ -15,10 +11,10 @@
   flex-wrap: wrap;
   justify-content: center;
 
-  .footer-nav-bar,
-  .footer-contacts {
+  .navBar,
+  .contacts {
     text-align: left;
-    width: 30%;
+    width: 29%;
 
     h4 {
       margin-bottom: 10px;
@@ -60,17 +56,23 @@
       width: 100px;
     }
   }
+
+  .lang {
+    padding: 0 !important;
+    align-self: flex-end;
+  }
 }
 
 @media screen and (max-width: 1024px) {
-  .footer-wrap {
+  .wrap {
     position: relative;
-    .footer-nav-bar,
-    .footer-contacts {
+
+    .navBar,
+    .contacts {
       width: 100%;
     }
 
-    .footer-nav-bar {
+    .navBar {
       margin-bottom: 20px;
     }
 

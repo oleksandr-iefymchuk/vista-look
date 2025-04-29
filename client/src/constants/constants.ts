@@ -1,44 +1,20 @@
 export const BASE_URL = 'https://vista-look-server.vercel.app';
 
 export const headerNavbarLinks = [
-  {
-    link: '/',
-    name: 'Головна'
-  },
-  {
-    link: '/about',
-    name: 'Про компанію'
-  },
-  {
-    link: '/sale',
-    name: 'Знижки'
-  },
-  {
-    link: '/novelty',
-    name: 'Новинки'
-  },
-  {
-    link: '/delivery-info',
-    name: 'Умови оплати та доставки'
-  }
+  { link: '/', name: 'Головна' },
+  { link: '/about', name: 'Про компанію' },
+  { link: '/sale', name: 'Знижки' },
+  { link: '/novelty', name: 'Новинки' },
+  { link: '/delivery-info', name: 'Умови оплати та доставки' }
 ];
 
 export const foterNavLinks = [
-  {
-    link: '/about',
-    name: 'Про компанію'
-  },
-  {
-    link: '/contacts',
-    name: 'Контакти'
-  },
-  {
-    link: '/delivery-info',
-    name: 'Умови оплати та доставки'
-  }
+  { link: '/about', id: 'footer.navLinks.about', defaultMessage: 'Про компанію' },
+  { link: '/contacts', id: 'footer.navLinks.contacts', defaultMessage: 'Контакти' },
+  { link: '/delivery-info', id: 'footer.navLinks.deliveryInfo', defaultMessage: 'Умови оплати та доставки' }
 ];
 
-export const messengers = url => [
+export const messengers = (url: string) => [
   {
     icon: 'whatsapp',
     link: `https://api.whatsapp.com/send?text=${encodeURIComponent(url)}`
@@ -49,15 +25,11 @@ export const messengers = url => [
   },
   {
     icon: 'facebook',
-    link: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-      url
-    )}`
+    link: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`
   },
   {
     icon: 'gmail',
-    link: `https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=Your%20Subject&body=${encodeURIComponent(
-      url
-    )}&ui=2&tf=1&pli=1`
+    link: `https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=Your%20Subject&body=${encodeURIComponent(url)}&ui=2&tf=1&pli=1`
   },
   {
     icon: 'skype',
@@ -65,9 +37,7 @@ export const messengers = url => [
   },
   {
     icon: 'twitter',
-    link: `https://twitter.com/intent/tweet?url=${encodeURIComponent(
-      url
-    )}&text=Check%20this%20out!`
+    link: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=Check%20this%20out!`
   }
 ];
 
@@ -109,3 +79,5 @@ export const itemHeaders = [
   { id: 'size', label: 'Розмір' },
   { id: 'total', label: 'Загальна сума' }
 ];
+
+export const languages = ['uk', 'ru', 'en'];

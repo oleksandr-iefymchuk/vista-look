@@ -4,17 +4,9 @@ import { TextField } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import {
-  productArrayTemplates,
-  productDataInputs,
-  productParamInputs
-} from '../../../../../constants/inputTemplates';
-import ButtonWrapper from '../../../../common/Button/Button';
-import {
-  addProductThunk,
-  getProductsThunk,
-  updateProductThunk
-} from '../../../../../store/products/thunk';
+import { productArrayTemplates, productDataInputs, productParamInputs } from '../../../../../constants/inputTemplates';
+import { ButtonWrapper } from '../../../../common/Button/Button';
+import { addProductThunk, getProductsThunk, updateProductThunk } from '../../../../../store/products/thunk';
 
 const ProductForm = () => {
   const dispatch = useDispatch();
@@ -173,9 +165,7 @@ const ProductForm = () => {
         quantity,
         discount,
         category,
-        dateAdded: dateAdded
-          ? new Date(dateAdded).toISOString().split('T')[0]
-          : '',
+        dateAdded: dateAdded ? new Date(dateAdded).toISOString().split('T')[0] : '',
         description
       });
 

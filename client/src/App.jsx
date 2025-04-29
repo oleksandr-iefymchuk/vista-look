@@ -1,10 +1,5 @@
 import './App.scss';
-import {
-  Route,
-  BrowserRouter as Router,
-  Routes,
-  Navigate
-} from 'react-router-dom';
+import { Route, BrowserRouter as Router, Routes, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
@@ -25,8 +20,8 @@ import DeliveryInfo from './components/pages/DeliveryInfo/DeliveryInfo';
 import CardInfo from './components/layout/CardInfo/CardInfo';
 import Basket from './components/pages/Basket/Basket';
 import Favorites from './components/pages/Favorites/Favorites';
-import Footer from './components/pages/Footer/Footer';
-import Order from './components/pages/Order/Order';
+import { Footer } from './components/pages/Footer/Footer';
+import { Order } from './components/pages/Order/Order';
 import SearchList from './components/layout/SearchList/SearchList';
 import Catalog from './components/pages/Catalog/Catalog';
 import CategoryMenu from './components/layout/CategoryMenu/CategoryMenu';
@@ -43,8 +38,8 @@ import ProductForm from './components/pages/Profile/components/ProductForm/Produ
 const App = () => {
   const dispatch = useDispatch();
   const isMobileDevice = useMediaQuery({ maxWidth: 1024 });
-  const { message, messageType } = useSelector(state => state.user);
-  const isShowLoginModal = useSelector(state => state.app.isShowLoginModal);
+  const { message, messageType } = useSelector((state) => state.user);
+  const isShowLoginModal = useSelector((state) => state.app.isShowLoginModal);
   const tokenString = localStorage.getItem('userInfo');
 
   const toggleLoginVisibility = () => {
@@ -70,16 +65,8 @@ const App = () => {
         <Breadcrumbs />
         <Progress />
         {isMobileDevice && <CategoryMenu categories={categories} />}
-        <CustomAlert
-          open={!!message}
-          onClose={() => dispatch(clearMessage())}
-          message={message}
-          severity={messageType}
-        />
-        <Authentication
-          openModalForm={isShowLoginModal}
-          closeModalForm={toggleLoginVisibility}
-        />
+        <CustomAlert open={!!message} onClose={() => dispatch(clearMessage())} message={message} severity={messageType} />
+        <Authentication openModalForm={isShowLoginModal} closeModalForm={toggleLoginVisibility} />
         <main>
           <Routes>
             <Route path='/' element={<Home />} />
@@ -100,10 +87,7 @@ const App = () => {
               <Route path='personal-info' element={<PersonalInfo />} />
               <Route path='personal-orders' element={<OrderHistory />} />
               <Route path='product-form' element={<ProductForm />} />
-              <Route
-                path='product-form/:productSlug'
-                element={<ProductForm />}
-              />
+              <Route path='product-form/:productSlug' element={<ProductForm />} />
             </Route>
           </Routes>
         </main>

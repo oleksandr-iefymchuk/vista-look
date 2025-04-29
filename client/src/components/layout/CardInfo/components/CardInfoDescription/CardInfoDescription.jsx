@@ -6,27 +6,24 @@ import Tab from '@mui/material/Tab';
 import { TabPanel, TabContext, TabList } from '@mui/lab';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import { useTabContext } from '../../../../../contexts/TabControlContext';
+import { useCardInfoTabContext } from '../../../../../contexts/CardInfoTabContext';
 
-import ButtonWrapper from '../../../../common/Button/Button';
+import { ButtonWrapper } from '../../../../common/Button/Button';
 import Reviews from './components/Reviews/Reviews';
 import Markdown from 'markdown-to-jsx';
 
 const CardInfoDescription = ({ _id, description, param }) => {
-  const { value, setValue } = useTabContext();
+  const { activeTab, setActiveTab } = useCardInfoTabContext();
   const [markdown, setMarkdown] = useState('');
   const [isExpandedDescription, setIsExpandedDescription] = useState(false);
-  const [isExpandedCharacteristics, setIsExpandedCharacteristics] =
-    useState(false);
+  const [isExpandedCharacteristics, setIsExpandedCharacteristics] = useState(false);
 
-  const toggleExpandDescription = () =>
-    setIsExpandedDescription(!isExpandedDescription);
+  const toggleExpandDescription = () => setIsExpandedDescription(!isExpandedDescription);
 
-  const toggleExpandCharacteristics = () =>
-    setIsExpandedCharacteristics(!isExpandedCharacteristics);
+  const toggleExpandCharacteristics = () => setIsExpandedCharacteristics(!isExpandedCharacteristics);
 
   const handleChangeTab = (event, newValue) => {
-    setValue(newValue);
+    setActiveTab(newValue);
   };
 
   const styles = createTheme({
@@ -63,14 +60,13 @@ const CardInfoDescription = ({ _id, description, param }) => {
     </table>
   );
 
-  const markdownPath =
-    window.location.hostname === '127.0.0.1' ? '/public/markdown' : '/markdown';
+  const markdownPath = window.location.hostname === '127.0.0.1' ? '/public/markdown' : '/markdown';
 
   useEffect(() => {
     if (description) {
       fetch(`${markdownPath}/${description}`)
-        .then(res => res.text())
-        .then(markdown => {
+        .then((res) => res.text())
+        .then((markdown) => {
           setMarkdown(markdown);
         });
     }
@@ -79,55 +75,33 @@ const CardInfoDescription = ({ _id, description, param }) => {
   return (
     <div className='card-info-description' id='reviews'>
       <ThemeProvider theme={styles}>
-        <TabContext value={value}>
+        <TabContext value={activeTab}>
           <TabList onChange={handleChangeTab} className='custom-tab-list'>
             <Tab label='Опис' value='description' />
             <Tab label='Характеристики' value='characteristics' />
             <Tab label='Відгуки' value='reviews' />
           </TabList>
           <TabPanel value='description' className='description'>
-            <div
-              className={
-                isExpandedDescription ? 'content-expanded' : 'content-collapsed'
-              }
-            >
-              {!markdown.includes('<!doctype html>') ? (
-                <Markdown>{markdown}</Markdown>
-              ) : (
-                <p>Опис відсутній</p>
-              )}
+            <div className={isExpandedDescription ? 'content-expanded' : 'content-collapsed'}>
+              {!markdown.includes('<!doctype html>') ? <Markdown>{markdown}</Markdown> : <p>Опис відсутній</p>}
             </div>
-            {markdown &&
-              !markdown.includes('<!doctype html>') &&
-              markdown.split('\n').length > 10 && (
-                <ButtonWrapper
-                  buttonClassName='expand-btn'
-                  icon={isExpandedDescription ? 'collapse' : 'expand'}
-                  onClick={toggleExpandDescription}
-                  buttonText={
-                    isExpandedDescription ? 'Згорнути' : 'Показати повністю'
-                  }
-                />
-              )}
+            {markdown && !markdown.includes('<!doctype html>') && markdown.split('\n').length > 10 && (
+              <ButtonWrapper
+                buttonClassName='expand-btn'
+                icon={isExpandedDescription ? 'collapse' : 'expand'}
+                onClick={toggleExpandDescription}
+                buttonText={isExpandedDescription ? 'Згорнути' : 'Показати повністю'}
+              />
+            )}
           </TabPanel>
           <TabPanel value='characteristics' className='characteristics'>
-            <div
-              className={
-                isExpandedCharacteristics
-                  ? 'content-expanded'
-                  : 'content-collapsed'
-              }
-            >
-              {renderCharacteristics()}
-            </div>
+            <div className={isExpandedCharacteristics ? 'content-expanded' : 'content-collapsed'}>{renderCharacteristics()}</div>
             {Object.keys(param).length > 6 && (
               <ButtonWrapper
                 buttonClassName='expand-btn'
                 icon={isExpandedCharacteristics ? 'collapse' : 'expand'}
                 onClick={toggleExpandCharacteristics}
-                buttonText={
-                  isExpandedCharacteristics ? 'Згорнути' : 'Показати повністю'
-                }
+                buttonText={isExpandedCharacteristics ? 'Згорнути' : 'Показати повністю'}
               />
             )}
           </TabPanel>

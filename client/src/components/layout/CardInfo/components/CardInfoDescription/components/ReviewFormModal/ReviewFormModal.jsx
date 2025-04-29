@@ -7,27 +7,14 @@ import { jwtDecode } from 'jwt-decode';
 import { GoogleLogin } from '@react-oauth/google';
 import { Modal, Fade, TextField, Rating } from '@mui/material';
 
-import {
-  getReviewsThunk,
-  addReviewThunk,
-  updateReviewThunk
-} from '../../../../../../../store/reviews/thunk';
-import {
-  getUserProfileThunk,
-  googleUserRegistrationThunk
-} from '../../../../../../../store/user/thunk';
+import { getReviewsThunk, addReviewThunk, updateReviewThunk } from '../../../../../../../store/reviews/thunk';
+import { getUserProfileThunk, googleUserRegistrationThunk } from '../../../../../../../store/user/thunk';
 import { showMessage } from '../../../../../../../store/user/actionCreators';
 
-import ButtonWrapper from '../../../../../../common/Button/Button';
+import { ButtonWrapper } from '../../../../../../common/Button/Button';
 import CustomAlert from '../../../../../../common/CustomAlert/CustomAlert';
 
-const ReviewFormModal = ({
-  _id,
-  openModalForm,
-  closeModalForm,
-  replyToUser,
-  parentCommentId
-}) => {
+const ReviewFormModal = ({ _id, openModalForm, closeModalForm, replyToUser, parentCommentId }) => {
   const dispatch = useDispatch();
   const isMobileDevice = useMediaQuery({ maxWidth: 768 });
   const reviews = useSelector(store => store.reviews);
@@ -94,9 +81,7 @@ const ReviewFormModal = ({
     };
 
     if (parentCommentId) {
-      const parentComment = reviews.find(
-        review => review._id === parentCommentId
-      );
+      const parentComment = reviews.find(review => review._id === parentCommentId);
       if (parentComment) {
         const updatedParentComment = {
           ...parentComment,
@@ -114,10 +99,7 @@ const ReviewFormModal = ({
       newReview.productId = _id;
       newReview.rating = rating;
       newReview.replies = [];
-      dispatch(addReviewThunk(newReview))
-        .then(handleSuccess)
-        .then(dispatch(getReviewsThunk()))
-        .catch(handleError);
+      dispatch(addReviewThunk(newReview)).then(handleSuccess).then(dispatch(getReviewsThunk())).catch(handleError);
     }
 
     setFormData({
@@ -155,39 +137,24 @@ const ReviewFormModal = ({
           <div className='form-container'>
             <div className='form-header'>
               {!parentCommentId && <h4>Додати новий відгук</h4>}
-              {replyToUser && typeof replyToUser === 'string' && (
-                <h4>Відповідь для {replyToUser}</h4>
-              )}
+              {replyToUser && typeof replyToUser === 'string' && <h4>Відповідь для {replyToUser}</h4>}
 
-              <ButtonWrapper
-                buttonClassName='close-form-btn'
-                icon='close'
-                onClick={closeModalForm}
-              />
+              <ButtonWrapper buttonClassName='close-form-btn' icon='close' onClick={closeModalForm} />
             </div>
             {!isAuthenticated && (
               <div className='google-login'>
                 {!isMobileDevice && <p>Увійти за допомогою</p>}
                 <GoogleLogin
                   onSuccess={credentialResponse => {
-                    const { name, email } = jwtDecode(
-                      credentialResponse.credential
-                    );
-                    dispatch(googleUserRegistrationThunk({ name, email })).then(
-                      updateUser
-                    );
+                    const { name, email } = jwtDecode(credentialResponse.credential);
+                    dispatch(googleUserRegistrationThunk({ name, email })).then(updateUser);
                   }}
                   type={isMobileDevice ? 'standard' : 'icon'}
                   size={isMobileDevice ? 'medium' : 'large'}
                   width='334px'
                   onError={error => {
                     console.log('Login Failed:', error);
-                    dispatch(
-                      showMessage(
-                        'Не вдалося авторизуватися через Google',
-                        'error'
-                      )
-                    );
+                    dispatch(showMessage('Не вдалося авторизуватися через Google', 'error'));
                   }}
                 />
               </div>
@@ -229,18 +196,13 @@ const ReviewFormModal = ({
               {!parentCommentId && (
                 <div className='rating-stars'>
                   <p>Оцінити товар:</p>
-                  <Rating
-                    value={rating}
-                    onChange={(event, newValue) => setRating(newValue)}
-                  />
+                  <Rating value={rating} onChange={(event, newValue) => setRating(newValue)} />
                 </div>
               )}
               <ButtonWrapper
                 buttonClassName='submit-review-btn'
                 type='submit'
-                buttonText={
-                  !parentCommentId ? 'Залишити відгук' : 'Залишити відповідь'
-                }
+                buttonText={!parentCommentId ? 'Залишити відгук' : 'Залишити відповідь'}
               />
             </form>
           </div>

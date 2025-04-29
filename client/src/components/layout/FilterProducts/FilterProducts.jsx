@@ -5,17 +5,10 @@ import { useMediaQuery } from 'react-responsive';
 import PropTypes from 'prop-types';
 import './FilterProducts.scss';
 
-import {
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails
-} from '@mui/material';
+import { Checkbox, FormControlLabel, FormGroup, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-import ButtonWrapper from '../../common/Button/Button';
+import { ButtonWrapper } from '../../common/Button/Button';
 import SortList from '../SortList/SortList';
 import PriceFilter from './PriceFilter/PriceFilter';
 
@@ -34,9 +27,7 @@ const FilterProducts = ({ products, showFilterButton }) => {
     const isChecked = updatedValues.includes(value);
     const updatedParams = {
       ...selectedParams,
-      [paramName]: isChecked
-        ? updatedValues.filter(item => item !== value)
-        : [...updatedValues, value]
+      [paramName]: isChecked ? updatedValues.filter(item => item !== value) : [...updatedValues, value]
     };
     setSelectedParams(updatedParams);
   };
@@ -44,11 +35,7 @@ const FilterProducts = ({ products, showFilterButton }) => {
   const getProductsWordUkr = count => {
     const cases = [2, 0, 1, 1, 1, 2];
     const titles = ['товар', 'товари', 'товарів'];
-    return titles[
-      count % 100 > 4 && count % 100 < 20
-        ? 2
-        : cases[count % 10 < 5 ? count % 10 : 5]
-    ];
+    return titles[count % 100 > 4 && count % 100 < 20 ? 2 : cases[count % 10 < 5 ? count % 10 : 5]];
   };
 
   const toggleFilterMenu = () => {
@@ -83,9 +70,7 @@ const FilterProducts = ({ products, showFilterButton }) => {
       let filtered = products;
 
       if (activeCategory) {
-        filtered = products.filter(
-          product => product.category === activeCategory
-        );
+        filtered = products.filter(product => product.category === activeCategory);
       }
 
       applyFilters(selectedParams, filtered);
@@ -116,48 +101,37 @@ const FilterProducts = ({ products, showFilterButton }) => {
   }, [products, activeCategory]);
 
   useEffect(() => {
-    const availableParams = Object.keys(allParamValues).reduce(
-      (acc, paramName) => {
-        acc[paramName] = allParamValues[paramName].filter(paramValue => {
-          const tempSelectedParams = {
-            ...selectedParams,
-            [paramName]: [paramValue]
-          };
-          const filtered = products.filter(product =>
-            Object.entries(tempSelectedParams).every(
-              ([key, values]) =>
-                values.length === 0 ||
-                values.some(value =>
-                  Array.isArray(product.param[key])
-                    ? product.param[key].includes(value)
-                    : product.param[key] === value
-                )
-            )
-          );
-          return filtered.length > 0;
-        });
-        return acc;
-      },
-      {}
-    );
+    const availableParams = Object.keys(allParamValues).reduce((acc, paramName) => {
+      acc[paramName] = allParamValues[paramName].filter(paramValue => {
+        const tempSelectedParams = {
+          ...selectedParams,
+          [paramName]: [paramValue]
+        };
+        const filtered = products.filter(product =>
+          Object.entries(tempSelectedParams).every(
+            ([key, values]) =>
+              values.length === 0 ||
+              values.some(value =>
+                Array.isArray(product.param[key]) ? product.param[key].includes(value) : product.param[key] === value
+              )
+          )
+        );
+        return filtered.length > 0;
+      });
+      return acc;
+    }, {});
     setAvailableParams(availableParams);
   }, [allParamValues, selectedParams, products]);
 
   return (
     <div className='filter-products-wrap'>
-      {isShowFilterMenu && (
-        <div className='filter-menu-overlay' onClick={toggleFilterMenu}></div>
-      )}
+      {isShowFilterMenu && <div className='filter-menu-overlay' onClick={toggleFilterMenu}></div>}
       {products.length > 0 && (
         <div className={`filters ${isShowFilterMenu ? 'show' : 'hide'}`}>
           {isMobileDevice && (
             <div className='filter-title'>
               <h3>Фільтр</h3>
-              <ButtonWrapper
-                buttonClassName='close-filter-btn'
-                onClick={toggleFilterMenu}
-                icon='close'
-              />
+              <ButtonWrapper buttonClassName='close-filter-btn' onClick={toggleFilterMenu} icon='close' />
             </div>
           )}
           <div className='filter-param'>
@@ -184,17 +158,9 @@ const FilterProducts = ({ products, showFilterButton }) => {
                             sx={{
                               '& .MuiSvgIcon-root': { fontSize: 28 }
                             }}
-                            checked={
-                              selectedParams[paramName]
-                                ? selectedParams[paramName].includes(paramValue)
-                                : false
-                            }
-                            disabled={
-                              !availableParams[paramName]?.includes(paramValue)
-                            }
-                            onChange={() =>
-                              handleParamChange(paramName, paramValue)
-                            }
+                            checked={selectedParams[paramName] ? selectedParams[paramName].includes(paramValue) : false}
+                            disabled={!availableParams[paramName]?.includes(paramValue)}
+                            onChange={() => handleParamChange(paramName, paramValue)}
                           />
                         }
                         label={paramValue}
@@ -204,28 +170,19 @@ const FilterProducts = ({ products, showFilterButton }) => {
                 </AccordionDetails>
               </Accordion>
             ))}
-            <PriceFilter
-              products={filteredProducts}
-              setFilteredProducts={setFilteredProducts}
-            />
+            <PriceFilter products={filteredProducts} setFilteredProducts={setFilteredProducts} />
           </div>
           {isMobileDevice && (
             <ButtonWrapper
               buttonClassName='show-filtered-products-btn'
-              buttonText={`Показати ${
-                filteredProducts.length
-              } ${getProductsWordUkr(filteredProducts.length)}`}
+              buttonText={`Показати ${filteredProducts.length} ${getProductsWordUkr(filteredProducts.length)}`}
               onClick={toggleFilterMenu}
             />
           )}
         </div>
       )}
 
-      <SortList
-        products={filteredProducts}
-        setShowFilterMenu={toggleFilterMenu}
-        showFilterButton={showFilterButton}
-      />
+      <SortList products={filteredProducts} setShowFilterMenu={toggleFilterMenu} showFilterButton={showFilterButton} />
     </div>
   );
 };

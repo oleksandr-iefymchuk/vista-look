@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import questionMark from '../../../assets/question-mark.webp';
 
-import ButtonWrapper from '../../common/Button/Button';
+import { ButtonWrapper } from '../../common/Button/Button';
 import SortList from '../../layout/SortList/SortList';
 
 const SearchList = () => {
@@ -16,12 +16,8 @@ const SearchList = () => {
 
   const filterProducts = (products, searchValue) => {
     return products.filter(({ productCode, title }) => {
-      const filteredById = productCode
-        .toLowerCase()
-        .includes(searchValue.toLowerCase());
-      const filteredByTitle = title
-        .toLowerCase()
-        .includes(searchValue.toLowerCase());
+      const filteredById = productCode.toLowerCase().includes(searchValue.toLowerCase());
+      const filteredByTitle = title.toLowerCase().includes(searchValue.toLowerCase());
       return filteredById || filteredByTitle;
     });
   };
@@ -51,13 +47,9 @@ const SearchList = () => {
           <div className='search-info'>
             <h2 className='empty-search-list-title'>
               За запитом &quot;
-              <span className='search-value'>{searchValue}</span>&quot; нічого
-              не знайдено :(
+              <span className='search-value'>{searchValue}</span>&quot; нічого не знайдено :(
             </h2>
-            <p>
-              Перевірте правильність написання запиту, спробуйте використати
-              синоніми чи більш загальні запити.
-            </p>
+            <p>Перевірте правильність написання запиту, спробуйте використати синоніми чи більш загальні запити.</p>
             <ButtonWrapper
               buttonClassName='catalog-btn'
               onClick={() => navigate('/catalog')}

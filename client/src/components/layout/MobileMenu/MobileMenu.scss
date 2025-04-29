@@ -1,4 +1,4 @@
-@import '../../../variables.scss';
+@use '@/variables.scss' as *;
 
 @mixin mobile-menu-btn {
   display: flex;
@@ -14,7 +14,9 @@
   border-bottom: 1px solid #dbdde7;
 }
 
-@mixin svg-wrapper($color) {
+@mixin svg($color) {
+  width: 35px;
+  height: 35px;
   color: #ffffff;
   margin-right: 10px;
   padding: 5px;
@@ -96,8 +98,8 @@
     .mobile-menu-catalog-btn {
       @include mobile-menu-btn();
 
-      .svg-wrapper {
-        @include svg-wrapper($secondary-btn-color);
+      svg {
+        @include svg($secondary-btn-color);
       }
     }
 
@@ -124,16 +126,14 @@
           margin-right: auto;
         }
 
-        .svg-wrapper {
-          svg {
-            width: 32px;
-            height: 32px;
-            stroke: #000;
-            fill: #000;
-          }
+        svg {
+          width: 32px;
+          height: 32px;
+          stroke: #000;
+          fill: #000;
         }
 
-        .value {
+        span {
           background-color: $secondary-btn-color;
           width: 18px;
           height: 18px;
@@ -145,10 +145,8 @@
       }
 
       .mobile-btn-favorite {
-        .svg-wrapper {
-          svg {
-            width: 30px;
-          }
+        svg {
+          width: 30px;
         }
       }
     }
@@ -157,14 +155,11 @@
       @include mobile-menu-btn();
       margin-top: 9px;
 
-      .svg-wrapper {
-        @include svg-wrapper(#eaedf7);
-
-        svg {
-          width: 26px;
-          height: 26px;
-          fill: #000;
-        }
+      svg {
+        @include svg(#eaedf7);
+        width: 36px;
+        height: 36px;
+        fill: #000;
       }
     }
 

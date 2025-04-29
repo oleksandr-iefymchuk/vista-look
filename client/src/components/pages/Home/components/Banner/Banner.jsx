@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 
 import { banners } from '../../../../../constants/banners';
-import ButtonWrapper from '../../../../common/Button/Button';
+import { ButtonWrapper } from '../../../../common/Button/Button';
 
 const Banner = () => {
   const settings = {

@@ -1,49 +1,35 @@
 import './Order.scss';
-import { orderTabStyles } from '../../../muiStyles';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { orderTabStyles } from '@/muiStyles';
 import { TabPanel, TabContext, TabList } from '@mui/lab';
-import {
-  Tab,
-  TextField,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  ThemeProvider,
-  MenuItem
-} from '@mui/material';
-import {
-  adressInputTemplates,
-  deliveryOptions,
-  paymentOptions,
-  userOrderInputTemplates
-} from '../../../constants/inputTemplates';
-import { calculateDiscountedPrice, calculatePrice } from '../../../helpers';
+import { Tab, TextField, FormControlLabel, Radio, RadioGroup, ThemeProvider, MenuItem } from '@mui/material';
+import { adressInputTemplates, deliveryOptions, paymentOptions, userOrderInputTemplates } from '@/constants/inputTemplates';
+import { calculateDiscountedPrice, calculatePrice } from '@/helpers';
 
-import ButtonWrapper from '../../common/Button/Button';
-import TextMaskCustom from '../Profile/components/MaskedInput/MaskedInput';
-import TotalPrice from '../../layout/TotalPrice/TotalPrice';
-import { saveOrderThunk } from '../../../store/orders/thunk';
-import { clearBasketThunk } from '../../../store/user/thunk';
-import { addOrder } from '../../../store/orders/actionCreators';
-import BasketItem from '../Basket/components/BasketItem';
+import { ButtonWrapper } from '@/components/common/Button/Button';
+import TextMaskCustom from '@/components/pages/Profile/components/MaskedInput/MaskedInput';
+import TotalPrice from '@/components/layout/TotalPrice/TotalPrice';
+import { saveOrderThunk } from '@/store/orders/thunk';
+import { clearBasketThunk } from '@/store/user/thunk';
+import { addOrder } from '@/store/orders/actionCreators';
+import BasketItem from '@/components/pages/Basket/components/BasketItem';
 // import LiqPay from '../../layout/LiqPay/LiqPay';
-import { fetchPostOffice } from '../../../api';
-import CityInput from '../Profile/components/CityInput/CityInput';
+import { CityInput } from './CityInput/CityInput';
+import { useFetchPostOfficesQuery } from '@/api/orderAddressApi';
 
-const Order = () => {
+export const Order = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { _id, name, surname, email, phone, basket } = useSelector(
-    store => store.user
-  );
-  const products = useSelector(state => state.products);
+  const { _id, name, surname, email, phone, basket } = useSelector((store) => store.user);
+  const products = useSelector((state) => state.products);
 
   const [value, setValue] = useState('customerData');
   const [deliveryMethod, setDeliveryMethodn] = useState(deliveryOptions[0]);
   const [paymentMethod, setPaymentMethod] = useState(paymentOptions[0]);
   const [errors, setErrors] = useState({});
+  const [selectedCity, setSelectedCity] = useState(null);
   const [personalInfo, setPersonalInfo] = useState({
     name: '',
     surname: '',
@@ -55,31 +41,29 @@ const Order = () => {
     apartment: '',
     deliveryAddress: ''
   });
-  const [warehouses, setWarehouses] = useState([]);
-  const [selectedCity, setSelectedCity] = useState(null);
+
   const { totalPrice } = calculatePrice(products, basket);
 
-  const validateFields = fields => {
-    const newErrors = {};
-    let valid = true;
+  const { data: departments } = useFetchPostOfficesQuery(selectedCity?.locality, { skip: !selectedCity });
 
-    fields.forEach(field => {
+  const validateFields = (fields) => {
+    const newErrors = fields.reduce((acc, field) => {
       if (!personalInfo[field]) {
-        newErrors[field] = 'Поле не може бути порожнім';
-        valid = false;
+        acc[field] = 'Поле не може бути порожнім';
       }
-    });
+      return acc;
+    }, {});
 
     if (deliveryMethod === deliveryOptions[0]) {
-      delete newErrors['street'];
-      delete newErrors['house'];
+      delete newErrors.street;
+      delete newErrors.house;
     }
 
     setErrors(newErrors);
-    return valid;
+    return Object.keys(newErrors).length === 0;
   };
 
-  const handleTabChange = newValue => {
+  const handleTabChange = (newValue) => {
     let fieldsToValidate = [];
     if (value === 'customerData') {
       fieldsToValidate = ['name', 'surname', 'email', 'phone'];
@@ -97,36 +81,32 @@ const Order = () => {
   };
 
   const handlePersonalInfoChange =
-    id =>
+    (id) =>
     ({ target: { value } }) => {
       setPersonalInfo({ ...personalInfo, [id]: value });
-      setErrors(prevErrors => ({ ...prevErrors, [id]: '' }));
+      setErrors((prevErrors) => ({ ...prevErrors, [id]: '' }));
     };
 
   const orderItems = basket
     .map(({ productId, productCode, quantity, size }) => {
-      const product = products.find(p => p._id === productId);
-      if (product) {
-        const discountedPrice = calculateDiscountedPrice(
-          product.price,
-          product.discount
-        );
-        return {
-          _id: product._id,
-          productCode,
-          image: product.images[0],
-          title: product.title,
-          price: discountedPrice,
-          quantity,
-          size,
-          total: discountedPrice * quantity
-        };
-      }
-      return null;
+      const product = products.find((p) => p._id === productId);
+      const discountedPrice = calculateDiscountedPrice(product.price, product.discount);
+      return product
+        ? {
+            _id: product._id,
+            productCode,
+            image: product.images[0],
+            title: product.title,
+            price: discountedPrice,
+            quantity,
+            size,
+            total: discountedPrice * quantity
+          }
+        : null;
     })
-    .filter(item => item !== null);
+    .filter(Boolean);
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (
@@ -137,9 +117,7 @@ const Order = () => {
           'email',
           'phone',
           'deliveryCity',
-          ...(deliveryMethod === deliveryOptions[0]
-            ? ['deliveryAddress']
-            : ['street', 'house'])
+          ...(deliveryMethod === deliveryOptions[0] ? ['deliveryAddress'] : ['street', 'house'])
         ],
         deliveryMethod
       )
@@ -185,18 +163,10 @@ const Order = () => {
     navigate('/');
   };
 
-  const handleCitySelect = newValue => {
-    setSelectedCity(newValue);
-    setPersonalInfo(prevInfo => ({
-      ...prevInfo,
-      deliveryCity: newValue.display_name
-    }));
-    setErrors(prevErrors => ({ ...prevErrors, deliveryCity: '' }));
-    fetchPostOffice(newValue.structured_formatting.locality)
-      .then(departments => {
-        setWarehouses(departments);
-      })
-      .catch(error => console.error('Error fetching warehouses:', error));
+  const handleCitySelect = (city) => {
+    setSelectedCity(city);
+    setPersonalInfo((prev) => ({ ...prev, deliveryCity: city?.display_name ?? '', deliveryAddress: '' }));
+    setErrors((prev) => ({ ...prev, deliveryCity: '' }));
   };
 
   useEffect(() => {
@@ -218,7 +188,7 @@ const Order = () => {
       <div className='order-info'>
         <ThemeProvider theme={orderTabStyles}>
           <TabContext value={value}>
-            <TabList onChange={(event, newValue) => handleTabChange(newValue)}>
+            <TabList onChange={(_, newValue) => handleTabChange(newValue)}>
               <Tab label='Дані покупця' value='customerData' />
               <Tab label='Доставка' value='delivery' />
               <Tab label='Оплата' value='payment' />
@@ -237,37 +207,21 @@ const Order = () => {
                         className='user-order-input'
                         variant='standard'
                         disabled={id === 'email'}
-                        InputProps={
-                          id === 'phone'
-                            ? { inputComponent: TextMaskCustom }
-                            : {}
-                        }
+                        InputProps={id === 'phone' ? { inputComponent: TextMaskCustom } : {}}
                         error={!!errors[id]}
                         helperText={errors[id]}
                       />
                     );
                   })}
-                  <ButtonWrapper
-                    buttonClassName='btn-next'
-                    onClick={() => handleTabChange('delivery')}
-                    buttonText='Далі'
-                  />
+                  <ButtonWrapper buttonClassName='btn-next' onClick={() => handleTabChange('delivery')} buttonText='Далі' />
                 </div>
               </TabPanel>
               <TabPanel value='delivery'>
                 <div className='order-section'>
                   <h4>Варіант доставки</h4>
-                  <RadioGroup
-                    value={deliveryMethod}
-                    onChange={e => setDeliveryMethodn(e.target.value)}
-                  >
-                    {deliveryOptions.map(option => (
-                      <FormControlLabel
-                        key={option}
-                        value={option}
-                        control={<Radio />}
-                        label={option}
-                      />
+                  <RadioGroup value={deliveryMethod} onChange={(e) => setDeliveryMethodn(e.target.value)}>
+                    {deliveryOptions.map((option) => (
+                      <FormControlLabel key={option} value={option} control={<Radio />} label={option} />
                     ))}
                     <p>* за тарифами перевізника</p>
                   </RadioGroup>
@@ -287,18 +241,14 @@ const Order = () => {
                         onChange={handlePersonalInfoChange('deliveryAddress')}
                         error={!!errors.deliveryAddress}
                         helperText={errors.deliveryAddress}
-                        disabled={!warehouses.length}
+                        disabled={!departments?.data?.length}
                         className='user-order-input'
                       >
-                        {warehouses.map((warehouse, index) => (
-                          <MenuItem
-                            key={`${warehouse.value}-${index}`}
-                            value={warehouse.value}
-                            className='user-order-input post'
-                          >
-                            {warehouse.label}
+                        {departments?.data?.map(({ Description }, index) => (
+                          <MenuItem key={index} value={Description} className='user-order-input post'>
+                            {Description}
                           </MenuItem>
-                        ))}
+                        )) ?? <MenuItem disabled />}
                       </TextField>
                     ) : (
                       adressInputTemplates.map(({ id, ...otherInputProps }) => (
@@ -316,38 +266,19 @@ const Order = () => {
                       ))
                     )}
                   </div>
-                  <ButtonWrapper
-                    buttonClassName='btn-next'
-                    onClick={() => handleTabChange('payment')}
-                    buttonText='Далі'
-                  />
+                  <ButtonWrapper buttonClassName='btn-next' onClick={() => handleTabChange('payment')} buttonText='Далі' />
                 </div>
               </TabPanel>
               <TabPanel value='payment'>
                 <div className='order-section'>
                   <h4>Метод оплати</h4>
-                  <RadioGroup
-                    value={paymentMethod}
-                    onChange={e => setPaymentMethod(e.target.value)}
-                  >
-                    {paymentOptions.map(option => (
-                      <FormControlLabel
-                        key={option}
-                        value={option}
-                        control={<Radio />}
-                        label={option}
-                      />
+                  <RadioGroup value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
+                    {paymentOptions.map((option) => (
+                      <FormControlLabel key={option} value={option} control={<Radio />} label={option} />
                     ))}
                   </RadioGroup>
-                  <p>
-                    * реквізити для оплати онлайн будуть надіслані на електронну
-                    пошту
-                  </p>
-                  <ButtonWrapper
-                    buttonClassName='btn-next'
-                    type='submit'
-                    buttonText='Підтвердити замовлення'
-                  />
+                  <p>* реквізити для оплати онлайн будуть надіслані на електронну пошту</p>
+                  <ButtonWrapper buttonClassName='btn-next' type='submit' buttonText='Підтвердити замовлення' />
                 </div>
               </TabPanel>
             </form>
@@ -357,16 +288,8 @@ const Order = () => {
       <div className='current-order'>
         <h4>Ваше замовлення</h4>
         {basket.map(({ productId, quantity, size }) => {
-          const product = products.find(p => p._id === productId);
-          return product ? (
-            <BasketItem
-              key={productId}
-              {...product}
-              quantity={quantity}
-              size={size}
-              isInOrders={true}
-            />
-          ) : null;
+          const product = products.find((p) => p._id === productId);
+          return product ? <BasketItem key={productId} {...product} quantity={quantity} size={size} isInOrders={true} /> : null;
         })}
         <TotalPrice />
         {/* <LiqPay
@@ -382,5 +305,3 @@ const Order = () => {
     </div>
   );
 };
-
-export default Order;

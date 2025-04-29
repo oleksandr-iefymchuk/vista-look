@@ -1,13 +1,8 @@
 import './ConfirmDialog.scss';
 import PropTypes from 'prop-types';
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle
-} from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 
-import ButtonWrapper from '../Button/Button';
+import { ButtonWrapper } from '../Button/Button';
 
 const ConfirmDialog = ({ open, onClose, onConfirm, title, content }) => {
   return (
@@ -15,16 +10,8 @@ const ConfirmDialog = ({ open, onClose, onConfirm, title, content }) => {
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>{content}</DialogContent>
       <DialogActions>
-        <ButtonWrapper
-          buttonClassName='dialog-btn delete'
-          onClick={onConfirm}
-          buttonText='Видалити'
-        />
-        <ButtonWrapper
-          buttonClassName='dialog-btn cancel'
-          onClick={onClose}
-          buttonText='Відміна'
-        />
+        <ButtonWrapper buttonClassName='dialog-btn delete' onClick={onConfirm} buttonText='Видалити' />
+        <ButtonWrapper buttonClassName='dialog-btn cancel' onClick={onClose} buttonText='Відміна' />
       </DialogActions>
     </Dialog>
   );

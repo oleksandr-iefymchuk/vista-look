@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import './PriceFilter.scss';
 
-import ButtonWrapper from '../../../common/Button/Button';
+import { ButtonWrapper } from '../../../common/Button/Button';
 
 const PriceFilter = ({ products, setFilteredProducts }) => {
   const [minPrice, setMinPrice] = useState(0);
@@ -49,9 +49,7 @@ const PriceFilter = ({ products, setFilteredProducts }) => {
   };
 
   const applyPriceFilter = () => {
-    const filtered = products.filter(
-      product => product.price >= minPrice && product.price <= maxPrice
-    );
+    const filtered = products.filter(product => product.price >= minPrice && product.price <= maxPrice);
     setFilteredProducts(filtered);
   };
 
@@ -99,11 +97,7 @@ const PriceFilter = ({ products, setFilteredProducts }) => {
           }}
           onChange={handleMaxInputChange}
         />
-        <ButtonWrapper
-          buttonClassName='btn-price-filter'
-          buttonText='OK'
-          onClick={applyPriceFilter}
-        />
+        <ButtonWrapper buttonClassName='btn-price-filter' buttonText='OK' onClick={applyPriceFilter} />
       </div>
     </div>
   );

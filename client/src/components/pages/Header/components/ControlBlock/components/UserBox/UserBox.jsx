@@ -6,16 +6,14 @@ import { useDispatch } from 'react-redux';
 
 import './UserBox.scss';
 
-import Button from '../../../../../../common/Button/Button';
+import { ButtonWrapper } from '../../../../../../common/Button/Button';
 import { Fragment } from 'react';
 import { userLogout } from '../../../../../../../store/user/thunk';
 import { toggleLogineModal } from '../../../../../../../store/appReduser/actionCreators';
 
 const UserBox = () => {
   const [isProfileModalVisible, setIsProfileModalVisible] = useState(false);
-  const { name, basket, favorites, isAuthenticated } = useSelector(
-    store => store.user
-  );
+  const { name, basket, favorites, isAuthenticated } = useSelector(store => store.user);
 
   const profileModalRef = useRef(null);
 
@@ -30,10 +28,7 @@ const UserBox = () => {
 
   const isMobileDevice = useMediaQuery({ maxWidth: 768 });
 
-  const totalQuantity = basket?.reduce(
-    (sum, product) => sum + product.quantity,
-    0
-  );
+  const totalQuantity = basket?.reduce((sum, product) => sum + product.quantity, 0);
 
   const toggleLoginVisibility = () => {
     dispatch(toggleLogineModal());
@@ -69,7 +64,7 @@ const UserBox = () => {
     <div className='user-box'>
       {!isMobileDevice && (
         <Fragment>
-          <Button
+          <ButtonWrapper
             buttonClassName='user-box-btn'
             imgClassName='favorites-img'
             icon='favorites'
@@ -77,43 +72,27 @@ const UserBox = () => {
             onClick={navigationFavorites}
           />
           {isAuthenticated ? (
-            <Button
+            <ButtonWrapper
               buttonClassName='user-box-btn auth'
               icon='expand'
               onClick={toggleLogoutModalVisibility}
               buttonText={name.charAt(0).toUpperCase()}
-            ></Button>
+            ></ButtonWrapper>
           ) : (
-            <Button
-              buttonClassName='user-box-btn'
-              icon='user'
-              onClick={toggleLoginVisibility}
-            />
+            <ButtonWrapper buttonClassName='user-box-btn' icon='user' onClick={toggleLoginVisibility} />
           )}
-          <div
-            className={`profile-modal ${isProfileModalVisible && 'show'}`}
-            ref={profileModalRef}
-          >
-            <Button
+          <div className={`profile-modal ${isProfileModalVisible && 'show'}`} ref={profileModalRef}>
+            <ButtonWrapper
               buttonClassName='user-box-btn profile'
               buttonText='Особистий кабінет'
               onClick={navigationProfile}
             />
-            <Button
-              buttonClassName='user-box-btn profile'
-              buttonText='Вихід'
-              onClick={handleLogout}
-            />
+            <ButtonWrapper buttonClassName='user-box-btn profile' buttonText='Вихід' onClick={handleLogout} />
           </div>
         </Fragment>
       )}
 
-      <Button
-        buttonClassName='buttonBlock'
-        icon='basket'
-        value={totalQuantity}
-        onClick={navigationBasket}
-      />
+      <ButtonWrapper buttonClassName='buttonBlock' icon='basket' value={totalQuantity} onClick={navigationBasket} />
     </div>
   );
 };

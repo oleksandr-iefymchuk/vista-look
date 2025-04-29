@@ -1,4 +1,4 @@
-@import '../../../variables.scss';
+@use '@/variables.scss' as *;
 
 .card-info-wrapper {
   display: flex;

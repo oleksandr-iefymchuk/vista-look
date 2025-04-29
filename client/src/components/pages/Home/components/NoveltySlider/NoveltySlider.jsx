@@ -6,15 +6,13 @@ import { useMediaQuery } from 'react-responsive';
 import Slider from 'react-slick';
 import { Skeleton } from '@mui/material';
 
-import ButtonWrapper from '../../../../common/Button/Button';
+import { ButtonWrapper } from '../../../../common/Button/Button';
 import { isNewProduct } from '../../../../../helpers';
 import CardProduct from '../../../../layout/CardProduct/CardProduct';
 
 const NoveltySlider = () => {
   const products = useSelector(state => state.products);
-  const newProducts = products.filter(product =>
-    isNewProduct(product.dateAdded)
-  );
+  const newProducts = products.filter(product => isNewProduct(product.dateAdded));
 
   const isMobileDevice = useMediaQuery({ maxWidth: 768 });
   const isTabletDevice = useMediaQuery({ maxWidth: 1024 });
@@ -44,9 +42,7 @@ const NoveltySlider = () => {
                 <Skeleton
                   variant='rounded'
                   width='100%'
-                  height={
-                    isMobileDevice ? '84vw' : isTabletDevice ? '46vw' : '33vw'
-                  }
+                  height={isMobileDevice ? '84vw' : isTabletDevice ? '46vw' : '33vw'}
                   animation='wave'
                 />
               </div>

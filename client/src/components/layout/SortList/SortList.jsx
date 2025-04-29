@@ -4,13 +4,9 @@ import PropTypes from 'prop-types';
 import './SortList.scss';
 
 import Pagination from '../../layout/Pagination/Pagination';
-import ButtonWrapper from '../../common/Button/Button';
+import { ButtonWrapper } from '../../common/Button/Button';
 
-const SortList = ({
-  products,
-  setShowFilterMenu,
-  showFilterButton = false
-}) => {
+const SortList = ({ products, setShowFilterMenu, showFilterButton = false }) => {
   const isMobileDevice = useMediaQuery({ maxWidth: 1024 });
   const [sortType, setSortType] = useState('');
 
@@ -39,25 +35,12 @@ const SortList = ({
   return (
     <div className='sort-list-wrap'>
       {products.length > 0 && (
-        <div
-          className={`sort-list-block ${
-            showFilterButton ? 'center' : 'justify-end'
-          }`}
-        >
+        <div className={`sort-list-block ${showFilterButton ? 'center' : 'justify-end'}`}>
           {isMobileDevice && showFilterButton && (
-            <ButtonWrapper
-              buttonClassName='filter-btn'
-              icon='filter'
-              buttonText='Фільтр'
-              onClick={setShowFilterMenu}
-            />
+            <ButtonWrapper buttonClassName='filter-btn' icon='filter' buttonText='Фільтр' onClick={setShowFilterMenu} />
           )}
 
-          <select
-            className='sort-list-options'
-            value={sortType}
-            onChange={handleSortChange}
-          >
+          <select className='sort-list-options' value={sortType} onChange={handleSortChange}>
             <option value=''>За замовчуванням</option>
             <option value='priceAsc'>Від дешевих до дорогих</option>
             <option value='priceDesc'>Від дорогих до дешевих</option>

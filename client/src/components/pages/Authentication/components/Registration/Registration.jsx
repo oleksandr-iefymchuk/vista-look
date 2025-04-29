@@ -6,15 +6,11 @@ import PropTypes from 'prop-types';
 import { registrationInputTemplates } from '../../../../../constants/inputTemplates';
 import { Modal, Fade, TextField } from '@mui/material';
 
-import ButtonWrapper from '../../../../common/Button/Button';
+import { ButtonWrapper } from '../../../../common/Button/Button';
 import { registrationUserThunk } from '../../../../../store/user/thunk';
 import { showMessage } from '../../../../../store/user/actionCreators';
 
-const Registration = ({
-  openModalForm,
-  closeModalForm,
-  toggleAuthenticationModal
-}) => {
+const Registration = ({ openModalForm, closeModalForm, toggleAuthenticationModal }) => {
   const [userData, setUserData] = useState({
     name: '',
     email: '',
@@ -36,12 +32,7 @@ const Registration = ({
 
   const onRegistrationSucces = () => {
     toggleAuthenticationModal();
-    dispatch(
-      showMessage(
-        'Успішна реєстрація! Перевірте вашу Е-пошту для активації облікового запису!',
-        'success'
-      )
-    );
+    dispatch(showMessage('Успішна реєстрація! Перевірте вашу Е-пошту для активації облікового запису!', 'success'));
   };
 
   return (
@@ -82,20 +73,12 @@ const Registration = ({
                 );
               })}
             </div>
-            <ButtonWrapper
-              type='submit'
-              buttonText='Зареєструватись'
-              buttonClassName='registration-btn'
-            />
+            <ButtonWrapper type='submit' buttonText='Зареєструватись' buttonClassName='registration-btn' />
           </form>
 
           <div className='login'>
             <p>У вас вже є обліковий запис?</p>
-            <ButtonWrapper
-              buttonText='Увійти'
-              buttonClassName='login-btn'
-              onClick={toggleAuthenticationModal}
-            />
+            <ButtonWrapper buttonText='Увійти' buttonClassName='login-btn' onClick={toggleAuthenticationModal} />
           </div>
         </section>
       </Fade>

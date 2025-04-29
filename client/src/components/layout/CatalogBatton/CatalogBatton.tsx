@@ -1,25 +1,33 @@
-import './CatalogBatton.scss';
-import { useEffect } from 'react';
+import css from './CatalogBatton.module.scss';
+import { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import { useMediaQuery } from 'react-responsive';
 
 import { toggleCategoryMenu } from '../../../store/appReduser/actionCreators';
 
-import ButtonWrapper from '../../common/Button/Button';
+import { ButtonWrapper } from '../../common/Button/Button';
 import CategoryMenu from '../CategoryMenu/CategoryMenu';
 
-const CatalogBatton = ({
-  categories,
-  buttonText,
-  buttonClassName,
-  svgWrapperClassName,
-  iconBurger
-}) => {
+type Categories = {
+  name: string;
+  linkName: string;
+};
+
+type Props = {
+  categories: Array<Categories>;
+  buttonText: string;
+  iconBurger: string;
+  buttonClassName: string;
+  closeMenu: () => void;
+};
+
+const CatalogBatton = ({ categories, buttonText, buttonClassName, iconBurger }: Props) => {
   const dispatch = useDispatch();
   const isMobileDevice = useMediaQuery({ maxWidth: 1024 });
 
-  const isShowCategoryMenu = useSelector(state => state.app.isShowCategoryMenu);
+  const isShowCategoryMenu = useSelector(
+    (state: { app: { isShowCategoryMenu: boolean } }) => state.app.isShowCategoryMenu
+  );
 
   const toggleCategory = () => {
     dispatch(toggleCategoryMenu());
@@ -34,29 +42,17 @@ const CatalogBatton = ({
   }, [isShowCategoryMenu, isMobileDevice]);
 
   return (
-    <div className='catalog-btn-wrap'>
-      {isShowCategoryMenu && isMobileDevice && (
-        <div className='category-menu-overlay' onClick={toggleCategory}></div>
-      )}
+    <Fragment>
+      {isShowCategoryMenu && isMobileDevice && <div className={css.overlay} onClick={toggleCategory}></div>}
       <ButtonWrapper
         buttonClassName={buttonClassName}
-        svgWrapperClassName={svgWrapperClassName}
         icon={!isShowCategoryMenu ? iconBurger : 'close'}
         onClick={toggleCategory}
         buttonText={buttonText}
       />
       {!isMobileDevice && <CategoryMenu categories={categories} />}
-    </div>
+    </Fragment>
   );
-};
-
-CatalogBatton.propTypes = {
-  categories: PropTypes.array.isRequired,
-  buttonText: PropTypes.string.isRequired,
-  iconBurger: PropTypes.string,
-  buttonClassName: PropTypes.string,
-  svgWrapperClassName: PropTypes.string,
-  closeMenu: PropTypes.func
 };
 
 export default CatalogBatton;

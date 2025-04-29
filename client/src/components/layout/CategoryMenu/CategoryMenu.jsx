@@ -11,8 +11,8 @@ import {
   closeMobileMenu
 } from '../../../store/appReduser/actionCreators';
 
-import ButtonWrapper from '../../common/Button/Button';
-import SvgIcon from '../../common/SvgIcon';
+import { ButtonWrapper } from '../../common/Button/Button';
+import { SvgIcon } from '../../common/SvgIcon';
 
 const CategoryMenu = ({ categories }) => {
   const navigate = useNavigate();
@@ -21,9 +21,9 @@ const CategoryMenu = ({ categories }) => {
   const [hoveredCategory, setHoveredCategory] = useState(null);
   const isMobileDevice = useMediaQuery({ maxWidth: 1024 });
 
-  const isShowCategoryMenu = useSelector(state => state.app.isShowCategoryMenu);
+  const isShowCategoryMenu = useSelector((state) => state.app.isShowCategoryMenu);
 
-  const handleCategoryClick = async category => {
+  const handleCategoryClick = async (category) => {
     dispatch(selectCategory(category.name));
     dispatch(selectSubcategory(null));
     dispatch(closeCategoryMenu());
@@ -36,10 +36,7 @@ const CategoryMenu = ({ categories }) => {
   };
 
   return (
-    <div
-      className={`category-menu ${isShowCategoryMenu ? 'show' : 'hide'}`}
-      onMouseLeave={handleMouseLeave}
-    >
+    <div className={`category-menu ${isShowCategoryMenu ? 'show' : 'hide'}`} onMouseLeave={handleMouseLeave}>
       {isMobileDevice && (
         <div className='category-header'>
           <ButtonWrapper
@@ -64,9 +61,7 @@ const CategoryMenu = ({ categories }) => {
         {categories.map((categoryData, index) => (
           <div
             key={index}
-            className={`category-item ${
-              hoveredCategory === categoryData.name ? 'active' : ''
-            }`}
+            className={`category-item ${hoveredCategory === categoryData.name ? 'active' : ''}`}
             onClick={() => handleCategoryClick(categoryData)}
           >
             {categoryData.name}

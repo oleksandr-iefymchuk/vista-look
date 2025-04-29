@@ -3,20 +3,14 @@ import { Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
-import {
-  searchProduct,
-  toggleMobileMenu
-} from '../../../../../store/appReduser/actionCreators';
+import { searchProduct, toggleMobileMenu } from '../../../../../store/appReduser/actionCreators';
 
-import {
-  PLACEHOLDER_LABELS,
-  BUTTON_LABELS
-} from '../../../../../constants/constants';
+import { PLACEHOLDER_LABELS, BUTTON_LABELS } from '../../../../../constants/constants';
 import { categories } from '../../../../../constants/categories';
 
-import Logo from '../../../../common/Logo/Logo';
+import { Logo } from '../../../../common/Logo/Logo';
 import UserBox from './components/UserBox/UserBox';
-import ButtonWrapper from '../../../../common/Button/Button';
+import { ButtonWrapper } from '../../../../common/Button/Button';
 import InputWrapper from '../../../../common/Input/Input';
 import CatalogBatton from '../../../../layout/CatalogBatton/CatalogBatton';
 import MobileMenu from '../../../../layout/MobileMenu/MobileMenu';
@@ -33,9 +27,9 @@ const ControlBlock = () => {
   const navigationSearchList = () => navigate('/search');
 
   const isMobileDevice = useMediaQuery({ maxWidth: 1024 });
-  const isShowMobileMenu = useSelector(state => state.app.isShowMobileMenu);
+  const isShowMobileMenu = useSelector((state) => state.app.isShowMobileMenu);
 
-  const handleSearchChange = e => {
+  const handleSearchChange = (e) => {
     const { value } = e.target;
     setSearchValue(value);
   };
@@ -45,7 +39,7 @@ const ControlBlock = () => {
     navigationSearchList();
   };
 
-  const handleKeyDown = e => {
+  const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       handleSearchSubmit();
     }
@@ -67,14 +61,15 @@ const ControlBlock = () => {
           </Fragment>
         ) : (
           <Fragment>
-            <CatalogBatton
-              buttonBlockClassName='catalog-btn-wrap'
-              buttonClassName='catalog-btn'
-              buttonText={BUTTON_CATALOG}
-              categories={categories}
-              isShowButtonText={!isMobileDevice}
-              iconBurger='menu'
-            />
+            <div className='catalog-btn-wrap'>
+              <CatalogBatton
+                buttonClassName='catalog-btn'
+                buttonText={BUTTON_CATALOG}
+                categories={categories}
+                isShowButtonText={!isMobileDevice}
+                iconBurger='menu'
+              />
+            </div>
             {/* <CategoryMenu categories={categories} /> */}
           </Fragment>
         )}

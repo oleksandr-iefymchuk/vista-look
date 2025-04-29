@@ -63,21 +63,18 @@
     }
   }
 
-  .favorites-btn-wrap {
+  .favorites-btn {
     position: absolute;
     top: 2%;
     right: 2%;
     z-index: 20;
+    width: auto;
+    height: auto;
+    border-radius: 50%;
+    background-color: transparent;
 
-    .favorites-btn {
-      width: auto;
-      height: auto;
-      border-radius: 50%;
-      background-color: transparent;
-
-      svg {
-        width: 26px;
-      }
+    svg {
+      width: 26px;
     }
   }
 

@@ -7,7 +7,7 @@ import { Rating } from '@mui/material';
 import { formatDate } from '../../../../../../../helpers';
 import { delReviewThunk } from '../../../../../../../store/reviews/thunk';
 
-import ButtonWrapper from '../../../../../../common/Button/Button';
+import { ButtonWrapper } from '../../../../../../common/Button/Button';
 import ConfirmDialog from '../../../../../../common/ConfirmDialog/ConfirmDialog';
 import ReviewFormModal from '../ReviewFormModal/ReviewFormModal';
 
@@ -23,9 +23,7 @@ const Reviews = ({ productId }) => {
 
   const { isAdmin } = useSelector(store => store.user);
   const reviews = useSelector(store => store.reviews);
-  const productReviews = reviews.filter(
-    review => review.productId === productId
-  );
+  const productReviews = reviews.filter(review => review.productId === productId);
   productReviews.sort((a, b) => new Date(b.date) - new Date(a.date));
 
   const handleOpenDialog = reviewId => {
@@ -64,70 +62,54 @@ const Reviews = ({ productId }) => {
     <div className='reviews-wrapper'>
       <div className='block-add-review'>
         {!isMobileDevice && <p>Залиште свій відгук на цей товар</p>}
-        <ButtonWrapper
-          buttonClassName='add-review-btn'
-          onClick={handleOpenModalForm}
-          buttonText='Написати відгук'
-        />
+        <ButtonWrapper buttonClassName='add-review-btn' onClick={handleOpenModalForm} buttonText='Написати відгук' />
       </div>
-      {productReviews.map(
-        ({ _id, userName, rating, comment, date, replies }, index) => (
-          <div className='item-review' key={index}>
-            <div className='review-header'>
-              <h4>{userName}</h4>
-              <p className='review-date'>{formatDate(date)}</p>
-              <Rating className='review-rating' value={rating} readOnly />
-              {isAdmin && (
-                <ButtonWrapper
-                  buttonClassName='review-del-btn'
-                  icon='delete'
-                  onClick={() => handleOpenDialog(_id)}
-                />
-              )}
-            </div>
-            <p>{comment}</p>
-
-            <div className='reply-section'>
-              <ButtonWrapper
-                buttonClassName='reply-btn'
-                onClick={() => handleOpenModalForm(userName, _id)}
-                buttonText='Відповісти'
-                icon='arrow-return'
-              />
-              {replies.length > 0 && (
-                <ButtonWrapper
-                  buttonClassName='open-replies-btn'
-                  onClick={() => toggleReplies(_id)}
-                  buttonText={
-                    openRepliesIds.includes(_id)
-                      ? 'Приховати відповіді'
-                      : 'Читати всі відповіді'
-                  }
-                />
-              )}
-
-              {openRepliesIds.includes(_id) && (
-                <div className='replies-list'>
-                  {replies
-                    .slice()
-                    .reverse()
-                    .map((reply, replyIndex) => (
-                      <div className='item-review' key={replyIndex}>
-                        <div className='review-header'>
-                          <h4>{reply.userName}</h4>
-                          <p className='review-date'>
-                            {formatDate(reply.date)}
-                          </p>
-                        </div>
-                        <p>{reply.comment}</p>
-                      </div>
-                    ))}
-                </div>
-              )}
-            </div>
+      {productReviews.map(({ _id, userName, rating, comment, date, replies }, index) => (
+        <div className='item-review' key={index}>
+          <div className='review-header'>
+            <h4>{userName}</h4>
+            <p className='review-date'>{formatDate(date)}</p>
+            <Rating className='review-rating' value={rating} readOnly />
+            {isAdmin && (
+              <ButtonWrapper buttonClassName='review-del-btn' icon='delete' onClick={() => handleOpenDialog(_id)} />
+            )}
           </div>
-        )
-      )}
+          <p>{comment}</p>
+
+          <div className='reply-section'>
+            <ButtonWrapper
+              buttonClassName='reply-btn'
+              onClick={() => handleOpenModalForm(userName, _id)}
+              buttonText='Відповісти'
+              icon='arrow-return'
+            />
+            {replies.length > 0 && (
+              <ButtonWrapper
+                buttonClassName='open-replies-btn'
+                onClick={() => toggleReplies(_id)}
+                buttonText={openRepliesIds.includes(_id) ? 'Приховати відповіді' : 'Читати всі відповіді'}
+              />
+            )}
+
+            {openRepliesIds.includes(_id) && (
+              <div className='replies-list'>
+                {replies
+                  .slice()
+                  .reverse()
+                  .map((reply, replyIndex) => (
+                    <div className='item-review' key={replyIndex}>
+                      <div className='review-header'>
+                        <h4>{reply.userName}</h4>
+                        <p className='review-date'>{formatDate(reply.date)}</p>
+                      </div>
+                      <p>{reply.comment}</p>
+                    </div>
+                  ))}
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
       <ReviewFormModal
         _id={productId}
         openModalForm={openModalForm}

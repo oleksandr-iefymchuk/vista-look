@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 
 import { foterNavLinks } from '../../../constants/constants';
 import { categories } from '../../../constants/categories';
-import ButtonWrapper from '../../common/Button/Button';
+import { ButtonWrapper } from '../../common/Button/Button';
 import CatalogBatton from '../CatalogBatton/CatalogBatton';
-import Logo from '../../common/Logo/Logo';
+import { Logo } from '../../common/Logo/Logo';
 import {
   closeCategoryMenu,
   closeMobileMenu,
@@ -21,11 +21,9 @@ const MobileMenu = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { favorites, isAuthenticated, name, email } = useSelector(
-    store => store.user
-  );
+  const { favorites, isAuthenticated, name, email } = useSelector((store) => store.user);
 
-  const isShowMobileMenu = useSelector(state => state.app.isShowMobileMenu);
+  const isShowMobileMenu = useSelector((state) => state.app.isShowMobileMenu);
 
   const navigationHome = () => {
     navigate('/');
@@ -71,9 +69,7 @@ const MobileMenu = () => {
 
   return (
     <Fragment>
-      {isShowMobileMenu && (
-        <div className='mobile-menu-overlay' onClick={handleCloseMenu}></div>
-      )}
+      {isShowMobileMenu && <div className='mobile-menu-overlay' onClick={handleCloseMenu}></div>}
       <div className={`mobile-menu ${isShowMobileMenu ? 'show' : 'hide'}`}>
         <div className='mobile-menu-navigation'>
           <div className='mobile-menu-header'>
@@ -131,17 +127,11 @@ const MobileMenu = () => {
           </div>
           <CatalogBatton
             buttonClassName='mobile-menu-catalog-btn'
-            svgWrapperClassName='svg-wrapper'
             buttonText='Каталог товарів'
             categories={categories}
             iconBurger='menu'
           />
-          <ButtonWrapper
-            buttonClassName='mobile-btn-stock'
-            buttonText='Акції'
-            icon='sale'
-            onClick={navigationStock}
-          />
+          <ButtonWrapper buttonClassName='mobile-btn-stock' buttonText='Акції' icon='sale' onClick={navigationStock} />
           <nav className='mobile-nav-bar'>
             <ul>
               {foterNavLinks.map(({ link, name }) => (

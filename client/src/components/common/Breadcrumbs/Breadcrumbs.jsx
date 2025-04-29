@@ -3,11 +3,8 @@ import { Fragment, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import {
-  selectCategory,
-  selectSubcategory
-} from '../../../store/appReduser/actionCreators';
-import Button from '../Button/Button';
+import { selectCategory, selectSubcategory } from '../../../store/appReduser/actionCreators';
+import { ButtonWrapper } from '../Button/Button';
 import { breadcrumbLinks } from '../../../constants/breadcrumbLinks';
 
 const Breadcrumbs = () => {
@@ -30,9 +27,7 @@ const Breadcrumbs = () => {
     dispatch(selectSubcategory(null));
   };
 
-  const pathWithoutProductId = pathnameParts.filter(
-    part => !part.match(/^\d+$/)
-  );
+  const pathWithoutProductId = pathnameParts.filter(part => !part.match(/^\d+$/));
 
   useEffect(() => {
     const mainElement = document.querySelector('main');
@@ -58,21 +53,13 @@ const Breadcrumbs = () => {
         <Fragment key={path}>
           {index === 0 ? (
             <Fragment>
-              <Button
-                icon='home'
-                buttonClassName='link-home'
-                onClick={handleGoHome}
-              />
+              <ButtonWrapper icon='home' buttonClassName='link-home' onClick={handleGoHome} />
               {' / '}
             </Fragment>
           ) : (
             ''
           )}
-          {part === 'catalog' ? (
-            <a onClick={handleGoCatalog}>{displayName}</a>
-          ) : (
-            <Link to={path}>{displayName}</Link>
-          )}
+          {part === 'catalog' ? <a onClick={handleGoCatalog}>{displayName}</a> : <Link to={path}>{displayName}</Link>}
           {index < pathParts.length - 1 && <span> / </span>}
         </Fragment>
       );
@@ -82,9 +69,7 @@ const Breadcrumbs = () => {
   if (location.pathname !== '/') {
     return (
       <div className='breadcrumbs-wrap'>
-        <div className='breadcrumbs'>
-          {generateBreadcrumbs(pathWithoutProductId)}
-        </div>
+        <div className='breadcrumbs'>{generateBreadcrumbs(pathWithoutProductId)}</div>
       </div>
     );
   } else {

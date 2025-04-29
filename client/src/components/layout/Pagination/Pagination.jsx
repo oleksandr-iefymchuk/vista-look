@@ -1,7 +1,7 @@
 import './Pagination.scss';
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import ButtonWrapper from '../../common/Button/Button';
+import { ButtonWrapper } from '../../common/Button/Button';
 import ProductList from '../ProductList/ProductList';
 
 const Pagination = ({ products }) => {
@@ -48,11 +48,7 @@ const Pagination = ({ products }) => {
           return (
             <ButtonWrapper
               key={pageNumber}
-              buttonClassName={
-                pageNumber === currentPage
-                  ? 'pagination-buttons active'
-                  : 'pagination-buttons'
-              }
+              buttonClassName={pageNumber === currentPage ? 'pagination-buttons active' : 'pagination-buttons'}
               buttonText={pageNumber.toString()}
               onClick={() => handlePageChange(pageNumber)}
             />

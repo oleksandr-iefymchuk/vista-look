@@ -2,7 +2,7 @@ import './Navigation.scss';
 import { Link } from 'react-router-dom';
 
 import { headerNavbarLinks } from '../../../../../constants/constants';
-import SvgIcon from '../../../../common/SvgIcon';
+import { SvgIcon } from '../../../../common/SvgIcon';
 
 const Navigation = () => {
   return (
@@ -22,8 +22,7 @@ const Navigation = () => {
             <SvgIcon name='phone' color='#fff'></SvgIcon> +38 (093) 94-264-23
           </p>
           <p>
-            <SvgIcon width='22px' name='email' color='#fff'></SvgIcon>{' '}
-            bizmailer24@gmail.com
+            <SvgIcon width='22px' name='email' color='#fff'></SvgIcon> bizmailer24@gmail.com
           </p>
         </div>
       </div>

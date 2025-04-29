@@ -1,4 +1,4 @@
-@import '../../../variables.scss';
+@use '@/variables.scss' as *;
 
 .home-wrap {
   display: flex;
@@ -68,21 +68,17 @@
 
 @media screen and (max-width: 1024px) {
   .home-wrap {
-    .catalog-btn-wrap {
-      width: 60%;
+    .home-catalog-btn {
       margin-top: 20px;
+      width: 90vw;
+      position: relative;
+      justify-content: center;
+      background-color: $secondary-btn-color;
+      font-size: 16px;
 
-      .home-catalog-btn {
-        width: 100%;
-        position: relative;
-        justify-content: center;
-        background-color: $secondary-btn-color;
-        font-size: 16px;
-
-        svg {
-          left: 3%;
-          position: absolute;
-        }
+      svg {
+        left: 3%;
+        position: absolute;
       }
     }
 
@@ -137,7 +133,7 @@
 @media screen and (max-width: 768px) {
   .home-wrap {
     .catalog-btn-wrap {
-      width: 90%;
+      width: 90vw;
     }
     .products-list {
       .product-category {

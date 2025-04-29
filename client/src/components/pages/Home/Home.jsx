@@ -5,7 +5,7 @@ import { useMediaQuery } from 'react-responsive';
 import { BUTTON_LABELS } from '../../../constants/constants';
 import { categories } from '../../../constants/categories';
 import Banner from './components/Banner/Banner';
-import ButtonWrapper from '../../common/Button/Button';
+import { ButtonWrapper } from '../../common/Button/Button';
 import ProductList from '../../layout/ProductList/ProductList';
 import CatalogBatton from '../../layout/CatalogBatton/CatalogBatton';
 import NoveltySlider from './components/NoveltySlider/NoveltySlider';
@@ -31,9 +31,7 @@ const Home = () => {
 
   const handleSwipe = (direction, category) => {
     const currentIndex = categoryIndexes[category] || 0;
-    const categoryProducts = products.filter(
-      product => product.category === category
-    );
+    const categoryProducts = products.filter(product => product.category === category);
 
     if (direction === 'left') {
       if (currentIndex + 2 < categoryProducts.length) {
@@ -62,15 +60,10 @@ const Home = () => {
         {categories.map(categoryData => {
           const { name: categoryName } = categoryData;
 
-          const categoryProducts = products.filter(
-            product => product.category === categoryName
-          );
+          const categoryProducts = products.filter(product => product.category === categoryName);
 
           const currentIndex = categoryIndexes[categoryName] || 0;
-          const displayedProducts = categoryProducts.slice(
-            currentIndex,
-            currentIndex + 2
-          );
+          const displayedProducts = categoryProducts.slice(currentIndex, currentIndex + 2);
 
           return (
             <SwipeableCategory
@@ -84,17 +77,13 @@ const Home = () => {
                   <ButtonWrapper
                     buttonClassName='category-buttons'
                     disabled={currentIndex === 0}
-                    onClick={() =>
-                      setCurrentIndex(categoryName, currentIndex - 2)
-                    }
+                    onClick={() => setCurrentIndex(categoryName, currentIndex - 2)}
                     icon='arrow-prev'
                   />
                   <ButtonWrapper
                     buttonClassName='category-buttons'
                     disabled={currentIndex + 2 >= categoryProducts.length}
-                    onClick={() =>
-                      setCurrentIndex(categoryName, currentIndex + 2)
-                    }
+                    onClick={() => setCurrentIndex(categoryName, currentIndex + 2)}
                     icon='arrow-next'
                   />
                 </div>
