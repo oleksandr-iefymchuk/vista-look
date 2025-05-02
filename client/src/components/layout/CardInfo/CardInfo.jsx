@@ -16,12 +16,13 @@ import { ButtonWrapper } from '../../common/Button/Button';
 import CardInfoTitle from './components/CardInfoTitle/CardInfoTitle';
 import CardInfoDescription from './components/CardInfoDescription/CardInfoDescription';
 import SizeSelector from '../../common/SizeSelector/SizeSelector';
+import { BREAKPOINTS } from '@/constants/constants';
 
 const CardInfo = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { productSlug } = useParams();
-  const isMobileDevice = useMediaQuery({ maxWidth: 1024 });
+  const isMobileDevice = useMediaQuery({ maxWidth: BREAKPOINTS.TABLET });
   const navigationBasket = () => navigate('/basket');
 
   const [cardInfoQuantity, setcardInfoQuantity] = useState(1);

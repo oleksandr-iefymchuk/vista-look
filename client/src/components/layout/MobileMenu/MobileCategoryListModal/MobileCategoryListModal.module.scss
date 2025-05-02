@@ -1,0 +1,58 @@
+@use '@/variables.scss' as *;
+
+.modal {
+  background-color: #f4f5f7;
+  color: #000000;
+
+  .categoryBtn {
+    background-color: transparent;
+    svg {
+      width: 20px;
+      height: 20px;
+      fill: #fff;
+    }
+  }
+
+  .header {
+    color: #fff;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: $primary-color;
+    margin-bottom: 12px;
+    border-top-right-radius: 6px;
+  }
+
+  .list {
+    cursor: pointer;
+    width: 100%;
+    align-items: center;
+    flex: 1;
+    font-size: 18px;
+
+    .item {
+      width: 100%;
+      display: flex;
+      flex-wrap: nowrap;
+      padding: 10px 22px 10px 35px;
+      align-items: center;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover {
+        background-color: $primary-btn-hover-color;
+      }
+
+      svg {
+        margin-left: auto;
+        width: 15px;
+        height: 15px;
+        fill: $primary-color;
+      }
+    }
+  }
+}

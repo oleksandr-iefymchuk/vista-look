@@ -1,8 +1,8 @@
 import './Order.scss';
+import { orderTabStyles } from './muiStyles';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { orderTabStyles } from '@/muiStyles';
 import { TabPanel, TabContext, TabList } from '@mui/lab';
 import { Tab, TextField, FormControlLabel, Radio, RadioGroup, ThemeProvider, MenuItem } from '@mui/material';
 import { adressInputTemplates, deliveryOptions, paymentOptions, userOrderInputTemplates } from '@/constants/inputTemplates';
@@ -15,7 +15,6 @@ import { saveOrderThunk } from '@/store/orders/thunk';
 import { clearBasketThunk } from '@/store/user/thunk';
 import { addOrder } from '@/store/orders/actionCreators';
 import BasketItem from '@/components/pages/Basket/components/BasketItem';
-// import LiqPay from '../../layout/LiqPay/LiqPay';
 import { CityInput } from './CityInput/CityInput';
 import { useFetchPostOfficesQuery } from '@/api/orderAddressApi';
 
@@ -147,15 +146,8 @@ export const Order = () => {
     };
 
     const tokenString = localStorage.getItem('userInfo');
-
-    if (paymentMethod !== 'Оплата онлайн' && tokenString) {
-      const token = JSON.parse(tokenString);
-      dispatch(saveOrderThunk(orderData, token, onSaveOrderSucces));
-    }
-
-    if (paymentMethod === 'Оплата онлайн') {
-      dispatch(addOrder(orderData));
-    }
+    const token = JSON.parse(tokenString);
+    dispatch(saveOrderThunk(orderData, token, onSaveOrderSucces));
   };
 
   const onSaveOrderSucces = () => {
@@ -292,15 +284,6 @@ export const Order = () => {
           return product ? <BasketItem key={productId} {...product} quantity={quantity} size={size} isInOrders={true} /> : null;
         })}
         <TotalPrice />
-        {/* <LiqPay
-          public_key='sandbox_i89780154994'
-          private_key='sandbox_vLSKy2izIhgOHcgTnhMHKCNoBUKUnZMfVnV0flSf'
-          amount={totalPrice}
-          currency='UAH'
-          description='Оплата товара'
-          order_id='6'
-          server_url='https://vista-look.vercel.app'
-        /> */}
       </div>
     </div>
   );

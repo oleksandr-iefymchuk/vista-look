@@ -1,23 +1,8 @@
-@keyframes modalFadeIn {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
+@use '@/variables.scss' as *;
 
 .form-container {
-  padding: 30px;
+  padding: 20px;
   background-color: #fff;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 10px;
-  animation: modalFadeIn 0.3s ease-out;
 
   .form-header {
     display: flex;
@@ -75,26 +60,42 @@
       }
     }
 
-    .submit-review-btn {
+    .buttonBlock {
+      display: grid;
+      gap: 8px;
+      grid-template-columns: 1fr 1fr;
+      width: max-content;
+      min-width: 100%;
       margin-top: 50px;
-      width: 200px;
-      height: 40px;
-      background-color: #008ec8;
 
-      &:hover {
-        background-color: #00a7e9;
-        transition: 0.3s;
+      .submitReview {
+        width: 100%;
+        height: 40px;
+        background-color: $secondary-btn-color;
+        letter-spacing: 1px;
+
+        &:hover {
+          background-color: $secondary-btn-hover-color;
+        }
+      }
+
+      .cancel {
+        width: 100%;
+        height: 40px;
+        background-color: $primary-btn-color;
+        letter-spacing: 1px;
+
+        &:hover {
+          background-color: $primary-btn-hover-color;
+        }
       }
     }
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .form-container {
     width: 100%;
-    height: 100%;
-    border-radius: 0;
-    padding: 20px;
 
     .google-login {
       width: 90%;
@@ -128,10 +129,7 @@
         align-self: flex-start;
       }
 
-      .submit-review-btn {
-        width: 90%;
-        font-size: 14px;
-        letter-spacing: 1px;
+      .buttonBlock {
         margin-top: 70px;
       }
     }

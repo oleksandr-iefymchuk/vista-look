@@ -10,25 +10,11 @@ body {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  scrollbar-gutter: stable;
 
-  &.mobile-menu-open,
-  &.category-menu-open,
   &.loading {
     overflow: hidden;
-    margin-right: 17px;
   }
-
-  // &.loading {
-  //   .footer-wrap,
-  //   .user-profile {
-  //     // .home-wrap {
-  //     margin-right: 16px;
-  //   }
-  // }
-
-  // &.mobile-menu-open {
-  //   margin-right: 16px;
-  // }
 
   #root {
     display: flex;
@@ -49,8 +35,6 @@ body {
 @media screen and (max-width: 1024px) {
   html,
   body {
-    &.mobile-menu-open,
-    &.category-menu-open,
     &.loading {
       margin-right: 0;
     }

@@ -47,13 +47,11 @@
 
   .content-collapsed {
     max-height: 335px;
-    overflow: hidden;
     transition: max-height 1s ease-out;
   }
 
   .content-expanded {
     max-height: 3500px;
-    overflow: hidden;
     transition: max-height 1s ease-in;
   }
 

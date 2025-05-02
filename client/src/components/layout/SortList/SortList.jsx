@@ -5,16 +5,17 @@ import './SortList.scss';
 
 import Pagination from '../../layout/Pagination/Pagination';
 import { ButtonWrapper } from '../../common/Button/Button';
+import { BREAKPOINTS } from '@/constants/constants';
 
 const SortList = ({ products, setShowFilterMenu, showFilterButton = false }) => {
-  const isMobileDevice = useMediaQuery({ maxWidth: 1024 });
+  const isMobileDevice = useMediaQuery({ maxWidth: BREAKPOINTS.TABLET });
   const [sortType, setSortType] = useState('');
 
-  const handleSortChange = e => {
+  const handleSortChange = (e) => {
     setSortType(e.target.value);
   };
 
-  const sortProducts = type => {
+  const sortProducts = (type) => {
     switch (type) {
       case 'priceAsc':
         return products.slice().sort((a, b) => a.price - b.price);

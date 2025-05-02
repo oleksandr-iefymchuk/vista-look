@@ -5,12 +5,12 @@ import { useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import Rating from '@mui/material/Rating';
 
-import { messengers } from '../../../../../constants/constants';
+import { BREAKPOINTS, messengers } from '../../../../../constants/constants';
 import { ButtonWrapper } from '../../../../common/Button/Button';
 import { useCardInfoTabContext } from '../../../../../contexts/CardInfoTabContext';
 
 const CardInfoTitle = ({ _id, productCode, title, quantity }) => {
-  const isMobileDevice = useMediaQuery({ maxWidth: 1024 });
+  const isMobileDevice = useMediaQuery({ maxWidth: BREAKPOINTS.TABLET });
   const [isOpen, setIsOpen] = useState(false);
   const { setActiveTab } = useCardInfoTabContext();
 

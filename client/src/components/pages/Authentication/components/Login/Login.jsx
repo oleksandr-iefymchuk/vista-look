@@ -13,22 +13,23 @@ import { getUserProfileThunk, googleUserRegistrationThunk, loginUserThunk } from
 import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
 import { showMessage } from '../../../../../store/user/actionCreators';
+import { BREAKPOINTS } from '@/constants/constants';
 
 const Login = ({ openModalForm, closeModalForm, toggleAuthenticationModal }) => {
   const dispatch = useDispatch();
-  const isMobileDevice = useMediaQuery({ maxWidth: 768 });
+  const isMobileDevice = useMediaQuery({ maxWidth: BREAKPOINTS.MOBILE });
   const [userData, setUserData] = useState({
     email: '',
     password: ''
   });
 
   const handleInputChange =
-    id =>
+    (id) =>
     ({ target: { value } }) => {
       setUserData({ ...userData, [id]: value });
     };
 
-  const handleLogin = e => {
+  const handleLogin = (e) => {
     e.preventDefault();
     dispatch(loginUserThunk(userData, closeModalForm));
   };
@@ -71,11 +72,7 @@ const Login = ({ openModalForm, closeModalForm, toggleAuthenticationModal }) => 
             </form>
             <div className='registration'>
               <p>У вас немає облікового запису?</p>
-              <ButtonWrapper
-                buttonText='Зареєструватись'
-                buttonClassName='registration-btn'
-                onClick={toggleAuthenticationModal}
-              />
+              <ButtonWrapper buttonText='Зареєструватись' buttonClassName='registration-btn' onClick={toggleAuthenticationModal} />
             </div>
             <div className='or'>
               <span className='separator'></span>
@@ -85,13 +82,13 @@ const Login = ({ openModalForm, closeModalForm, toggleAuthenticationModal }) => 
 
             <div className='google-login'>
               <GoogleLogin
-                onSuccess={credentialResponse => {
+                onSuccess={(credentialResponse) => {
                   const { name, email } = jwtDecode(credentialResponse.credential);
                   dispatch(googleUserRegistrationThunk({ name, email }, updateUser));
                 }}
                 size='medium'
                 width={isMobileDevice ? '300px' : '330px'}
-                onError={error => {
+                onError={(error) => {
                   console.log('Login Failed:', error);
                   dispatch(showMessage('Не вдалося авторизуватися через Google', 'error'));
                 }}

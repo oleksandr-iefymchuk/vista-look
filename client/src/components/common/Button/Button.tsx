@@ -1,5 +1,6 @@
 import css from './Button.module.scss';
 import { SvgIcon } from '@/components/common/SvgIcon';
+import cn from 'classnames';
 
 type Props = {
   disabled?: boolean;
@@ -29,7 +30,7 @@ export const ButtonWrapper = ({
   value
 }: Props) => {
   return (
-    <button className={`${css.button} ${buttonClassName ?? ''}`} disabled={disabled} type={type} onClick={onClick}>
+    <button className={cn(css.button, buttonClassName)} disabled={disabled} type={type} onClick={onClick}>
       {icon && <SvgIcon name={icon} color={svgColor} width={svgWidth} height={svgHeight} />}
       {buttonText}
       {value !== undefined && value !== 0 && <span className={css.value}>{value}</span>}

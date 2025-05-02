@@ -9,13 +9,14 @@ import { Skeleton } from '@mui/material';
 import { ButtonWrapper } from '../../../../common/Button/Button';
 import { isNewProduct } from '../../../../../helpers';
 import CardProduct from '../../../../layout/CardProduct/CardProduct';
+import { BREAKPOINTS } from '@/constants/constants';
 
 const NoveltySlider = () => {
-  const products = useSelector(state => state.products);
-  const newProducts = products.filter(product => isNewProduct(product.dateAdded));
+  const products = useSelector((state) => state.products);
+  const newProducts = products.filter((product) => isNewProduct(product.dateAdded));
 
-  const isMobileDevice = useMediaQuery({ maxWidth: 768 });
-  const isTabletDevice = useMediaQuery({ maxWidth: 1024 });
+  const isMobileDevice = useMediaQuery({ maxWidth: BREAKPOINTS.MOBILE });
+  const isTabletDevice = useMediaQuery({ maxWidth: BREAKPOINTS.TABLET });
   const settings = {
     infinite: true,
     lazyLoad: true,
@@ -50,7 +51,7 @@ const NoveltySlider = () => {
           </Slider>
         ) : (
           <Slider {...settings}>
-            {newProducts.map(product => (
+            {newProducts.map((product) => (
               <CardProduct key={product?._id} {...product} />
             ))}
           </Slider>

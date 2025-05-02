@@ -64,11 +64,11 @@
         border-left: none;
         border-right: none;
         letter-spacing: 1px;
-        overflow: hidden;
         text-decoration: none;
         transition: 0.5s;
         backdrop-filter: blur(15px);
         z-index: 2;
+        overflow: hidden;
 
         svg {
           margin-right: 10px;

@@ -11,28 +11,29 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { ButtonWrapper } from '../../common/Button/Button';
 import SortList from '../SortList/SortList';
 import PriceFilter from './PriceFilter/PriceFilter';
+import { BREAKPOINTS } from '@/constants/constants';
 
 const FilterProducts = ({ products, showFilterButton }) => {
-  const isMobileDevice = useMediaQuery({ maxWidth: 1024 });
+  const isMobileDevice = useMediaQuery({ maxWidth: BREAKPOINTS.TABLET });
 
   const [isShowFilterMenu, setShowFilterMenu] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedParams, setSelectedParams] = useState({});
   const [allParamValues, setAllParamValues] = useState({});
   const [availableParams, setAvailableParams] = useState({});
-  const activeCategory = useSelector(store => store.app.selectedCategory);
+  const activeCategory = useSelector((store) => store.app.selectedCategory);
 
   const handleParamChange = (paramName, value) => {
     const updatedValues = selectedParams[paramName] || [];
     const isChecked = updatedValues.includes(value);
     const updatedParams = {
       ...selectedParams,
-      [paramName]: isChecked ? updatedValues.filter(item => item !== value) : [...updatedValues, value]
+      [paramName]: isChecked ? updatedValues.filter((item) => item !== value) : [...updatedValues, value]
     };
     setSelectedParams(updatedParams);
   };
 
-  const getProductsWordUkr = count => {
+  const getProductsWordUkr = (count) => {
     const cases = [2, 0, 1, 1, 1, 2];
     const titles = ['товар', 'товари', 'товарів'];
     return titles[count % 100 > 4 && count % 100 < 20 ? 2 : cases[count % 10 < 5 ? count % 10 : 5]];
@@ -44,7 +45,7 @@ const FilterProducts = ({ products, showFilterButton }) => {
     } else {
       document.body.classList.remove('mobile-menu-open');
     }
-    setShowFilterMenu(prevState => !prevState);
+    setShowFilterMenu((prevState) => !prevState);
   };
 
   useEffect(() => {
@@ -53,11 +54,9 @@ const FilterProducts = ({ products, showFilterButton }) => {
 
       Object.entries(params).forEach(([paramName, selectedValues]) => {
         if (selectedValues.length > 0) {
-          filtered = filtered.filter(product =>
-            selectedValues.some(value =>
-              Array.isArray(product.param[paramName])
-                ? product.param[paramName].includes(value)
-                : product.param[paramName] === value
+          filtered = filtered.filter((product) =>
+            selectedValues.some((value) =>
+              Array.isArray(product.param[paramName]) ? product.param[paramName].includes(value) : product.param[paramName] === value
             )
           );
         }
@@ -70,7 +69,7 @@ const FilterProducts = ({ products, showFilterButton }) => {
       let filtered = products;
 
       if (activeCategory) {
-        filtered = products.filter(product => product.category === activeCategory);
+        filtered = products.filter((product) => product.category === activeCategory);
       }
 
       applyFilters(selectedParams, filtered);
@@ -78,9 +77,7 @@ const FilterProducts = ({ products, showFilterButton }) => {
   }, [products, selectedParams, activeCategory]);
 
   useEffect(() => {
-    const filteredByCategory = activeCategory
-      ? products.filter(product => product.category === activeCategory)
-      : products;
+    const filteredByCategory = activeCategory ? products.filter((product) => product.category === activeCategory) : products;
 
     const paramValues = filteredByCategory.reduce((acc, product) => {
       Object.entries(product.param).forEach(([paramName, paramValue]) => {
@@ -88,7 +85,7 @@ const FilterProducts = ({ products, showFilterButton }) => {
           acc[paramName] = [];
         }
         const values = Array.isArray(paramValue) ? paramValue : [paramValue];
-        values.forEach(value => {
+        values.forEach((value) => {
           if (!acc[paramName].includes(value)) {
             acc[paramName].push(value);
           }
@@ -102,16 +99,16 @@ const FilterProducts = ({ products, showFilterButton }) => {
 
   useEffect(() => {
     const availableParams = Object.keys(allParamValues).reduce((acc, paramName) => {
-      acc[paramName] = allParamValues[paramName].filter(paramValue => {
+      acc[paramName] = allParamValues[paramName].filter((paramValue) => {
         const tempSelectedParams = {
           ...selectedParams,
           [paramName]: [paramValue]
         };
-        const filtered = products.filter(product =>
+        const filtered = products.filter((product) =>
           Object.entries(tempSelectedParams).every(
             ([key, values]) =>
               values.length === 0 ||
-              values.some(value =>
+              values.some((value) =>
                 Array.isArray(product.param[key]) ? product.param[key].includes(value) : product.param[key] === value
               )
           )
@@ -135,7 +132,7 @@ const FilterProducts = ({ products, showFilterButton }) => {
             </div>
           )}
           <div className='filter-param'>
-            {Object.keys(allParamValues).map(paramName => (
+            {Object.keys(allParamValues).map((paramName) => (
               <Accordion key={paramName} defaultExpanded className='param-box'>
                 <AccordionSummary
                   sx={{
@@ -150,7 +147,7 @@ const FilterProducts = ({ products, showFilterButton }) => {
                 </AccordionSummary>
                 <AccordionDetails>
                   <FormGroup>
-                    {allParamValues[paramName].map(paramValue => (
+                    {allParamValues[paramName].map((paramValue) => (
                       <FormControlLabel
                         key={`${paramName}-${paramValue}`}
                         control={

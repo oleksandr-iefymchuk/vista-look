@@ -10,10 +10,11 @@ import { ButtonWrapper } from '../../../../../../common/Button/Button';
 import { Fragment } from 'react';
 import { userLogout } from '../../../../../../../store/user/thunk';
 import { toggleLogineModal } from '../../../../../../../store/appReduser/actionCreators';
+import { BREAKPOINTS } from '@/constants/constants';
 
 const UserBox = () => {
   const [isProfileModalVisible, setIsProfileModalVisible] = useState(false);
-  const { name, basket, favorites, isAuthenticated } = useSelector(store => store.user);
+  const { name, basket, favorites, isAuthenticated } = useSelector((store) => store.user);
 
   const profileModalRef = useRef(null);
 
@@ -26,7 +27,7 @@ const UserBox = () => {
     setIsProfileModalVisible(false);
   };
 
-  const isMobileDevice = useMediaQuery({ maxWidth: 768 });
+  const isMobileDevice = useMediaQuery({ maxWidth: BREAKPOINTS.MOBILE });
 
   const totalQuantity = basket?.reduce((sum, product) => sum + product.quantity, 0);
 
@@ -43,12 +44,8 @@ const UserBox = () => {
     navigate('/');
   };
 
-  const handleOutsideClick = event => {
-    if (
-      profileModalRef.current &&
-      !profileModalRef.current.contains(event.target) &&
-      !event.target.classList.contains('user-box-btn')
-    ) {
+  const handleOutsideClick = (event) => {
+    if (profileModalRef.current && !profileModalRef.current.contains(event.target) && !event.target.classList.contains('user-box-btn')) {
       setIsProfileModalVisible(false);
     }
   };
@@ -82,11 +79,7 @@ const UserBox = () => {
             <ButtonWrapper buttonClassName='user-box-btn' icon='user' onClick={toggleLoginVisibility} />
           )}
           <div className={`profile-modal ${isProfileModalVisible && 'show'}`} ref={profileModalRef}>
-            <ButtonWrapper
-              buttonClassName='user-box-btn profile'
-              buttonText='Особистий кабінет'
-              onClick={navigationProfile}
-            />
+            <ButtonWrapper buttonClassName='user-box-btn profile' buttonText='Особистий кабінет' onClick={navigationProfile} />
             <ButtonWrapper buttonClassName='user-box-btn profile' buttonText='Вихід' onClick={handleLogout} />
           </div>
         </Fragment>

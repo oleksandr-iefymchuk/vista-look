@@ -7,9 +7,10 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { useMediaQuery } from 'react-responsive';
 
 import { SvgIcon } from '../../common/SvgIcon';
+import { BREAKPOINTS } from '@/constants/constants';
 
 const Contacts = () => {
-  const isMobileDevice = useMediaQuery({ maxWidth: 1024 });
+  const isMobileDevice = useMediaQuery({ maxWidth: BREAKPOINTS.TABLET });
 
   const location = {
     address: "вул. В'ячеслава Черновола, буд. 15, м.Миколаїв",

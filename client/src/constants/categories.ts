@@ -1,7 +1,7 @@
 export const categories = [
-  { name: 'Костюми', linkName: 'kostyumi' },
-  { name: 'Сукні', linkName: 'sukni' },
-  { name: 'Худі', linkName: 'hudi' },
-  { name: 'Жилетки', linkName: 'zhiletki' },
-  { name: 'Куртки', linkName: 'kurtki' }
+  { defaultMessage: 'Костюми', linkName: 'kostyumi', id: 'categories.costumes' },
+  { defaultMessage: 'Сукні', linkName: 'sukni', id: 'categories.dresses' },
+  { defaultMessage: 'Худі', linkName: 'hudi', id: 'categories.hoodie' },
+  { defaultMessage: 'Жилетки', linkName: 'zhiletki', id: 'categories.vests' },
+  { defaultMessage: 'Куртки', linkName: 'kurtki', id: 'categories.jackets' }
 ];

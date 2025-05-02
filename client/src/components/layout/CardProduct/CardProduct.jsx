@@ -1,22 +1,17 @@
 import './CardProduct.scss';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { calculateDiscountedPrice, isNewProduct } from '../../../helpers';
 
-import {
-  addToBasketThunk,
-  addToFavoritesThunk,
-  removeFromFavoritesThunk,
-  updateBasketItemSizeThunk
-} from '../../../store/user/thunk';
+import { addToBasketThunk, addToFavoritesThunk, removeFromFavoritesThunk, updateBasketItemSizeThunk } from '../../../store/user/thunk';
 import { toggleLogineModal } from '../../../store/appReduser/actionCreators';
 import { delProductThunk } from '../../../store/products/thunk';
 
 import { ButtonWrapper } from '../../common/Button/Button';
-import ConfirmDialog from '../../common/ConfirmDialog/ConfirmDialog';
 import SizeSelector from '../../common/SizeSelector/SizeSelector';
+import { DeleteProductModal } from './DeleteProductModal/DeleteProductModal';
 
 const CardProduct = ({ _id, productCode, images, title, slug, price, sizes, quantity, discount, dateAdded }) => {
   const navigate = useNavigate();
@@ -24,13 +19,13 @@ const CardProduct = ({ _id, productCode, images, title, slug, price, sizes, quan
 
   const dispatch = useDispatch();
   const [selectedSize, setSelectedSize] = useState(null);
-  const products = useSelector(state => state.products);
-  const { favorites, basket, isAuthenticated, isAdmin } = useSelector(store => store.user);
+  const products = useSelector((state) => state.products);
+  const { favorites, basket, isAuthenticated, isAdmin } = useSelector((store) => store.user);
 
-  const currentProduct = products.find(product => product._id === _id);
+  const currentProduct = products.find((product) => product._id === _id);
 
-  const isFavorite = favorites.some(item => item === _id);
-  const isInBasket = basket ? basket.find(item => item.productId === _id) : null;
+  const isFavorite = favorites.some((item) => item === _id);
+  const isInBasket = basket ? basket.find((item) => item.productId === _id) : null;
   const [openDialog, setOpenDialog] = useState(false);
 
   const handleOpenDialog = () => setOpenDialog(true);
@@ -67,7 +62,7 @@ const CardProduct = ({ _id, productCode, images, title, slug, price, sizes, quan
     }
   };
 
-  const handleSizeChange = size => {
+  const handleSizeChange = (size) => {
     setSelectedSize(size);
     if (isInBasket && size !== isInBasket.size) {
       dispatch(updateBasketItemSizeThunk(_id, size));
@@ -83,7 +78,7 @@ const CardProduct = ({ _id, productCode, images, title, slug, price, sizes, quan
   }, [sizes, isInBasket]);
 
   return (
-    <>
+    <Fragment>
       <div className='card-product'>
         <div className='badges'>
           {isNewProduct(dateAdded) && <span className='badge-new'>Новинка</span>}
@@ -144,9 +139,7 @@ const CardProduct = ({ _id, productCode, images, title, slug, price, sizes, quan
 
             <ButtonWrapper
               buttonClassName={`${
-                currentProduct?.quantity <= 0 && (!isInBasket || isInBasket.quantity <= 0)
-                  ? 'disabled-buy-btn'
-                  : 'active-buy-btn'
+                currentProduct?.quantity <= 0 && (!isInBasket || isInBasket.quantity <= 0) ? 'disabled-buy-btn' : 'active-buy-btn'
               } ${isInBasket ? 'in-basket' : ''}`}
               disabled={currentProduct?.quantity <= 0 && (!isInBasket || isInBasket.quantity <= 0)}
               icon={isInBasket ? 'full-basket' : 'basket'}
@@ -155,14 +148,9 @@ const CardProduct = ({ _id, productCode, images, title, slug, price, sizes, quan
           </div>
         </div>
       </div>
-      <ConfirmDialog
-        open={openDialog}
-        onClose={handleCloseDialog}
-        onConfirm={handleDeleteProduct}
-        title='Підтвердження видалення товару'
-        content='Ви впевнені, що бажаєте видалити цей товар?'
-      />
-    </>
+
+      <DeleteProductModal isOpen={openDialog} onClose={handleCloseDialog} onConfirm={handleDeleteProduct} />
+    </Fragment>
   );
 };
 

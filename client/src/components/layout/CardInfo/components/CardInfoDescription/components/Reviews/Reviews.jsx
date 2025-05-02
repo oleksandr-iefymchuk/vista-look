@@ -8,12 +8,13 @@ import { formatDate } from '../../../../../../../helpers';
 import { delReviewThunk } from '../../../../../../../store/reviews/thunk';
 
 import { ButtonWrapper } from '../../../../../../common/Button/Button';
-import ConfirmDialog from '../../../../../../common/ConfirmDialog/ConfirmDialog';
 import ReviewFormModal from '../ReviewFormModal/ReviewFormModal';
+import { BREAKPOINTS } from '@/constants/constants';
+import { DeleteReviewModal } from '../DeleteReviewModal/DeleteReviewModal';
 
 const Reviews = ({ productId }) => {
   const dispatch = useDispatch();
-  const isMobileDevice = useMediaQuery({ maxWidth: 768 });
+  const isMobileDevice = useMediaQuery({ maxWidth: BREAKPOINTS.MOBILE });
   const [openModalForm, setOpenModalForm] = useState(false);
   const [parentCommentId, setParentCommentId] = useState(null);
   const [replyToUser, setReplyToUser] = useState(null);
@@ -21,19 +22,19 @@ const Reviews = ({ productId }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [currentReviewId, setCurrentReviewId] = useState(null);
 
-  const { isAdmin } = useSelector(store => store.user);
-  const reviews = useSelector(store => store.reviews);
-  const productReviews = reviews.filter(review => review.productId === productId);
+  const { isAdmin } = useSelector((store) => store.user);
+  const reviews = useSelector((store) => store.reviews);
+  const productReviews = reviews.filter((review) => review.productId === productId);
   productReviews.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-  const handleOpenDialog = reviewId => {
+  const handleOpenDialog = (reviewId) => {
     setCurrentReviewId(reviewId);
     setOpenDialog(true);
   };
 
   const handleCloseDialog = () => setOpenDialog(false);
 
-  const handleDeleteКReview = async () => {
+  const handleDeleteReview = async () => {
     dispatch(delReviewThunk(currentReviewId));
     handleCloseDialog();
   };
@@ -50,9 +51,9 @@ const Reviews = ({ productId }) => {
     setParentCommentId(null);
   };
 
-  const toggleReplies = reviewId => {
+  const toggleReplies = (reviewId) => {
     if (openRepliesIds.includes(reviewId)) {
-      setOpenRepliesIds(openRepliesIds.filter(id => id !== reviewId));
+      setOpenRepliesIds(openRepliesIds.filter((id) => id !== reviewId));
     } else {
       setOpenRepliesIds([...openRepliesIds, reviewId]);
     }
@@ -70,9 +71,7 @@ const Reviews = ({ productId }) => {
             <h4>{userName}</h4>
             <p className='review-date'>{formatDate(date)}</p>
             <Rating className='review-rating' value={rating} readOnly />
-            {isAdmin && (
-              <ButtonWrapper buttonClassName='review-del-btn' icon='delete' onClick={() => handleOpenDialog(_id)} />
-            )}
+            {isAdmin && <ButtonWrapper buttonClassName='review-del-btn' icon='delete' onClick={() => handleOpenDialog(_id)} />}
           </div>
           <p>{comment}</p>
 
@@ -117,14 +116,7 @@ const Reviews = ({ productId }) => {
         replyToUser={replyToUser}
         parentCommentId={parentCommentId}
       />
-
-      <ConfirmDialog
-        open={openDialog}
-        onClose={handleCloseDialog}
-        onConfirm={handleDeleteКReview}
-        title='Підтвердження видалення відгуку'
-        content='Ви дійсно бажаєте видалити цей відгук?'
-      />
+      <DeleteReviewModal isOpen={openDialog} onClose={handleCloseDialog} onConfirm={handleDeleteReview} />
     </div>
   );
 };

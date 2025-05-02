@@ -2,6 +2,13 @@ import { createTheme } from '@mui/material/styles';
 
 export const orderTabStyles = createTheme({
   components: {
+    MuiTabs: {
+      styleOverrides: {
+        root: {
+          padding: '10px 0'
+        }
+      }
+    },
     MuiTab: {
       styleOverrides: {
         root: {
@@ -15,13 +22,6 @@ export const orderTabStyles = createTheme({
             background: 'transparent',
             borderBottom: '3px solid #008ec8'
           }
-        }
-      }
-    },
-    MuiTabPanel: {
-      styleOverrides: {
-        root: {
-          padding: '30px 0'
         }
       }
     }
