@@ -1,4 +1,4 @@
-@import '../../../variables.scss';
+@use '@/variables.scss' as *;
 
 .card-info-wrapper {
   display: flex;
@@ -43,7 +43,6 @@
       align-items: center;
       padding: 15px;
       position: relative;
-      overflow: hidden;
 
       img {
         object-fit: contain;

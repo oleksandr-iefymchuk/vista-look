@@ -1,27 +1,19 @@
 import './PersonalInfo.scss';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  personalInfoInputTemplates,
-  passwordInputTemplates
-} from '../../../../../constants/inputTemplates';
+import { personalInfoInputTemplates, passwordInputTemplates } from '../../../../../constants/inputTemplates';
 import { TextField } from '@mui/material';
-import ButtonWrapper from '../../../../common/Button/Button';
-import {
-  updateUserPasswordThunk,
-  updateUserProfileThunk
-} from '../../../../../store/user/thunk';
+import { ButtonWrapper } from '../../../../common/Button/Button';
+import { updateUserPasswordThunk, updateUserProfileThunk } from '../../../../../store/user/thunk';
 import { showMessage } from '../../../../../store/user/actionCreators';
-import SvgIcon from '../../../../common/SvgIcon';
+import { SvgIcon } from '../../../../common/SvgIcon';
 import TextMaskCustom from '../MaskedInput/MaskedInput';
 
 const PersonalInfo = () => {
   const dispatch = useDispatch();
   const tokenString = localStorage.getItem('userInfo');
 
-  const { name, surname, email, phone, city, address, authType } = useSelector(
-    store => store.user
-  );
+  const { name, surname, email, phone, city, address, authType } = useSelector((store) => store.user);
 
   const [personalInfo, setPersonalInfo] = useState({
     name: '',
@@ -38,18 +30,18 @@ const PersonalInfo = () => {
   });
 
   const handlePersonalInfoChange =
-    id =>
+    (id) =>
     ({ target: { value } }) => {
       setPersonalInfo({ ...personalInfo, [id]: value });
     };
 
   const handlePasswordChange =
-    id =>
+    (id) =>
     ({ target: { value } }) => {
       setPassword({ ...password, [id]: value });
     };
 
-  const handleUpdateProfile = e => {
+  const handleUpdateProfile = (e) => {
     e.preventDefault();
     if (tokenString) {
       const token = JSON.parse(tokenString);
@@ -61,25 +53,15 @@ const PersonalInfo = () => {
     dispatch(showMessage('Особиста інформація успішно оновлена!', 'success'));
   };
 
-  const handleUpdatePassword = e => {
+  const handleUpdatePassword = (e) => {
     e.preventDefault();
     if (password.newPassword === password.currentPassword) {
-      dispatch(
-        showMessage(
-          'Старий пароль і новий пароль не можуть співпадати!',
-          'error'
-        )
-      );
+      dispatch(showMessage('Старий пароль і новий пароль не можуть співпадати!', 'error'));
       return;
     }
 
     if (password.newPassword !== password.passwordConfirmation) {
-      dispatch(
-        showMessage(
-          'Новий пароль і підтвердження пароля не співпадають!',
-          'error'
-        )
-      );
+      dispatch(showMessage('Новий пароль і підтвердження пароля не співпадають!', 'error'));
       return;
     }
     if (tokenString) {
@@ -120,18 +102,12 @@ const PersonalInfo = () => {
                 className='personal-info-input'
                 variant='standard'
                 disabled={id === 'email'}
-                InputProps={
-                  id === 'phone' ? { inputComponent: TextMaskCustom } : {}
-                }
+                InputProps={id === 'phone' ? { inputComponent: TextMaskCustom } : {}}
               />
             );
           })}
         </div>
-        <ButtonWrapper
-          type='submit'
-          buttonText='Зберегти зміни'
-          buttonClassName='personal-info-btn'
-        />
+        <ButtonWrapper type='submit' buttonText='Зберегти зміни' buttonClassName='personal-info-btn' />
       </form>
 
       {authType !== 'google' && (
@@ -161,11 +137,7 @@ const PersonalInfo = () => {
               );
             })}
           </div>
-          <ButtonWrapper
-            type='submit'
-            buttonText='Замінити пароль'
-            buttonClassName='personal-info-btn'
-          />
+          <ButtonWrapper type='submit' buttonText='Замінити пароль' buttonClassName='personal-info-btn' />
         </form>
       )}
     </div>

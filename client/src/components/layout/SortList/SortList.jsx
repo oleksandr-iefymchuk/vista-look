@@ -4,21 +4,18 @@ import PropTypes from 'prop-types';
 import './SortList.scss';
 
 import Pagination from '../../layout/Pagination/Pagination';
-import ButtonWrapper from '../../common/Button/Button';
+import { ButtonWrapper } from '../../common/Button/Button';
+import { BREAKPOINTS } from '@/constants/constants';
 
-const SortList = ({
-  products,
-  setShowFilterMenu,
-  showFilterButton = false
-}) => {
-  const isMobileDevice = useMediaQuery({ maxWidth: 1024 });
+const SortList = ({ products, setShowFilterMenu, showFilterButton = false }) => {
+  const isMobileDevice = useMediaQuery({ maxWidth: BREAKPOINTS.TABLET });
   const [sortType, setSortType] = useState('');
 
-  const handleSortChange = e => {
+  const handleSortChange = (e) => {
     setSortType(e.target.value);
   };
 
-  const sortProducts = type => {
+  const sortProducts = (type) => {
     switch (type) {
       case 'priceAsc':
         return products.slice().sort((a, b) => a.price - b.price);
@@ -39,25 +36,12 @@ const SortList = ({
   return (
     <div className='sort-list-wrap'>
       {products.length > 0 && (
-        <div
-          className={`sort-list-block ${
-            showFilterButton ? 'center' : 'justify-end'
-          }`}
-        >
+        <div className={`sort-list-block ${showFilterButton ? 'center' : 'justify-end'}`}>
           {isMobileDevice && showFilterButton && (
-            <ButtonWrapper
-              buttonClassName='filter-btn'
-              icon='filter'
-              buttonText='Фільтр'
-              onClick={setShowFilterMenu}
-            />
+            <ButtonWrapper buttonClassName='filter-btn' icon='filter' buttonText='Фільтр' onClick={setShowFilterMenu} />
           )}
 
-          <select
-            className='sort-list-options'
-            value={sortType}
-            onChange={handleSortChange}
-          >
+          <select className='sort-list-options' value={sortType} onChange={handleSortChange}>
             <option value=''>За замовчуванням</option>
             <option value='priceAsc'>Від дешевих до дорогих</option>
             <option value='priceDesc'>Від дорогих до дешевих</option>

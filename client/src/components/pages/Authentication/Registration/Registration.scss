@@ -1,0 +1,97 @@
+@use '@/variables.scss' as *;
+
+.registration-block {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 6px;
+
+  .registration-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    h2 {
+      margin-bottom: 15px;
+    }
+
+    .registration-form-header {
+      display: flex;
+      justify-content: space-between;
+
+      .close-form-btn {
+        width: 30px;
+        height: 30px;
+        background-color: transparent;
+
+        svg {
+          width: 15px;
+          height: 15px;
+          fill: #008ec8;
+        }
+      }
+    }
+
+    .list-registration-inputs {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .registration-input {
+        width: 100%;
+        margin: 10px 0;
+      }
+    }
+
+    .registration-btn {
+      align-self: center;
+      margin-top: 20px;
+      width: 100%;
+      height: 40px;
+      background-color: $secondary-btn-color;
+
+      &:hover {
+        background-color: $secondary-btn-hover-color;
+        transition: 0.3s;
+      }
+    }
+  }
+
+  .login {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 15px;
+
+    .login-btn {
+      width: 120px;
+      height: 30px;
+      background-color: transparent;
+      border: 1px solid #ddeafd;
+      color: #000;
+
+      &:hover {
+        background-color: #f7faff;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .registration-block {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+
+    .login {
+      p {
+        font-size: 12px;
+      }
+
+      .login-btn {
+        width: 110px;
+      }
+    }
+  }
+}

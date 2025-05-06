@@ -1,0 +1,27 @@
+{
+  "button.cancel": "Скасувати",
+  "button.delete": "Видалити",
+  "categories.costumes": "Костюми",
+  "categories.dresses": "Сукні",
+  "categories.hoodie": "Худі",
+  "categories.vests": "Жилетки",
+  "categories.jackets": "Куртки",
+
+  "mobileCategoryList.title": "Категорія товарів",
+
+  "deleteReviewModal.title": "Підтвердження видалення відгуку",
+  "deleteReviewModal.description": "Ви дійсно бажаєте видалити цей відгук?",
+
+  "deleteProductModal.title": "Підтвердження видалення товару",
+  "deleteProductModal.description": "Ви впевнені, що бажаєте видалити цей товар?",
+
+  "cityInput.noMatches": "немає збігів, перевірте правильність написання",
+  "cityInput.address.label": "Вкажіть населений пункт",
+
+  "footer.forClients": "Клієнтам",
+  "footer.contacts": "Контакти",
+  "footer.copyright": "2024-2025 Інтернет-магазин жіночого одягу «VistaLook»",
+  "footer.navLinks.about": "Про компанію",
+  "footer.navLinks.contacts": "Контакти",
+  "footer.navLinks.deliveryInfo": "Умови оплати та доставки"
+}

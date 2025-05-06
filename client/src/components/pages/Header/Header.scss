@@ -1,10 +1,9 @@
-@import '../../../variables.scss';
+@use '@/variables.scss' as *;
 
 .header-wrap {
   color: #fff;
 }
 
 .navigation-container {
-  overflow: hidden;
   background-color: $secondary-color;
 }

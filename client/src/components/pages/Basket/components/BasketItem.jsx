@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import './BasketItem.scss';
 
-import ButtonWrapper from '../../../common/Button/Button';
+import { ButtonWrapper } from '../../../common/Button/Button';
 
 import { calculateDiscountedPrice } from '../../../../helpers';
 import {
@@ -11,17 +11,7 @@ import {
   removeFromBasketThunk
 } from '../../../../store/user/thunk';
 
-const BasketItem = ({
-  _id,
-  productCode,
-  images,
-  title,
-  price,
-  quantity,
-  size,
-  discount,
-  isInOrders = false
-}) => {
+const BasketItem = ({ _id, productCode, images, title, price, quantity, size, discount, isInOrders = false }) => {
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector(store => store.user);
   // const products = useSelector(state => state.products);
@@ -61,11 +51,7 @@ const BasketItem = ({
         <div className='quantity-control-btn'>
           {!isInOrders && (
             <ButtonWrapper
-              buttonClassName={
-                quantity <= 1
-                  ? 'disabled-btn-increase-quantity'
-                  : 'active-btn-increase-quantity'
-              }
+              buttonClassName={quantity <= 1 ? 'disabled-btn-increase-quantity' : 'active-btn-increase-quantity'}
               disabled={quantity <= 1}
               onClick={handleDecreaseQuantity}
               icon='minus'
@@ -75,11 +61,7 @@ const BasketItem = ({
           <p className='quantity'>{quantity}</p>
           {!isInOrders && (
             <ButtonWrapper
-              buttonClassName={
-                quantity >= 10
-                  ? 'disabled-btn-increase-quantity'
-                  : 'active-btn-increase-quantity'
-              }
+              buttonClassName={quantity >= 10 ? 'disabled-btn-increase-quantity' : 'active-btn-increase-quantity'}
               disabled={quantity >= 10}
               onClick={handleIncreaseQuantity}
               icon='plus'
@@ -104,11 +86,7 @@ const BasketItem = ({
           )}
         </div>
         {!isInOrders && (
-          <ButtonWrapper
-            buttonClassName='delete-btn'
-            onClick={() => handleRemoveFromBasket('decrease')}
-            icon='close'
-          />
+          <ButtonWrapper buttonClassName='delete-btn' onClick={() => handleRemoveFromBasket('decrease')} icon='close' />
         )}
       </div>
     </div>

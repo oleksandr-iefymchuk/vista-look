@@ -1,0 +1,83 @@
+@use '@/variables.scss' as *;
+
+.wrap {
+  position: relative;
+  background: linear-gradient(142deg, $primary-color 0%, $secondary-color 91%, $secondary-color 100%);
+  color: #fff;
+  margin-top: 20px;
+  padding: 30px 7%;
+  font-weight: 200;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .navBar,
+  .contacts {
+    text-align: left;
+    width: 29%;
+
+    h4 {
+      margin-bottom: 10px;
+    }
+
+    ul {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      font-size: 15px;
+
+      li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+
+        a {
+          text-decoration: none;
+          color: #fff;
+
+          &:hover {
+            color: #ffa3c5;
+          }
+        }
+      }
+    }
+  }
+
+  .copyright {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+
+    .logo {
+      width: 100px;
+    }
+  }
+
+  .lang {
+    padding: 0 !important;
+    align-self: flex-end;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .wrap {
+    position: relative;
+
+    .navBar,
+    .contacts {
+      width: 100%;
+    }
+
+    .navBar {
+      margin-bottom: 20px;
+    }
+
+    .copyright {
+      margin-top: 20px;
+    }
+  }
+}

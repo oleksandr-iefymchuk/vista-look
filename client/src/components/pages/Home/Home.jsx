@@ -1,25 +1,28 @@
 import './Home.scss';
-import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useState, useEffect, Fragment } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import { BUTTON_LABELS } from '../../../constants/constants';
+import { BREAKPOINTS, BUTTON_LABELS } from '../../../constants/constants';
 import { categories } from '../../../constants/categories';
 import Banner from './components/Banner/Banner';
-import ButtonWrapper from '../../common/Button/Button';
+import { ButtonWrapper } from '../../common/Button/Button';
 import ProductList from '../../layout/ProductList/ProductList';
-import CatalogBatton from '../../layout/CatalogBatton/CatalogBatton';
 import NoveltySlider from './components/NoveltySlider/NoveltySlider';
 import SwipeableCategory from './components/SwipeableCategory/SwipeableCategory';
+import { MobileCategoryListModal } from '@/components/layout/MobileMenu/MobileCategoryListModal/MobileCategoryListModal';
 
 const Home = () => {
   const { BUTTON_CATALOG } = BUTTON_LABELS;
-  const products = useSelector(state => state.products);
-
+  const products = useSelector((state) => state.products);
+  const dispatch = useDispatch();
   const [categoryIndexes, setCategoryIndexes] = useState({});
-  const isMobileDevice = useMediaQuery({ maxWidth: 1024 });
+  const isMobileDevice = useMediaQuery({ maxWidth: BREAKPOINTS.TABLET });
+  const [showCategoryMenu, setShowCategoryMenu] = useState(false);
+  const handleCloseCategoryMenu = () => setShowCategoryMenu(false);
+  const handleOpenCategoryMenu = () => setShowCategoryMenu(true);
 
   const setCurrentIndex = (category, index) => {
-    setCategoryIndexes(prevIndexes => ({
+    setCategoryIndexes((prevIndexes) => ({
       ...prevIndexes,
       [category]: index
     }));
@@ -31,9 +34,7 @@ const Home = () => {
 
   const handleSwipe = (direction, category) => {
     const currentIndex = categoryIndexes[category] || 0;
-    const categoryProducts = products.filter(
-      product => product.category === category
-    );
+    const categoryProducts = products.filter((product) => product.category === category);
 
     if (direction === 'left') {
       if (currentIndex + 2 < categoryProducts.length) {
@@ -50,27 +51,20 @@ const Home = () => {
     <div className='home-wrap'>
       <Banner />
       {isMobileDevice && (
-        <CatalogBatton
-          categories={categories}
-          iconBurger='menu'
-          buttonText={BUTTON_CATALOG}
-          buttonClassName='home-catalog-btn'
-        />
+        <Fragment>
+          <ButtonWrapper buttonClassName='home-catalog-btn' icon='menu' onClick={handleOpenCategoryMenu} buttonText='Каталог товарів' />
+          <MobileCategoryListModal categories={categories} isOpen={showCategoryMenu} onClose={handleCloseCategoryMenu} />
+        </Fragment>
       )}
 
       <div className='products-list'>
-        {categories.map(categoryData => {
-          const { name: categoryName } = categoryData;
+        {categories.map((categoryData) => {
+          const { defaultMessage: categoryName } = categoryData;
 
-          const categoryProducts = products.filter(
-            product => product.category === categoryName
-          );
+          const categoryProducts = products.filter((product) => product.category === categoryName);
 
           const currentIndex = categoryIndexes[categoryName] || 0;
-          const displayedProducts = categoryProducts.slice(
-            currentIndex,
-            currentIndex + 2
-          );
+          const displayedProducts = categoryProducts.slice(currentIndex, currentIndex + 2);
 
           return (
             <SwipeableCategory
@@ -84,17 +78,13 @@ const Home = () => {
                   <ButtonWrapper
                     buttonClassName='category-buttons'
                     disabled={currentIndex === 0}
-                    onClick={() =>
-                      setCurrentIndex(categoryName, currentIndex - 2)
-                    }
+                    onClick={() => setCurrentIndex(categoryName, currentIndex - 2)}
                     icon='arrow-prev'
                   />
                   <ButtonWrapper
                     buttonClassName='category-buttons'
                     disabled={currentIndex + 2 >= categoryProducts.length}
-                    onClick={() =>
-                      setCurrentIndex(categoryName, currentIndex + 2)
-                    }
+                    onClick={() => setCurrentIndex(categoryName, currentIndex + 2)}
                     icon='arrow-next'
                   />
                 </div>

@@ -1,0 +1,49 @@
+@use '@/variables.scss' as *;
+
+@keyframes slide-down {
+  from {
+    max-height: 0;
+  }
+  to {
+    max-height: 230px;
+  }
+}
+
+.menu {
+  width: 100%;
+  color: #fff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+  border-radius: 5px;
+  position: absolute;
+  top: 127%;
+  left: 0%;
+  overflow: hidden;
+  max-height: 0;
+  background-color: $primary-btn-color;
+  z-index: 10;
+
+  &.show {
+    animation: slide-down 0.4s ease-out forwards;
+  }
+
+  .list {
+    cursor: pointer;
+    width: 100%;
+
+    .item {
+      width: 100%;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      padding: 10px 11px;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover {
+        background-color: $primary-btn-hover-color;
+      }
+    }
+  }
+}

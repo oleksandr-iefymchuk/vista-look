@@ -5,33 +5,22 @@ import { useMediaQuery } from 'react-responsive';
 import PropTypes from 'prop-types';
 import { jwtDecode } from 'jwt-decode';
 import { GoogleLogin } from '@react-oauth/google';
-import { Modal, Fade, TextField, Rating } from '@mui/material';
+import { TextField, Rating } from '@mui/material';
 
-import {
-  getReviewsThunk,
-  addReviewThunk,
-  updateReviewThunk
-} from '../../../../../../../store/reviews/thunk';
-import {
-  getUserProfileThunk,
-  googleUserRegistrationThunk
-} from '../../../../../../../store/user/thunk';
+import { getReviewsThunk, addReviewThunk, updateReviewThunk } from '../../../../../../../store/reviews/thunk';
+import { getUserProfileThunk, googleUserRegistrationThunk } from '../../../../../../../store/user/thunk';
 import { showMessage } from '../../../../../../../store/user/actionCreators';
 
-import ButtonWrapper from '../../../../../../common/Button/Button';
+import { ButtonWrapper } from '../../../../../../common/Button/Button';
 import CustomAlert from '../../../../../../common/CustomAlert/CustomAlert';
+import { BREAKPOINTS } from '@/constants/constants';
+import { Modal } from '@/components/common/Modal/Modal';
 
-const ReviewFormModal = ({
-  _id,
-  openModalForm,
-  closeModalForm,
-  replyToUser,
-  parentCommentId
-}) => {
+const ReviewFormModal = ({ _id, openModalForm, closeModalForm, replyToUser, parentCommentId }) => {
   const dispatch = useDispatch();
-  const isMobileDevice = useMediaQuery({ maxWidth: 768 });
-  const reviews = useSelector(store => store.reviews);
-  const { name, email, isAuthenticated } = useSelector(store => store.user);
+  const isMobileDevice = useMediaQuery({ maxWidth: BREAKPOINTS.MOBILE });
+  const reviews = useSelector((store) => store.reviews);
+  const { name, email, isAuthenticated } = useSelector((store) => store.user);
 
   const [rating, setRating] = useState(null);
   const [notification, setNotification] = useState(null);
@@ -49,7 +38,7 @@ const ReviewFormModal = ({
     }
   };
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({
       ...formData,
@@ -66,7 +55,7 @@ const ReviewFormModal = ({
     });
   };
 
-  const handleError = error => {
+  const handleError = (error) => {
     console.error('Error:', error);
     setNotification({
       severity: 'error',
@@ -74,7 +63,7 @@ const ReviewFormModal = ({
     });
   };
 
-  const handleAddReview = e => {
+  const handleAddReview = (e) => {
     e.preventDefault();
 
     const { name, email, message } = formData;
@@ -94,9 +83,7 @@ const ReviewFormModal = ({
     };
 
     if (parentCommentId) {
-      const parentComment = reviews.find(
-        review => review._id === parentCommentId
-      );
+      const parentComment = reviews.find((review) => review._id === parentCommentId);
       if (parentComment) {
         const updatedParentComment = {
           ...parentComment,
@@ -114,10 +101,7 @@ const ReviewFormModal = ({
       newReview.productId = _id;
       newReview.rating = rating;
       newReview.replies = [];
-      dispatch(addReviewThunk(newReview))
-        .then(handleSuccess)
-        .then(dispatch(getReviewsThunk()))
-        .catch(handleError);
+      dispatch(addReviewThunk(newReview)).then(handleSuccess).then(dispatch(getReviewsThunk())).catch(handleError);
     }
 
     setFormData({
@@ -142,109 +126,86 @@ const ReviewFormModal = ({
   return (
     <Fragment>
       {notification && (
-        <CustomAlert
-          open={true}
-          onClose={handleCloseAlert}
-          severity={notification.severity}
-          message={notification.message}
-        />
+        <CustomAlert open={true} onClose={handleCloseAlert} severity={notification.severity} message={notification.message} />
       )}
 
-      <Modal open={openModalForm} onClose={closeModalForm} closeAfterTransition>
-        <Fade in={openModalForm}>
-          <div className='form-container'>
-            <div className='form-header'>
-              {!parentCommentId && <h4>Додати новий відгук</h4>}
-              {replyToUser && typeof replyToUser === 'string' && (
-                <h4>Відповідь для {replyToUser}</h4>
-              )}
+      <Modal isOpen={openModalForm} onClose={closeModalForm}>
+        <div className='form-container'>
+          <div className='form-header'>
+            {!parentCommentId && <h4>Додати новий відгук</h4>}
+            {replyToUser && typeof replyToUser === 'string' && <h4>Відповідь для {replyToUser}</h4>}
 
-              <ButtonWrapper
-                buttonClassName='close-form-btn'
-                icon='close'
-                onClick={closeModalForm}
+            <ButtonWrapper buttonClassName='close-form-btn' icon='close' onClick={closeModalForm} />
+          </div>
+          {!isAuthenticated && (
+            <div className='google-login'>
+              {!isMobileDevice && <p>Увійти за допомогою</p>}
+              <GoogleLogin
+                onSuccess={(credentialResponse) => {
+                  const { name, email } = jwtDecode(credentialResponse.credential);
+                  dispatch(googleUserRegistrationThunk({ name, email })).then(updateUser);
+                }}
+                type={isMobileDevice ? 'standard' : 'icon'}
+                size={isMobileDevice ? 'medium' : 'large'}
+                width='334px'
+                onError={(error) => {
+                  console.log('Login Failed:', error);
+                  dispatch(showMessage('Не вдалося авторизуватися через Google', 'error'));
+                }}
               />
             </div>
-            {!isAuthenticated && (
-              <div className='google-login'>
-                {!isMobileDevice && <p>Увійти за допомогою</p>}
-                <GoogleLogin
-                  onSuccess={credentialResponse => {
-                    const { name, email } = jwtDecode(
-                      credentialResponse.credential
-                    );
-                    dispatch(googleUserRegistrationThunk({ name, email })).then(
-                      updateUser
-                    );
-                  }}
-                  type={isMobileDevice ? 'standard' : 'icon'}
-                  size={isMobileDevice ? 'medium' : 'large'}
-                  width='334px'
-                  onError={error => {
-                    console.log('Login Failed:', error);
-                    dispatch(
-                      showMessage(
-                        'Не вдалося авторизуватися через Google',
-                        'error'
-                      )
-                    );
-                  }}
-                />
+          )}
+
+          <form className='form-add-review' onSubmit={handleAddReview}>
+            <TextField
+              type='text'
+              className='review-input'
+              label="Ім'я та прізвище"
+              name='name'
+              value={formData.name}
+              onChange={handleChange}
+              size='small'
+              required
+            />
+
+            <TextField
+              type='email'
+              className='review-input'
+              label='E-пошта'
+              name='email'
+              value={formData.email}
+              onChange={handleChange}
+              size='small'
+              required
+            />
+            <TextField
+              multiline
+              className='review-input textarea'
+              label='Повідомлення'
+              name='message'
+              value={formData.message}
+              onChange={handleChange}
+              size='small'
+              rows={5}
+              required
+            />
+            {!parentCommentId && (
+              <div className='rating-stars'>
+                <p>Оцінити товар:</p>
+                <Rating value={rating} onChange={(event, newValue) => setRating(newValue)} />
               </div>
             )}
 
-            <form className='form-add-review' onSubmit={handleAddReview}>
-              <TextField
-                type='text'
-                className='review-input'
-                label="Ім'я та прізвище"
-                name='name'
-                value={formData.name}
-                onChange={handleChange}
-                size='small'
-                required
-              />
-
-              <TextField
-                type='email'
-                className='review-input'
-                label='E-пошта'
-                name='email'
-                value={formData.email}
-                onChange={handleChange}
-                size='small'
-                required
-              />
-              <TextField
-                multiline
-                className='review-input textarea'
-                label='Повідомлення'
-                name='message'
-                value={formData.message}
-                onChange={handleChange}
-                size='small'
-                rows={5}
-                required
-              />
-              {!parentCommentId && (
-                <div className='rating-stars'>
-                  <p>Оцінити товар:</p>
-                  <Rating
-                    value={rating}
-                    onChange={(event, newValue) => setRating(newValue)}
-                  />
-                </div>
-              )}
+            <div className='buttonBlock'>
+              <ButtonWrapper buttonClassName='cancel' onClick={closeModalForm} buttonText='Скасувати' />
               <ButtonWrapper
-                buttonClassName='submit-review-btn'
+                buttonClassName='submitReview'
                 type='submit'
-                buttonText={
-                  !parentCommentId ? 'Залишити відгук' : 'Залишити відповідь'
-                }
+                buttonText={!parentCommentId ? 'Залишити відгук' : 'Залишити відповідь'}
               />
-            </form>
-          </div>
-        </Fade>
+            </div>
+          </form>
+        </div>
       </Modal>
     </Fragment>
   );

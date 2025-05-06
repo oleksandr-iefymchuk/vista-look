@@ -1,0 +1,27 @@
+{
+  "button.cancel": "Отмена",
+  "button.delete": "Удалить",
+  "categories.costumes": "Костюмы",
+  "categories.dresses": "Платья",
+  "categories.hoodie": "Худи",
+  "categories.vests": "Жилетки",
+  "categories.jackets": "Куртки",
+
+  "mobileCategoryList.title": "Категория товара",
+
+  "deleteReviewModal.title": "Подтверждение удаления отзыва",
+  "deleteReviewModal.description": "Вы действительно хотите удалить этот отзыв?",
+
+  "deleteProductModal.title": "Подтверждение удаления товара",
+  "deleteProductModal.description": "Вы уверены, что хотите удалить этот товар?",
+
+  "cityInput.noMatches": "совпадений не найдено, проверьте правильность написания",
+  "cityInput.address.label": "Укажите населённый пункт",
+
+  "footer.forClients": "Клиентам",
+  "footer.contacts": "Контакты",
+  "footer.copyright": "2024–2025 Интернет-магазин женской одежды «VistaLook»",
+  "footer.navLinks.about": "О компании",
+  "footer.navLinks.contacts": "Контакты",
+  "footer.navLinks.deliveryInfo": "Условия оплаты и доставки"
+}

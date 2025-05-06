@@ -7,58 +7,40 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-import { TabControlContext } from '../../../contexts/TabControlContext';
-import {
-  addToBasketThunk,
-  addToFavoritesThunk,
-  removeFromFavoritesThunk
-} from '../../../store/user/thunk';
+import { CardInfoTabProvider } from '../../../contexts/CardInfoTabContext';
+import { addToBasketThunk, addToFavoritesThunk, removeFromFavoritesThunk } from '../../../store/user/thunk';
 import { toggleLogineModal } from '../../../store/appReduser/actionCreators';
 import { showMessage } from '../../../store/user/actionCreators';
 
-import ButtonWrapper from '../../common/Button/Button';
+import { ButtonWrapper } from '../../common/Button/Button';
 import CardInfoTitle from './components/CardInfoTitle/CardInfoTitle';
 import CardInfoDescription from './components/CardInfoDescription/CardInfoDescription';
 import SizeSelector from '../../common/SizeSelector/SizeSelector';
+import { BREAKPOINTS } from '@/constants/constants';
 
 const CardInfo = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { productSlug } = useParams();
-  const isMobileDevice = useMediaQuery({ maxWidth: 1024 });
+  const isMobileDevice = useMediaQuery({ maxWidth: BREAKPOINTS.TABLET });
   const navigationBasket = () => navigate('/basket');
 
   const [cardInfoQuantity, setcardInfoQuantity] = useState(1);
-  const [value, setValue] = useState('description');
   const [selectedSize, setSelectedSize] = useState(null);
   const [zoomStyle, setZoomStyle] = useState({
     transform: 'scale(1)',
     transformOrigin: 'center'
   });
 
-  const products = useSelector(state => state.products);
-  const { favorites, basket, isAuthenticated } = useSelector(
-    store => store.user
-  );
+  const products = useSelector((state) => state.products);
+  const { favorites, basket, isAuthenticated } = useSelector((store) => store.user);
 
-  const cardInfo = products.find(product => product.slug === productSlug);
+  const cardInfo = products.find((product) => product.slug === productSlug);
 
-  const {
-    _id,
-    productCode,
-    images,
-    title,
-    price,
-    sizes,
-    quantity,
-    param,
-    description
-  } = cardInfo || {};
+  const { _id, productCode, images, title, price, sizes, quantity, param, description } = cardInfo || {};
 
-  const isInBasket = cardInfo
-    ? basket.find(item => item.productId === _id)
-    : null;
-  const isFavorite = cardInfo ? favorites.some(item => item === _id) : false;
+  const isInBasket = cardInfo ? basket.find((item) => item.productId === _id) : null;
+  const isFavorite = cardInfo ? favorites.some((item) => item === _id) : false;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -74,9 +56,7 @@ const CardInfo = () => {
     }
 
     if (isAuthenticated && !isInBasket && selectedSize) {
-      dispatch(
-        addToBasketThunk(_id, productCode, cardInfoQuantity, selectedSize)
-      );
+      dispatch(addToBasketThunk(_id, productCode, cardInfoQuantity, selectedSize));
     }
 
     if (isAuthenticated && isInBasket && selectedSize) {
@@ -96,7 +76,7 @@ const CardInfo = () => {
     }
   };
 
-  const handleUpdateQuantity = update => {
+  const handleUpdateQuantity = (update) => {
     if (update === 'increase') {
       setcardInfoQuantity(cardInfoQuantity + 1);
     }
@@ -105,7 +85,7 @@ const CardInfo = () => {
     }
   };
 
-  const handleMouseMove = e => {
+  const handleMouseMove = (e) => {
     const { top, left, width, height } = e.target.getBoundingClientRect();
     let x = ((e.pageX - left) / width) * 100;
     let y = ((e.pageY - top) / height) * 100;
@@ -156,16 +136,9 @@ const CardInfo = () => {
 
   return (
     cardInfo && (
-      <TabControlContext.Provider value={{ value, setValue }}>
+      <CardInfoTabProvider>
         <div className='card-info-wrapper'>
-          {isMobileDevice && (
-            <CardInfoTitle
-              _id={_id}
-              productCode={productCode}
-              title={title}
-              quantity={quantity}
-            />
-          )}
+          {isMobileDevice && <CardInfoTitle _id={_id} productCode={productCode} title={title} quantity={quantity} />}
           <div className='slider-container'>
             <Slider {...settings}>
               {images.map((image, index) => (
@@ -184,24 +157,11 @@ const CardInfo = () => {
 
           <div className='card-info'>
             <div className='card-info-header'>
-              {!isMobileDevice && (
-                <CardInfoTitle
-                  _id={_id}
-                  productCode={productCode}
-                  title={title}
-                  quantity={quantity}
-                />
-              )}
+              {!isMobileDevice && <CardInfoTitle _id={_id} productCode={productCode} title={title} quantity={quantity} />}
 
               <div className='quantity-block'>
                 {isMobileDevice && (
-                  <span
-                    className={
-                      quantity !== 0
-                        ? 'available-product'
-                        : 'unavailable-product'
-                    }
-                  >
+                  <span className={quantity !== 0 ? 'available-product' : 'unavailable-product'}>
                     {quantity !== 0 ? 'В наявності' : 'Немає в наявності'}
                   </span>
                 )}
@@ -216,39 +176,29 @@ const CardInfo = () => {
                 <div className='card-info-quantity'>
                   <ButtonWrapper
                     buttonClassName={
-                      cardInfoQuantity <= 1 || isInBasket
-                        ? 'disabled-btn-increase-quantity'
-                        : 'active-btn-increase-quantity'
+                      cardInfoQuantity <= 1 || isInBasket ? 'disabled-btn-increase-quantity' : 'active-btn-increase-quantity'
                     }
                     disabled={cardInfoQuantity <= 1 || isInBasket}
                     onClick={() => handleUpdateQuantity('decrease')}
                     icon='minus'
                   />
-                  <p className='quantity'>
-                    {isInBasket ? isInBasket.quantity : cardInfoQuantity}
-                  </p>
+                  <p className='quantity'>{isInBasket ? isInBasket.quantity : cardInfoQuantity}</p>
                   <ButtonWrapper
                     buttonClassName={
                       cardInfoQuantity >= 10 || isInBasket || quantity <= 0
                         ? 'disabled-btn-increase-quantity'
                         : 'active-btn-increase-quantity'
                     }
-                    disabled={
-                      cardInfoQuantity >= 10 || isInBasket || quantity <= 0
-                    }
+                    disabled={cardInfoQuantity >= 10 || isInBasket || quantity <= 0}
                     onClick={() => handleUpdateQuantity('increase')}
                     icon='plus'
                   />
 
                   <ButtonWrapper
                     buttonClassName={`${
-                      quantity <= 0 && (!isInBasket || isInBasket.quantity <= 0)
-                        ? 'disabled-buy-btn'
-                        : 'active-buy-btn'
+                      quantity <= 0 && (!isInBasket || isInBasket.quantity <= 0) ? 'disabled-buy-btn' : 'active-buy-btn'
                     } ${isInBasket ? 'in-basket' : ''}`}
-                    disabled={
-                      quantity <= 0 && (!isInBasket || isInBasket.quantity <= 0)
-                    }
+                    disabled={quantity <= 0 && (!isInBasket || isInBasket.quantity <= 0)}
                     icon={isInBasket ? 'check-mark' : 'basket'}
                     buttonText={isInBasket ? 'В кошику' : 'До кошика'}
                     onClick={handleAddToBasket}
@@ -265,26 +215,16 @@ const CardInfo = () => {
                     buttonClassName='favorites-btn'
                     icon={isFavorite ? 'favorites-filled' : 'favorites'}
                     svgColor='#f05a00'
-                    buttonText={
-                      isMobileDevice
-                        ? isFavorite
-                          ? 'В обраному'
-                          : 'До обраного'
-                        : ''
-                    }
+                    buttonText={isMobileDevice ? (isFavorite ? 'В обраному' : 'До обраного') : ''}
                     onClick={handleAddToFavotites}
                   />
                 </div>
               </div>
             </div>
-            <CardInfoDescription
-              _id={_id}
-              description={description}
-              param={param}
-            />
+            <CardInfoDescription _id={_id} description={description} param={param} />
           </div>
         </div>
-      </TabControlContext.Provider>
+      </CardInfoTabProvider>
     )
   );
 };

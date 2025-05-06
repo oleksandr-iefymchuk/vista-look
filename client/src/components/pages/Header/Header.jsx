@@ -1,13 +1,13 @@
 import './Header.scss';
-import ControlBlock from './components/ControlBlock/ControlBlock';
-import Navigation from './components/Navigation/Navigation';
+import HeaderControlPanel from './HeaderControlPanel/HeaderControlPanel';
+import HeaderNavigation from './HeaderNavigation/HeaderNavigation';
 
 const Header = () => {
   return (
     <header className='header-wrap'>
-      <ControlBlock />
+      <HeaderControlPanel />
       <div className='navigation-container'>
-        <Navigation />
+        <HeaderNavigation />
       </div>
     </header>
   );

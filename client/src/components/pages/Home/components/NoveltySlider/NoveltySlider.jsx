@@ -6,18 +6,19 @@ import { useMediaQuery } from 'react-responsive';
 import Slider from 'react-slick';
 import { Skeleton } from '@mui/material';
 
-import ButtonWrapper from '../../../../common/Button/Button';
+import { ButtonWrapper } from '../../../../common/Button/Button';
 import { isNewProduct } from '../../../../../helpers';
 import CardProduct from '../../../../layout/CardProduct/CardProduct';
+import { BREAKPOINTS } from '@/constants/constants';
 
 const NoveltySlider = () => {
-  const products = useSelector(state => state.products);
-  const newProducts = products.filter(product =>
-    isNewProduct(product.dateAdded)
-  );
+  const products = useSelector((state) => state.products);
+  const sortedProducts = [...products].sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
+  const newProducts = sortedProducts.filter((product) => isNewProduct(product.dateAdded));
+  const productsToShow = newProducts.length === 0 ? sortedProducts.slice(0, 10) : newProducts;
 
-  const isMobileDevice = useMediaQuery({ maxWidth: 768 });
-  const isTabletDevice = useMediaQuery({ maxWidth: 1024 });
+  const isMobileDevice = useMediaQuery({ maxWidth: BREAKPOINTS.MOBILE });
+  const isTabletDevice = useMediaQuery({ maxWidth: BREAKPOINTS.TABLET });
   const settings = {
     infinite: true,
     lazyLoad: true,
@@ -37,16 +38,14 @@ const NoveltySlider = () => {
     <div className='novelty-slider-wrap'>
       <div className='novelty-slider-container'>
         <h2>Новинки</h2>
-        {newProducts.length === 0 ? (
+        {products.length === 0 ? (
           <Slider {...settings}>
             {Array.from({ length: skeletonCount }).map((_, index) => (
               <div key={index} className='skeleton-wrapper'>
                 <Skeleton
                   variant='rounded'
                   width='100%'
-                  height={
-                    isMobileDevice ? '84vw' : isTabletDevice ? '46vw' : '33vw'
-                  }
+                  height={isMobileDevice ? '84vw' : isTabletDevice ? '46vw' : '33vw'}
                   animation='wave'
                 />
               </div>
@@ -54,7 +53,7 @@ const NoveltySlider = () => {
           </Slider>
         ) : (
           <Slider {...settings}>
-            {newProducts.map(product => (
+            {productsToShow.map((product) => (
               <CardProduct key={product?._id} {...product} />
             ))}
           </Slider>
