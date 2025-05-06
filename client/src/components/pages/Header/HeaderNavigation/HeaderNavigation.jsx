@@ -1,8 +1,8 @@
-import './Navigation.scss';
+import './HeaderNavigation.scss';
 import { Link } from 'react-router-dom';
 
-import { headerNavbarLinks } from '../../../../../constants/constants';
-import { SvgIcon } from '../../../../common/SvgIcon';
+import { headerNavbarLinks } from '../../../../constants/constants';
+import { SvgIcon } from '../../../common/SvgIcon';
 
 const Navigation = () => {
   return (

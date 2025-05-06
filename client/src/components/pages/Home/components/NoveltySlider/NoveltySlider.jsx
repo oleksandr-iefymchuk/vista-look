@@ -13,7 +13,9 @@ import { BREAKPOINTS } from '@/constants/constants';
 
 const NoveltySlider = () => {
   const products = useSelector((state) => state.products);
-  const newProducts = products.filter((product) => isNewProduct(product.dateAdded));
+  const sortedProducts = [...products].sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
+  const newProducts = sortedProducts.filter((product) => isNewProduct(product.dateAdded));
+  const productsToShow = newProducts.length === 0 ? sortedProducts.slice(0, 10) : newProducts;
 
   const isMobileDevice = useMediaQuery({ maxWidth: BREAKPOINTS.MOBILE });
   const isTabletDevice = useMediaQuery({ maxWidth: BREAKPOINTS.TABLET });
@@ -36,7 +38,7 @@ const NoveltySlider = () => {
     <div className='novelty-slider-wrap'>
       <div className='novelty-slider-container'>
         <h2>Новинки</h2>
-        {newProducts.length === 0 ? (
+        {products.length === 0 ? (
           <Slider {...settings}>
             {Array.from({ length: skeletonCount }).map((_, index) => (
               <div key={index} className='skeleton-wrapper'>
@@ -51,7 +53,7 @@ const NoveltySlider = () => {
           </Slider>
         ) : (
           <Slider {...settings}>
-            {newProducts.map((product) => (
+            {productsToShow.map((product) => (
               <CardProduct key={product?._id} {...product} />
             ))}
           </Slider>

@@ -6,10 +6,10 @@ import { useDispatch } from 'react-redux';
 
 import './UserBox.scss';
 
-import { ButtonWrapper } from '../../../../../../common/Button/Button';
+import { ButtonWrapper } from '../../../../common/Button/Button';
 import { Fragment } from 'react';
-import { userLogout } from '../../../../../../../store/user/thunk';
-import { toggleLogineModal } from '../../../../../../../store/appReduser/actionCreators';
+import { userLogout } from '../../../../../store/user/thunk';
+import { toggleLogineModal } from '../../../../../store/appReduser/actionCreators';
 import { BREAKPOINTS } from '@/constants/constants';
 
 const UserBox = () => {

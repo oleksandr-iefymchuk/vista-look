@@ -1,28 +1,12 @@
 @use '@/variables.scss' as *;
 
-@keyframes modalFadeIn {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
-
 .registration-block {
-  padding: 30px;
-  width: 400px;
+  padding: 20px;
   background-color: #fff;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 10px;
-  animation: modalFadeIn 0.3s ease-out;
+  border-radius: 6px;
 
   .registration-form {
+    width: 100%;
     display: flex;
     flex-direction: column;
 
@@ -77,6 +61,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 8px;
     margin-top: 15px;
 
     .login-btn {

@@ -60,8 +60,9 @@ export const Footer = () => {
         value={translation}
         onChange={handleChange}
         variant='standard'
-        disableUnderline
         size='small'
+        disableUnderline
+        MenuProps={{ disableScrollLock: true, disableRestoreFocus: true }}
         IconComponent={() => null}
         renderValue={(value) => <SvgIcon name={value} />}
         classes={{ select: css.lang }}

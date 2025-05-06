@@ -23,12 +23,12 @@ import { Footer } from './components/pages/Footer/Footer';
 import { Order } from './components/pages/Order/Order';
 import SearchList from './components/layout/SearchList/SearchList';
 import Catalog from './components/pages/Catalog/Catalog';
-import { CategoryList } from './components/pages/Header/components/ControlBlock/components/CategoryList/CategoryList';
+import { CategoryList } from './components/pages/Header/HeaderControlPanel/CategoryList/CategoryList';
 import Contacts from './components/pages/Contacts/Contacts';
 import Breadcrumbs from './components/common/Breadcrumbs/Breadcrumbs';
 import Progress from './components/common/Progress/Progress';
 import CustomAlert from './components/common/CustomAlert/CustomAlert';
-import Authentication from './components/pages/Authentication/Authentication';
+import { Authentication } from './components/pages/Authentication/Authentication';
 import Profile from './components/pages/Profile/Profile';
 import OrderHistory from './components/pages/Profile/components/OrderHistory/OrderHistory';
 import PersonalInfo from './components/pages/Profile/components/PersonalInfo/PersonalInfo';
@@ -67,7 +67,7 @@ const App = () => {
         <Progress />
         {isMobileDevice && <CategoryList categories={categories} />}
         <CustomAlert open={!!message} onClose={() => dispatch(clearMessage())} message={message} severity={messageType} />
-        <Authentication openModalForm={isShowLoginModal} closeModalForm={toggleLoginVisibility} />
+        <Authentication isOpen={isShowLoginModal} onClose={toggleLoginVisibility} />
         <main>
           <Routes>
             <Route path={ROUTES.HOME} element={<Home />} />

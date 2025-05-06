@@ -1,21 +1,21 @@
-import './ControlBlock.scss';
+import './HeaderControlPanel.scss';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
-import { searchProduct, toggleMobileMenu } from '../../../../../store/appReduser/actionCreators';
+import { searchProduct, toggleMobileMenu } from '../../../../store/appReduser/actionCreators';
 
-import { PLACEHOLDER_LABELS, BUTTON_LABELS, BREAKPOINTS } from '../../../../../constants/constants';
-import { categories } from '../../../../../constants/categories';
+import { PLACEHOLDER_LABELS, BUTTON_LABELS, BREAKPOINTS } from '../../../../constants/constants';
+import { categories } from '../../../../constants/categories';
 
-import { Logo } from '../../../../common/Logo/Logo';
-import UserBox from './components/UserBox/UserBox';
-import { ButtonWrapper } from '../../../../common/Button/Button';
-import InputWrapper from '../../../../common/Input/Input';
-import MobileMenu from '../../../../layout/MobileMenu/MobileMenu';
-import { CategoryList } from '@/components/pages/Header/components/ControlBlock/components/CategoryList/CategoryList';
+import { Logo } from '../../../common/Logo/Logo';
+import UserBox from './UserBox/UserBox';
+import { ButtonWrapper } from '../../../common/Button/Button';
+import InputWrapper from '../../../common/Input/Input';
+import MobileMenu from '../../../layout/MobileMenu/MobileMenu';
+import { CategoryList } from '@/components/pages/Header/HeaderControlPanel/CategoryList/CategoryList';
 
-const ControlBlock = () => {
+const HeaderControlPanel = () => {
   const { BUTTON_SEARCH, BUTTON_CATALOG } = BUTTON_LABELS;
   const { SEARCH_PLACEHOLDER } = PLACEHOLDER_LABELS;
 
@@ -112,4 +112,4 @@ const ControlBlock = () => {
   );
 };
 
-export default ControlBlock;
+export default HeaderControlPanel;
